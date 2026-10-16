@@ -247,9 +247,33 @@ class Evolver:
         st["accepted_since_validation"] = 0
         st["last_event"] = f"evolve {target}: 10y validation — {rec['result']} (holdout dP@{k}={gain:+.4f}, t={t:+.2f})"
 
+    def _ten_cache(self, target: str, key: str):
+        return STATE_DIR / f"ten_{target}_{key}.parquet"
+
+    def baseline_10y(self, st: dict) -> None:
+        """운영 버전의 10년 워크포워드 성적(규칙 기준선 포함)을 한 번 만들어 둔다 → 이후 검증 때 재사용."""
+        target, k = st["target"], PRIMARY_K[st["target"]]
+        prod = st["production"]
+        self.log(f"{target}: 운영 버전 {prod['name']} 10년 백테스트 (기준선)")
+        r = run_cfg(self.f, target, f"{prod['name']}_{prod['key']}", prod["cfg"], DEV[0], None, "QS", "10y",
+                    keep_preds=True)
+        r["preds"].to_parquet(self._ten_cache(target, prod["key"]), index=False)
+        ten = ten_year_tables({prod["name"]: r}, target, k, HOLD_START)
+        per = ten["periods"]
+        st["ten_baseline"] = per.round(6).to_dict("records")
+        row = per[(per["기간"] == "10년 전체") & (per["모델"] == prod["name"])].iloc[0]
+        st["last_event"] = f"evolve {target}: 10y baseline of {prod['name']} P@{k}={row[f'P@{k}']:.4f}"
+
     def step(self, st: dict, minutes_left: float) -> bool:
         """한 단계 실행. 남은 시간 안에 못 끝낼 것 같으면 False."""
         self.ensure_baseline(st)
+        prod = st["production"]
+        if not self._ten_cache(st["target"], prod["key"]).exists() and not self.needs_validation(st):
+            if minutes_left < EST_TEN_MIN.get(prod["cfg"]["kind"], 60):
+                return False
+            self.baseline_10y(st)
+            st["iteration"] += 1
+            return True
         if self.needs_validation(st):
             need = EST_TEN_MIN.get(st["dev_champion"]["cfg"]["kind"], 60)
             if not (STATE_DIR / f"ten_{st['target']}_{st['production']['key']}.parquet").exists():
