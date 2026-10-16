@@ -1,0 +1,120 @@
+{
+ "target": "y_down",
+ "iteration": 1,
+ "dev_champion": {
+  "key": "488abe2759",
+  "label": "v1",
+  "cfg": {
+   "kind": "lgbm",
+   "params": {},
+   "neg_rate": 0.1,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  },
+  "score": 0.006104651372879744
+ },
+ "production": {
+  "name": "y_down",
+  "key": "488abe2759",
+  "cfg": {
+   "kind": "lgbm",
+   "params": {},
+   "neg_rate": 0.1,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  }
+ },
+ "queue_pos": 1,
+ "accepted_since_validation": 0,
+ "tested": {
+  "488abe2759": {
+   "label": "v1(출발점)",
+   "P@k": 0.006104651372879744,
+   "AP": 0.012854608313019116,
+   "gain": 0.0,
+   "t": 0.0,
+   "accepted": true,
+   "time": "10-16 16:04",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
+  },
+  "dc574a63fd": {
+   "label": "+rel_strength",
+   "P@k": 0.005697674583643675,
+   "AP": 0.01840470201412705,
+   "gain": -0.0004069767310284078,
+   "t": -1.6986795695289953,
+   "accepted": false,
+   "time": "10-16 16:06",
+   "base": "488abe2759",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "rel_strength"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
+  }
+ },
+ "versions": [],
+ "validations": [],
+ "last_event": "evolve y_down: try #2 +rel_strength (dP@20=-0.0004, t=-1.70)"
+}
