@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 19,
+ "iteration": 20,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "bag3",
@@ -50,7 +50,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 0,
+ "queue_pos": 1,
  "accepted_since_validation": 0,
  "tested": {
   "488abe2759": {
@@ -578,6 +578,37 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "58537a61f7": {
+   "label": "+rel_strength",
+   "P@k": 0.006191860418766737,
+   "AP": 0.01880357802977806,
+   "gain": -0.00017441861564293504,
+   "t": -0.9733137078818771,
+   "accepted": false,
+   "time": "10-16 21:34",
+   "base": "3d1ff1d4a5",
+   "cfg": {
+    "kind": "bag3",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "rel_strength"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -626,5 +657,5 @@
    "result": "승격 → y_down_v2"
   }
  ],
- "last_event": "evolve y_down: 10y validation — 승격 → y_down_v2 (holdout dP@20=+0.0004, t=+1.50)"
+ "last_event": "evolve y_down: try #18 +rel_strength (dP@20=-0.0002, t=-0.97)"
 }
