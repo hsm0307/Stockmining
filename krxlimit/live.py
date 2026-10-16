@@ -62,8 +62,8 @@ def predict(panel: pd.DataFrame, name: str = "y_up", date: str | None = None, to
     if verbose:
         streak = "down_streak" if target == "y_down" else "up_streak"
         show = f[["rank", "code", "name", "market", "close", "prob", "ret1", streak]].head(top).copy()
-        show["prob"] = (show["prob"] * 100).round(1).astype(str) + "%"
-        show["ret1"] = (show["ret1"] * 100).round(1)
+        show["prob"] = (show["prob"].astype(float) * 100).round(1).astype(str) + "%"
+        show["ret1"] = (show["ret1"].astype(float) * 100).round(1)
         print(f"\n[{name}: {stamp['예측대상']}] 기준일 {stamp['기준일']} 상위 {top}개 "
               f"(모델 학습 ~{meta['trained_through']})")
         print(show.to_string(index=False))
