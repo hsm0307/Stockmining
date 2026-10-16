@@ -104,14 +104,44 @@ def test_improve_search(env, monkeypatch):
     monkeypatch.setattr(config, "ROOT", root)
     monkeypatch.setattr(imp, "MIN_T", -99.0)  # 합성 데이터에서도 채택이 일어나도록
     monkeypatch.setattr(imp, "NEW_GROUPS", ["rel_strength", "pref_link"])
-    monkeypatch.setattr(imp, "PARAM_CANDIDATES", {"leaves15": {"params": {"num_leaves": 15}}})
+    monkeypatch.setattr(imp, "PARAM_CANDIDATES", {"hardneg": {"hard_neg": True}})
     monkeypatch.setattr(imp, "WINDOW_CANDIDATES", {"recent1y": {"train_years": 1}})
     f = load_features()
-    out = imp.improve(f, "y_up", freq="QS", promote=True, dev=("2022-01-01", "2022-10-01"), hold_start="2022-10-01")
+    out = imp.improve(f, "y_up", freq="QS", promote=True, dev=("2021-07-01", "2022-10-01"), hold_start="2022-10-01")
     assert len(out["dev_board"]) >= 6
+    assert {"10년 전체", "보류 2024~"} <= set(out["ten_year"]["periods"]["기간"])
     if out["better"]:
         name = out["promoted"]
         assert (root / "configs" / f"{name}.json").exists()
         p = load_panel()
         res = predict(p, name, date=str(p["date"].max().date()), verbose=False)
         assert res["prob"].between(0, 1).all()
+
+
+def test_evolve_steps(env, monkeypatch):
+    """자동 개선 루프: 후보 평가 → 개발 챔피언 → 10년 검증 → 승격/기각까지 한 바퀴."""
+    root, raw = env
+    from krxlimit import evolve as evo
+    from krxlimit.features import load_features
+
+    monkeypatch.setattr(config, "ROOT", root)
+    monkeypatch.setattr(evo, "STATE_DIR", root / "outputs" / "evolve")
+    monkeypatch.setattr(evo, "DEV", ("2021-07-01", "2022-10-01"))
+    monkeypatch.setattr(evo, "HOLD_START", "2022-10-01")
+    monkeypatch.setattr(evo, "MIN_T", -99.0)
+    monkeypatch.setattr(evo, "NEW_GROUPS", ["market2"])
+    monkeypatch.setattr(evo, "PARAM_CANDIDATES", {"hardneg": {"hard_neg": True}})
+    monkeypatch.setattr(evo, "MODEL_CANDIDATES", {"rank": {"kind": "rank", "params": {}}})
+    monkeypatch.setattr(evo, "WINDOW_CANDIDATES", {})
+    ev = evo.Evolver(load_features(), verbose=False)
+    st = evo.load_state("y_down")
+    for _ in range(5):
+        assert ev.step(st, minutes_left=1e9)
+        evo.save_state(st)
+    assert len(st["tested"]) >= 3 and len(st["validations"]) >= 1
+    evo.report(st)
+    st2 = evo.load_state("y_down")  # 저장된 상태로 이어서 진행
+    assert st2["iteration"] == st["iteration"]
+    for _ in range(2):  # 체계적 후보를 다 쓰면 무작위 변이로 계속
+        ev.step(st2, minutes_left=1e9)
+    assert len(st2["tested"]) > len(st["tested"]) - 1

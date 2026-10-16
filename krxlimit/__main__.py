@@ -9,6 +9,7 @@
   backtest       목표 5 워크포워드 백테스트
   ablation       특징 그룹 제거 실험
   improve        개선 탐색 (개발 구간 챔피언/도전자 → 보류 구간 확인 → --promote 시 새 버전)
+  evolve         장시간 자동 개선 루프 (상한가·하한가 번갈아, 이어서 진행, 결과 자동 커밋)
   train          최종 모델 학습·저장
   predict        다음 거래일 예측 저장
   evaluate-live  저장된 예측 채점
@@ -114,11 +115,16 @@ def cmd_train(a):
         cfg = json.loads(open(a.config, encoding="utf-8").read())
         meta = {"name": cfg["name"], "target": cfg["target"], "kind": cfg["kind"], "params": cfg["params"],
                 "neg_rate": cfg["neg_rate"], "exclude": cfg["exclude"], "train_years": cfg["train_years"],
-                "features": select_features(only_groups=cfg["groups"])}
+                "hard_neg": cfg.get("hard_neg", False), "features": select_features(only_groups=cfg["groups"])}
         retrain_like(f, meta)
         return
     for t, name in _names(a):
         train_final(f, t, name=name, **_model_kwargs(a))
+
+
+def cmd_evolve(a):
+    from .evolve import run
+    run(tuple(a.target.split(",")), hours=a.hours, sync=not a.no_sync)
 
 
 def cmd_improve(a):
@@ -240,6 +246,10 @@ def main(argv=None):
     s.add_argument("--rounds", default="features,params,model,window")
     s.add_argument("--freq", default="YS", help="개발 구간 재학습 주기 (YS: 빠름, QS: 정밀)")
     s.add_argument("--promote", action="store_true", help="보류 구간에서도 좋으면 새 버전(v2, v3…) 학습·저장")
+    s = add("evolve", cmd_evolve)
+    s.add_argument("--target", default="y_up,y_down")
+    s.add_argument("--hours", type=float, default=1.8, help="이번 실행 시간(시간). 상태가 저장돼 다음 실행에서 이어감")
+    s.add_argument("--no-sync", action="store_true", help="git 커밋·푸시 하지 않음")
     s = add("predict", cmd_predict)
     s.add_argument("--target", default="y_up,y_down")
     s.add_argument("--suffix", default="", help=suffix_help)

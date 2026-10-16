@@ -186,6 +186,27 @@ python -m krxlimit daily --suffix _v2                    # 승격된 v2 로 매�
 5. 실전 기간에는 v1(고정 설정)과 새 버전을 함께 예측해 `predictions/` 성적표로 비교합니다.
    매주 재학습은 각 버전의 설정(meta)을 그대로 써서 최신 데이터까지 다시 학습합니다.
 
+### 장시간 자동 개선 (`python -m krxlimit evolve`)
+`improve` 를 사람이 멈출 때까지 반복하는 버전입니다. 상한가·하한가 모델을 번갈아 개선합니다.
+```bash
+python -m krxlimit evolve --target y_up,y_down --hours 1.8   # 끝나면 다시 실행 → 저장된 상태에서 이어서 진행
+```
+- 개발 구간은 **2017~2023(7년)** 입니다. 2016년은 첫 학습용입니다.
+- 검증은 **2017~현재(약 10년) 분기 재학습 워크포워드**로 하고, 승격 판정은 보류 구간(2024~)으로 합니다.
+- 먼저 체계적 후보(새 특징 그룹, 파라미터, hard negative, 모델 종류, 학습기간)를 시험하고,
+  그다음 현재 챔피언 설정을 무작위로 1~2개 바꾼 변이 후보를 계속 시험합니다.
+- 개발 챔피언이 바뀌면 10년 백테스트로 운영 버전과 비교합니다. 보류 구간에서 나쁘지 않으면 `configs/{target}_vN.json` 으로 승격하고,
+  나쁘면 운영 버전으로 되돌립니다.
+- 진행 상황 파일
+  - `outputs/evolve/state_*.json` 진행 상태
+  - `outputs/tables/g5_evolve_board_*.csv` 시도한 후보 전체
+  - `g5_evolve_versions_*.csv` 승격 이력
+  - `g5_10y_*` 최근 10년 검증표
+  - `outputs/figures/g5_evolve_*.png` 진행 그래프
+- 결과는 매 단계 자동으로 커밋됩니다. 보류 구간을 여러 번 확인하면 그 구간에도 조금씩 맞춰질 수 있습니다.
+  최종 성능은 실전 예측(`predictions/`)으로 확인하세요.
+- 승격된 버전으로 예측: `python -m krxlimit train --config configs/y_up_v2.json` (다른 PC) → `python -m krxlimit daily --suffix _v2`
+
 **정확도를 높이는 방법 (체크리스트)**
 1. 지표 고정: P@10, Lift@10, AP. 모든 실험은 같은 워크포워드 구간으로 비교 (`experiments.csv`).
 2. **과최적화 방지**: 2019~2023년으로만 튜닝하고(`backtest --start 2019-01-01` 후 연도별 성적 확인),

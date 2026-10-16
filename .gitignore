@@ -6,6 +6,7 @@ data/
 models/
 outputs/*.parquet
 outputs/experiments/
+outputs/evolve/*.parquet
 
 __pycache__/
 *.pyc

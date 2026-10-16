@@ -46,6 +46,34 @@ class CalibratedRanker:
         return self.calibrator.predict_proba(s)[:, 1]
 
 
+def hard_mask(df: pd.DataFrame) -> np.ndarray:
+    """'헷갈리는' 음성 후보: 당일 ±10% 이상 움직였거나, 고가 +15% 이상이거나, 상·하한가를 터치한 종목."""
+    m = np.zeros(len(df), dtype=bool)
+    if "ret1" in df:
+        m |= np.abs(np.nan_to_num(df["ret1"].to_numpy(dtype=float))) >= 0.10
+    if "high_ret" in df:
+        m |= np.nan_to_num(df["high_ret"].to_numpy(dtype=float)) >= 0.15
+    for c in ("up_touch", "down_touch"):
+        if c in df:
+            m |= df[c].to_numpy() == 1
+    return m
+
+
+HARD_COLS = ["ret1", "high_ret", "up_touch", "down_touch"]
+
+
+class HardNegModel:
+    """헷갈리는 음성은 전부, 나머지 음성은 neg_rate 만 뽑아 학습한 분류기. 행마다 다른 추출률로 확률을 되돌린다."""
+
+    def __init__(self, model, neg_rate: float):
+        self.model, self.neg_rate = model, neg_rate
+
+    def true_proba(self, X) -> np.ndarray:
+        p = self.model.predict_proba(X)[:, 1]
+        r = np.where(hard_mask(X), 1.0, self.neg_rate)
+        return p * r / (p * r + (1 - p))
+
+
 class EnsembleModel:
     """여러 모델의 (보정된) 확률 평균."""
 
@@ -117,26 +145,35 @@ def adjust_prob(p, neg_rate):
     return p * neg_rate / (p * neg_rate + (1 - p))
 
 
+def sample_mask(df: pd.DataFrame, target: str, neg_rate: float, seed: int, hard_neg: bool) -> np.ndarray:
+    m = _downsample_mask(df[target].to_numpy(), neg_rate, seed)
+    return m | hard_mask(df) if hard_neg else m
+
+
 def fit(df: pd.DataFrame, target: str, feats: list[str], kind: str, params=None, neg_rate: float = 0.1,
-        valid_days: int = 60, seed: int = config.RANDOM_SEED, mask: np.ndarray | None = None):
+        valid_days: int = 60, seed: int = config.RANDOM_SEED, mask: np.ndarray | None = None,
+        hard_neg: bool = False):
     """df[mask] 로 학습. 시간 순 마지막 valid_days 거래일을 검증셋으로 조기종료(early stopping).
-    큰 테이블을 통째로 복사하지 않도록 행 선택은 불리언 마스크로 처리한다."""
+    큰 테이블을 통째로 복사하지 않도록 행 선택은 불리언 마스크로 처리한다.
+    hard_neg=True 이면 '헷갈리는' 음성(급등락·터치 종목)은 추출하지 않고 전부 학습에 쓴다."""
+    if hard_neg and not set(HARD_COLS) <= set(feats):
+        raise ValueError(f"hard_neg 를 쓰려면 특징에 {HARD_COLS} 가 있어야 합니다.")
     mask = np.ones(len(df), dtype=bool) if mask is None else mask
     dates = df["date"].to_numpy()
     days = np.unique(dates[mask])
     cut = days[-valid_days] if len(days) > valid_days * 3 else days[-1] + np.timedelta64(1, "D")
-    y = df[target].to_numpy()
-    tr_m = mask & (dates < cut) & _downsample_mask(y, neg_rate, seed)
+    tr_m = mask & (dates < cut) & sample_mask(df, target, neg_rate, seed, hard_neg)
     va_m = mask & (dates >= cut)
     if kind == "rank":
         return _fit_ranker(df, target, feats, params, tr_m, va_m, seed)
     if kind.startswith("bag"):  # 음성 표본 추출과 시드를 달리한 lgbm n개 평균 → 분산 감소
         n = int(kind[3:] or 3)
-        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed + i, mask), neg_rate)
-                              for i in range(n)])
+        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed + i, mask, hard_neg),
+                               neg_rate) for i in range(n)])
     if kind == "ens":
-        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed, mask), neg_rate),
-                              (fit(df, target, feats, "rank", None, neg_rate, valid_days, seed, mask), 1.0)])
+        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed, mask, hard_neg),
+                               neg_rate),
+                              (fit(df, target, feats, "rank", None, neg_rate, valid_days, seed, mask, hard_neg), 1.0)])
     tr = df.loc[tr_m, feats + [target]]
     va = df.loc[va_m, feats + [target]]
     model = make_model(kind, {**(params or {}), "random_state": seed} if kind == "lgbm" else params)
@@ -151,7 +188,7 @@ def fit(df: pd.DataFrame, target: str, feats: list[str], kind: str, params=None,
         if kind == "lgbm":  # 검증셋이 없으면 조기종료 불가 → 보수적인 반복수
             model.set_params(n_estimators=300)
         model.fit(tr[feats], tr[target].astype(int))
-    return model
+    return HardNegModel(model, neg_rate) if hard_neg and kind == "lgbm" else model
 
 
 def _fit_ranker(df, target, feats, params, tr_m, va_m, seed):
@@ -240,7 +277,7 @@ def rule_score(df: pd.DataFrame, target: str) -> np.ndarray:
 def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "2019-01-01", end: str | None = None,
                  freq: str = "QS", kind: str | None = None, params: dict | None = None, neg_rate: float = 0.1,
                  features: list[str] | None = None, exclude=(), train_years: float | None = None,
-                 verbose: bool = True) -> pd.DataFrame:
+                 verbose: bool = True, hard_neg: bool = False) -> pd.DataFrame:
     kind = kind or default_kind()
     features = features or ALL_FEATURES
     df = feats_df
@@ -268,7 +305,7 @@ def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "201
         if n_pos < 20:
             continue
         t = time.time()
-        model = fit(df, target, features, kind, params, neg_rate, mask=train_m)
+        model = fit(df, target, features, kind, params, neg_rate, mask=train_m, hard_neg=hard_neg)
         test = df.loc[test_m, keep_cols + [c for c in features if c not in keep_cols]]
         pr = test[keep_cols].copy()
         pr["prob"] = predict_proba(model, test[features], neg_rate)
@@ -352,7 +389,7 @@ def _plot_backtest(results: dict, target: str, tag: str) -> None:
 # ------------------------------------------------------------------ 최종 학습/저장
 def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None = None, params: dict | None = None,
                 neg_rate: float = 0.1, drop_groups=(), exclude=(), name: str | None = None,
-                features: list[str] | None = None, train_years: float | None = None) -> dict:
+                features: list[str] | None = None, train_years: float | None = None, hard_neg: bool = False) -> dict:
     """최종 모델 학습·저장. name 기본값은 target (예: y_up). 비교용 버전은 y_up_v2 처럼 이름을 다르게."""
     kind = kind or default_kind()
     feats = features or select_features(drop_groups)
@@ -360,16 +397,19 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
     m = df[target].notna().to_numpy() & universe_mask(df, exclude)
     if train_years:
         m &= (df["date"] >= df["date"].max() - pd.DateOffset(years=train_years)).to_numpy()
-    model = fit(df, target, feats, kind, params, neg_rate, mask=m)
+    model = fit(df, target, feats, kind, params, neg_rate, mask=m, hard_neg=hard_neg)
     best_iter = None
     if kind == "lgbm":
-        best_iter = int(model.best_iteration_ or model.n_estimators)
+        inner = model.model if isinstance(model, HardNegModel) else model
+        best_iter = int(inner.best_iteration_ or inner.n_estimators)
         # 검증 구간까지 포함해 최적 반복수로 다시 학습
         model = make_model(kind, {**(params or {}), "n_estimators": max(best_iter, 50)})
-        tr = df.loc[m & _downsample_mask(df[target].to_numpy(), neg_rate, config.RANDOM_SEED), feats + [target]]
+        tr = df.loc[m & sample_mask(df, target, neg_rate, config.RANDOM_SEED, hard_neg), feats + [target]]
         model.fit(tr[feats], tr[target].astype(int))
+        if hard_neg:
+            model = HardNegModel(model, neg_rate)
     meta = {"name": name or target, "target": target, "kind": kind, "features": feats, "neg_rate": neg_rate, "params": params or {},
-            "exclude": list(exclude), "train_years": train_years,
+            "exclude": list(exclude), "train_years": train_years, "hard_neg": hard_neg,
             "trained_through": str(df.loc[m, "date"].max().date()),
             "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "best_iter": best_iter,
             "n_train": int(m.sum()), "n_pos": int(np.nansum(df[target].to_numpy()[m]))}
@@ -394,12 +434,15 @@ def retrain_like(feats_df: pd.DataFrame, meta: dict) -> dict:
     """저장된 모델과 같은 설정(특징·모델·파라미터)으로 최신 데이터까지 다시 학습."""
     return train_final(feats_df, meta["target"], kind=meta["kind"], params=meta.get("params") or None,
                        neg_rate=meta["neg_rate"], exclude=tuple(meta.get("exclude", ())), name=meta["name"],
-                       features=meta["features"], train_years=meta.get("train_years"))
+                       features=meta["features"], train_years=meta.get("train_years"),
+                       hard_neg=meta.get("hard_neg", False))
 
 
 def feature_importance(model, kind: str, feats: list[str]) -> pd.DataFrame | None:
     if isinstance(model, EnsembleModel):
         model, kind = model.members[0][0], "lgbm"
+    if isinstance(model, HardNegModel):
+        model = model.model
     if isinstance(model, CalibratedRanker):
         model, kind = model.ranker, "lgbm"
     if kind == "lgbm":
