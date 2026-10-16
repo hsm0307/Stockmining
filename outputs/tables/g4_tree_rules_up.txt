@@ -1,0 +1,40 @@
+|--- value_rank <= 0.82
+|   |--- hl_range <= 0.02
+|   |   |--- ret20 <= 0.34
+|   |   |   |--- weights: [41.28, 136.78] class: 1
+|   |   |--- ret20 >  0.34
+|   |   |   |--- peer_ret <= 0.01
+|   |   |   |   |--- weights: [34.97, 472.88] class: 1
+|   |   |   |--- peer_ret >  0.01
+|   |   |   |   |--- weights: [32.68, 183.68] class: 1
+|   |--- hl_range >  0.02
+|   |   |--- value_rank <= 0.74
+|   |   |   |--- upvol_ratio20 <= 0.90
+|   |   |   |   |--- weights: [249.41, 539.32] class: 1
+|   |   |   |--- upvol_ratio20 >  0.90
+|   |   |   |   |--- weights: [26.95, 152.42] class: 1
+|   |   |--- value_rank >  0.74
+|   |   |   |--- ma120_gap <= 0.11
+|   |   |   |   |--- weights: [83.14, 35.17] class: 0
+|   |   |   |--- ma120_gap >  0.11
+|   |   |   |   |--- weights: [156.53, 273.57] class: 1
+|--- value_rank >  0.82
+|   |--- ma20_gap <= 0.82
+|   |   |--- value_rank <= 0.94
+|   |   |   |--- ma60_gap <= 0.32
+|   |   |   |   |--- weights: [561.89, 308.74] class: 0
+|   |   |   |--- ma60_gap >  0.32
+|   |   |   |   |--- weights: [474.74, 617.48] class: 1
+|   |   |--- value_rank >  0.94
+|   |   |   |--- mcap_rank <= 0.06
+|   |   |   |   |--- weights: [42.43, 82.07] class: 1
+|   |   |   |--- mcap_rank >  0.06
+|   |   |   |   |--- weights: [2471.73, 1094.27] class: 0
+|   |--- ma20_gap >  0.82
+|   |   |--- ret5 <= 1.52
+|   |   |   |--- gap <= 0.09
+|   |   |   |   |--- weights: [59.63, 66.44] class: 1
+|   |   |   |--- gap >  0.09
+|   |   |   |   |--- weights: [76.26, 207.13] class: 1
+|   |   |--- ret5 >  1.52
+|   |   |   |--- weights: [26.37, 168.05] class: 1
