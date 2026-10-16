@@ -1,9 +1,9 @@
 {
  "target": "y_down",
- "iteration": 4,
+ "iteration": 5,
  "dev_champion": {
-  "key": "488abe2759",
-  "label": "v1",
+  "key": "2b28d9e26e",
+  "label": "+peer2",
   "cfg": {
    "kind": "lgbm",
    "params": {},
@@ -18,13 +18,14 @@
     "size_type",
     "market",
     "peer",
-    "calendar"
+    "calendar",
+    "peer2"
    ],
    "exclude": [],
    "train_years": null,
    "hard_neg": false
   },
-  "score": 0.006104651372879744
+  "score": 0.006511627696454525
  },
  "production": {
   "name": "y_down",
@@ -50,8 +51,8 @@
    "hard_neg": false
   }
  },
- "queue_pos": 4,
- "accepted_since_validation": 0,
+ "queue_pos": 0,
+ "accepted_since_validation": 1,
  "tested": {
   "488abe2759": {
    "label": "v1(출발점)",
@@ -205,9 +206,40 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "2b28d9e26e": {
+   "label": "+peer2",
+   "P@k": 0.006511627696454525,
+   "AP": 0.021883027369415196,
+   "gain": 0.0004069768183398992,
+   "t": 1.8395638763426791,
+   "accepted": true,
+   "time": "10-16 16:30",
+   "base": "488abe2759",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "peer2"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_down: try #5 +market2 (dP@20=-0.0002, t=-0.78)"
+ "last_event": "evolve y_down: try #6 +peer2 (dP@20=+0.0004, t=+1.84, accepted)"
 }
