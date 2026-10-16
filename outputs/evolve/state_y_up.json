@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 7,
+ "iteration": 8,
  "dev_champion": {
   "key": "488abe2759",
   "label": "v1",
@@ -50,7 +50,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 7,
+ "queue_pos": 8,
  "accepted_since_validation": 0,
  "tested": {
   "488abe2759": {
@@ -296,9 +296,41 @@
     "train_years": null,
     "hard_neg": true
    }
+  },
+  "2a1ce552bf": {
+   "label": "leaves15",
+   "P@k": 0.0781976729631424,
+   "AP": 0.057913387325455826,
+   "gain": 0.00011627910862443969,
+   "t": 0.15906641918798753,
+   "accepted": false,
+   "time": "10-16 17:06",
+   "base": "488abe2759",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {
+     "num_leaves": 15
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_up: try #8 hardneg+neg0.03 (dP@10=-0.0086, t=-7.04)"
+ "last_event": "evolve y_up: try #9 leaves15 (dP@10=+0.0001, t=+0.16)"
 }
