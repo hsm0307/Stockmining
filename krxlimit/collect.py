@@ -6,6 +6,8 @@ data/raw/{MARKET}/{YYYY}/{YYYYMMDD}.parquet 로 하루치 원본을 저장한다
 from __future__ import annotations
 
 import json
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -35,40 +37,73 @@ def _save_calendar(cal: dict[str, str]) -> None:
 
 
 def collect(start: str, end: str | None = None, markets=("KOSPI", "KOSDAQ"),
-            client: KRXClient | None = None, force: bool = False, verbose: bool = True) -> int:
-    """start~end (YYYYMMDD) 평일을 순회하며 아직 없는 날짜만 받아온다. 반환값: API 호출 수."""
+            client: KRXClient | None = None, force: bool = False, verbose: bool = True,
+            workers: int = 6) -> int:
+    """start~end (YYYYMMDD) 평일 중 아직 없는 날짜만 받아온다(날짜 단위 병렬). 반환값: API 호출 수.
+
+    KRX 응답이 호출당 약 2초라 순차 수집은 10년치에 3시간가량 걸린다 → 기본 6개 스레드로 병렬 수집.
+    """
     config.ensure_dirs()
-    client = client or KRXClient()
     end = end or date.today().strftime("%Y%m%d")
     cal = _load_calendar()
     # 최근 3일 이내 날짜는 데이터가 아직 안 올라왔을 수 있으므로 휴장으로 확정하지 않는다.
     settle = (date.today() - timedelta(days=3)).strftime("%Y%m%d")
-
     days = [d.strftime("%Y%m%d") for d in pd.bdate_range(start, end)]
-    n_calls = 0
-    for k, ds in enumerate(days):
-        if cal.get(ds) == "closed" and not force:
-            continue
+    pending = [ds for ds in days if (force or cal.get(ds) != "closed")
+               and any(force or not raw_path(m, ds).exists() for m in markets)]
+    if not pending:
+        if verbose:
+            print("새로 받을 날짜가 없습니다.")
+        return 0
+
+    if client is None:
+        KRXClient()  # 키가 없으면 스레드를 띄우기 전에 바로 오류
+    local = threading.local()
+
+    def get_client():
+        if client is not None:
+            return client
+        if not hasattr(local, "c"):
+            local.c = KRXClient()
+        return local.c
+
+    def fetch_day(ds: str):
+        c = get_client()
         todo = [m for m in markets if force or not raw_path(m, ds).exists()]
-        if not todo:
-            continue
+        status, calls = None, 0
         for m in todo:
-            df = client.daily_trades(m, ds)
-            n_calls += 1
+            df = c.daily_trades(m, ds)
+            calls += 1
             if df.empty:
                 if m == todo[0]:  # 첫 시장이 비어 있으면 휴장일(또는 미반영)로 보고 나머지 시장은 건너뜀
-                    if ds <= settle:
-                        cal[ds] = "closed"
+                    status = "closed" if ds <= settle else None
                     break
                 print(f"[경고] {ds} {m} 데이터가 비어 있습니다.")
                 continue
             p = raw_path(m, ds)
             p.parent.mkdir(parents=True, exist_ok=True)
             df.to_parquet(p, index=False)
-            cal[ds] = "open"
-        if verbose and (n_calls % 50 == 0 or k == len(days) - 1):
-            print(f"  {ds} 까지 진행 (API 호출 {n_calls}건)")
-            _save_calendar(cal)
+            status = "open"
+        return ds, status, calls
+
+    n_calls, done = 0, 0
+    ex = ThreadPoolExecutor(max_workers=max(1, workers))
+    futs = [ex.submit(fetch_day, ds) for ds in pending]
+    try:
+        for fut in as_completed(futs):
+            ds, status, calls = fut.result()
+            n_calls += calls
+            done += 1
+            if status:
+                cal[ds] = status
+            if verbose and (done % 100 == 0 or done == len(pending)):
+                print(f"  {done}/{len(pending)}일 처리 (API 호출 {n_calls}건)", flush=True)
+                _save_calendar(cal)
+    except BaseException:
+        ex.shutdown(wait=True, cancel_futures=True)
+        _save_calendar(cal)
+        raise
+    ex.shutdown()
     _save_calendar(cal)
     if verbose:
         print(f"수집 완료: API 호출 {n_calls}건")

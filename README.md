@@ -39,7 +39,7 @@ python -m krxlimit check      # 최근 영업일 데이터가 나오면 성공
 ## 2. 실행 순서
 
 ```bash
-python -m krxlimit collect            # ① 2016-01-01 ~ 오늘 수집 (약 5,500회 호출, 중단돼도 이어받기)
+python -m krxlimit collect            # ① 2016-01-01 ~ 오늘 수집 (약 5,500회 호출, 동시 6개 요청으로 15~30분, 중단돼도 이어받기)
 python -m krxlimit build              # ② 패널 생성 + 상/하한가 판정 점검표 출력
 python -m krxlimit features           # ③ 특징·라벨 생성 (수 분)
 python -m krxlimit analyze            # ④ 목표 1~4 분석 (counts / pre / post / streak 개별 실행도 가능)

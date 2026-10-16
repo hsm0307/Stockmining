@@ -192,8 +192,9 @@ def main(argv=None):
     s = add("check", lambda a: __import__("krxlimit.collect", fromlist=["check"]).check(a.date))
     s.add_argument("--date", default=None)
     s = add("collect", lambda a: __import__("krxlimit.collect", fromlist=["collect"]).collect(
-        a.start, a.end, force=a.force))
+        a.start, a.end, force=a.force, workers=a.workers))
     s.add_argument("--start", default=config.DEFAULT_START)
+    s.add_argument("--workers", type=int, default=6, help="동시 요청 수")
     s.add_argument("--end", default=None)
     s.add_argument("--force", action="store_true")
     add("build", cmd_build)
