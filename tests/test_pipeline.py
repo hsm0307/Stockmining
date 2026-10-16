@@ -91,3 +91,27 @@ def test_end_to_end(env):
     text = build_report()
     assert "목표 5" in text
     assert (root / "outputs/figures/g3_paths.png").exists()
+
+
+def test_improve_search(env, monkeypatch):
+    """개선 탐색이 모든 모델 종류(lgbm/bag/rank/ens)로 끝까지 돌고 새 버전을 저장하는지."""
+    root, raw = env
+    from krxlimit import improve as imp
+    from krxlimit.features import load_features
+    from krxlimit.live import predict
+    from krxlimit.panel import load_panel
+
+    monkeypatch.setattr(config, "ROOT", root)
+    monkeypatch.setattr(imp, "MIN_T", -99.0)  # 합성 데이터에서도 채택이 일어나도록
+    monkeypatch.setattr(imp, "NEW_GROUPS", ["rel_strength", "pref_link"])
+    monkeypatch.setattr(imp, "PARAM_CANDIDATES", {"leaves15": {"params": {"num_leaves": 15}}})
+    monkeypatch.setattr(imp, "WINDOW_CANDIDATES", {"recent1y": {"train_years": 1}})
+    f = load_features()
+    out = imp.improve(f, "y_up", freq="QS", promote=True, dev=("2022-01-01", "2022-10-01"), hold_start="2022-10-01")
+    assert len(out["dev_board"]) >= 6
+    if out["better"]:
+        name = out["promoted"]
+        assert (root / "configs" / f"{name}.json").exists()
+        p = load_panel()
+        res = predict(p, name, date=str(p["date"].max().date()), verbose=False)
+        assert res["prob"].between(0, 1).all()

@@ -72,6 +72,7 @@ def _fit_models(df: pd.DataFrame, target: str, feats: list[str], split: pd.Times
     ytr, yte = tr[target].astype(int), te[target].astype(int)
     if ytr.nunique() < 2 or yte.nunique() < 2:
         return {}
+    feats = [c for c in feats if tr[c].notna().any()]  # 학습 기간에 값이 전혀 없는 특징 제외
     out, metrics = {}, []
 
     def _m(label, p):

@@ -28,10 +28,18 @@ FEATURE_GROUPS: dict[str, list[str]] = {
     "market": ["mkt_ret", "mkt_ret5", "mkt_n_up", "mkt_n_up5", "mkt_n_down", "mkt_breadth", "all_n_up"],
     "peer": ["peer_ret", "peer_n_up", "peer_max_ret", "peer_corr"],
     "calendar": ["dow"],
+    # ---- v2 후보 특징 (improve 실험에서 그룹 단위로 효과 검증)
+    "rel_strength": ["turn_rank_in_up", "value_rank_in_up", "mcap_rank_in_up"],  # 오늘 상한가 종목끼리 비교한 강도
+    "pref_link": ["parent_ret1", "parent_up_close", "child_max_ret1", "child_up_close"],  # 우선주 ↔ 보통주
+    "stock_hist": ["hist_cont_rate", "hist_n_cont500"],  # 이 종목의 과거 연상 성향
+    "market2": ["mkt_n_fail", "all_n_up_prev", "mkt_jeom_ratio"],  # 시장 과열/실패 분위기
+    "peer2": ["peer_n_touch"],  # 동조 종목의 상한가 터치 수
 }
+V1_GROUPS = ["candle", "momentum", "limit_hist", "volume", "volatility", "accumulation", "size_type", "market",
+             "peer", "calendar"]  # 1차 모델(v1) 특징 그룹
 ALL_FEATURES = [f for g in FEATURE_GROUPS.values() for f in g]
 AGE_CAP = 400       # 상장 경과 거래일 상한
-LIVE_LOOKBACK = 450  # 실시간 예측 시 사용하는 최근 거래일 수 (가장 긴 창 250일 + 동조종목 120일 + 여유)
+LIVE_LOOKBACK = 560  # 실시간 예측 시 사용하는 최근 거래일 수 (가장 긴 창 500일 + 여유)
 LABELS = ["y_up", "y_down", "y_uptouch", "next_ret", "next_open_ret", "next_tidx"]
 ID_COLS = ["date", "code", "name", "market", "close", "upper", "tidx"]
 
@@ -103,14 +111,15 @@ def _xs_rank(arr, mask):
 
 
 def peer_features(ret: np.ndarray, up: np.ndarray, days: np.ndarray, k: int = 10,
-                  lookback: int = 120, min_obs: int = 80) -> dict[str, np.ndarray]:
+                  lookback: int = 120, min_obs: int = 80, touch: np.ndarray | None = None) -> dict[str, np.ndarray]:
     """'테마' 대용 특징: 직전 lookback 거래일 수익률 상관이 가장 높은 k개 종목(동조 종목)의 당일 움직임.
 
     매월 첫 거래일에 그 이전 데이터로만 동조 종목을 다시 고르므로 미래 정보가 섞이지 않는다.
     우선주는 대개 보통주가, 테마주는 같은 테마 종목이 동조 종목으로 잡힌다.
     """
     T, N = ret.shape
-    out = {n: np.full((T, N), np.nan, dtype=np.float32) for n in ["peer_ret", "peer_n_up", "peer_max_ret", "peer_corr"]}
+    names = ["peer_ret", "peer_n_up", "peer_max_ret", "peer_corr"] + (["peer_n_touch"] if touch is not None else [])
+    out = {n: np.full((T, N), np.nan, dtype=np.float32) for n in names}
     month = pd.DatetimeIndex(days).to_period("M")
     starts = np.flatnonzero(np.r_[True, month[1:] != month[:-1]])
     ends = np.r_[starts[1:], T]
@@ -139,6 +148,9 @@ def peer_features(ret: np.ndarray, up: np.ndarray, days: np.ndarray, k: int = 10
         out["peer_max_ret"][t0:t1, idx] = G.max(axis=2)
         out["peer_n_up"][t0:t1, idx] = Um[:, top].sum(axis=2)
         out["peer_corr"][t0:t1, idx] = corr_top.mean(axis=1)
+        if touch is not None:
+            Tm = np.nan_to_num(touch[t0:t1][:, idx]).astype(np.float32)
+            out["peer_n_touch"][t0:t1, idx] = Tm[:, top].sum(axis=2)
     return out
 
 
@@ -258,7 +270,7 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     for mname in ["KOSPI", "KOSDAQ"]:
         sub = md[md["market"] == mname]
         arrs = {}
-        for c in ["ew_ret", "n_up", "n_down", "breadth"]:
+        for c in ["ew_ret", "n_up", "n_down", "breadth", "n_up_fail", "n_up_jeom"]:
             a = np.full(T, np.nan)
             a[day_pos[md["market"].to_numpy() == mname]] = sub[c].to_numpy()
             arrs[c] = a
@@ -271,13 +283,49 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     f["mkt_n_up"], f["mkt_n_up5"] = sel("n_up"), sel("n_up5")
     f["mkt_n_down"], f["mkt_breadth"] = sel("n_down"), sel("breadth")
     f["all_n_up"] = np.broadcast_to(both_up[:, None], (T, N))
+    # v2: 시장 분위기 — 상한가 터치 후 실패 수, 전일 전체 상한가 수, 상한가 중 점상 비율
+    f["mkt_n_fail"] = sel("n_up_fail")
+    f["all_n_up_prev"] = np.broadcast_to(_shift(both_up[:, None], 1), (T, N))
+    f["mkt_jeom_ratio"] = _div(sel("n_up_jeom"), sel("n_up"))
 
     # ---- 동조 종목(테마 대용)
     if peer:
-        f.update(peer_features(t_ret, flags["up_close"], W.days))
+        f.update(peer_features(t_ret, flags["up_close"], W.days, touch=flags["up_touch"]))
     else:
-        for c in FEATURE_GROUPS["peer"]:
+        for c in FEATURE_GROUPS["peer"] + FEATURE_GROUPS["peer2"]:
             f[c] = np.full((T, N), np.nan, dtype=np.float32)
+
+    # ---- v2: 오늘 상한가 종목끼리의 상대 강도 (회전율·거래대금이 낮을수록 매물이 잠긴 '강한' 상한가)
+    up_today = flags["up_close"] > 0
+    f["turn_rank_in_up"] = _xs_rank(turnover, up_today)
+    f["value_rank_in_up"] = _xs_rank(value, up_today)
+    f["mcap_rank_in_up"] = _xs_rank(mcap, up_today)
+
+    # ---- v2: 우선주 ↔ 보통주 연결 (우선주 코드 끝자리를 0으로 바꾸면 보통주)
+    codes = W.codes
+    parent = np.array([c[:5] + "0" if (c.isdigit() and not c.endswith("0")) else "" for c in codes])
+    pidx = np.searchsorted(codes, parent)
+    has_parent = (parent != "") & (pidx < N) & (codes[np.minimum(pidx, N - 1)] == parent)
+    child_cols, parent_cols = np.flatnonzero(has_parent), pidx[has_parent]
+    up_f = flags["up_close"]
+    parent_ret1 = np.full((T, N), np.nan, dtype=np.float32)
+    parent_up = np.full((T, N), np.nan, dtype=np.float32)
+    parent_ret1[:, child_cols] = t_ret[:, parent_cols]
+    parent_up[:, child_cols] = np.where(exists[:, parent_cols], up_f[:, parent_cols], np.nan)
+    child_max = np.full((T, N), np.nan, dtype=np.float32)
+    child_up = np.full((T, N), np.nan, dtype=np.float32)
+    for cj, pj in zip(child_cols, parent_cols):
+        child_max[:, pj] = np.fmax(child_max[:, pj], t_ret[:, cj])
+        child_up[:, pj] = np.fmax(child_up[:, pj], np.where(exists[:, cj], up_f[:, cj], np.nan))
+    f["parent_ret1"], f["parent_up_close"] = parent_ret1, parent_up
+    f["child_max_ret1"], f["child_up_close"] = child_max, child_up
+
+    # ---- v2: 이 종목의 과거 연상 성향 (최근 500거래일: 상한가 다음 날도 상한가였던 비율)
+    cont = up_f * _shift(up_f, 1)  # 오늘과 전날 모두 상한가
+    n_cont = _roll(np.nan_to_num(cont), 500, "sum", 1)
+    n_up_prev = _shift(_roll(up_f, 500, "sum", 1), 1)  # 결과를 아는 과거 상한가 수 (오늘 제외)
+    f["hist_n_cont500"] = np.where(exists, n_cont, np.nan)
+    f["hist_cont_rate"] = np.where(exists & (n_up_prev > 0), _div(n_cont, n_up_prev), np.nan)
 
     f["dow"] = np.broadcast_to(pd.DatetimeIndex(W.days).dayofweek.to_numpy()[:, None], (T, N)).astype(float)
 

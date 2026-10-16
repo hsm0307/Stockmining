@@ -8,6 +8,7 @@
   analyze        목표 1~4 전체
   backtest       목표 5 워크포워드 백테스트
   ablation       특징 그룹 제거 실험
+  improve        개선 탐색 (개발 구간 챔피언/도전자 → 보류 구간 확인 → --promote 시 새 버전)
   train          최종 모델 학습·저장
   predict        다음 거래일 예측 저장
   evaluate-live  저장된 예측 채점
@@ -106,10 +107,25 @@ def cmd_ablation(a):
 
 
 def cmd_train(a):
-    from .model import train_final
+    from .model import retrain_like, train_final
     f = _features()
+    if a.config:  # configs/*.json (improve 가 만든 버전) 그대로 학습
+        from .model import select_features
+        cfg = json.loads(open(a.config, encoding="utf-8").read())
+        meta = {"name": cfg["name"], "target": cfg["target"], "kind": cfg["kind"], "params": cfg["params"],
+                "neg_rate": cfg["neg_rate"], "exclude": cfg["exclude"], "train_years": cfg["train_years"],
+                "features": select_features(only_groups=cfg["groups"])}
+        retrain_like(f, meta)
+        return
     for t, name in _names(a):
         train_final(f, t, name=name, **_model_kwargs(a))
+
+
+def cmd_improve(a):
+    from .improve import improve
+    f = _features()
+    for t in a.target.split(","):
+        improve(f, t, rounds=tuple(a.rounds.split(",")), freq=a.freq, promote=a.promote)
 
 
 def cmd_predict(a):
@@ -129,7 +145,7 @@ def cmd_evaluate_live(a):
 def cmd_daily(a):
     from .collect import _load_calendar, collect
     from .live import evaluate_live, predict
-    from .model import load_model, train_final
+    from .model import load_model, retrain_like, train_final
     from .panel import build_panel
     opened = [d for d, v in _load_calendar().items() if v == "open"]
     start = (pd.Timestamp(max(opened)) - pd.Timedelta(days=7)).strftime("%Y%m%d") if opened else config.DEFAULT_START
@@ -141,17 +157,21 @@ def cmd_daily(a):
     need = []
     for t, name in names:
         try:
-            created = pd.Timestamp(load_model(name)["meta"]["created"])
+            meta = load_model(name)["meta"]
+            created = pd.Timestamp(meta["created"])
             if a.retrain_days > 0 and (pd.Timestamp(datetime.now()) - created).days >= a.retrain_days:
-                need.append((t, name))
+                need.append((t, name, meta))
         except FileNotFoundError:
-            need.append((t, name))
+            need.append((t, name, None))
     if need:
         from .features import build_features
-        print(f"재학습: {[n for _, n in need]} (주기 {a.retrain_days}일)")
+        print(f"재학습: {[n for _, n, _ in need]} (주기 {a.retrain_days}일)")
         f = build_features(p, peer=True)
-        for t, name in need:
-            train_final(f, t, name=name, **_model_kwargs(a))
+        for t, name, meta in need:
+            if meta:  # 기존 모델과 같은 설정으로 최신 데이터까지 다시 학습
+                retrain_like(f, meta)
+            else:
+                train_final(f, t, name=name, **_model_kwargs(a))
         del f
     for _, name in names:
         predict(p, name, top=a.top)
@@ -183,7 +203,7 @@ def main(argv=None):
 
     def model_opts(s, target="y_up"):
         s.add_argument("--target", default=target, help="y_up | y_down | y_uptouch (쉼표로 여러 개)")
-        s.add_argument("--model", default=None, help="lgbm | hgb | logit (기본: lgbm 설치 시 lgbm)")
+        s.add_argument("--model", default=None, help="lgbm | rank | bag3 | ens | hgb | logit (기본 lgbm)")
         s.add_argument("--neg-rate", type=float, default=0.1, help="학습 시 음성 표본 추출 비율")
         s.add_argument("--params", default=None, help='모델 하이퍼파라미터 JSON, 예: \'{"num_leaves": 63}\'')
         s.add_argument("--drop-groups", default="", help="제외할 특징 그룹 (쉼표)")
@@ -214,6 +234,12 @@ def main(argv=None):
     s = add("train", cmd_train)
     model_opts(s)
     s.add_argument("--suffix", default="", help=suffix_help)
+    s.add_argument("--config", default=None, help="configs/y_up_v2.json 처럼 improve 가 만든 설정으로 학습")
+    s = add("improve", cmd_improve)
+    s.add_argument("--target", default="y_up")
+    s.add_argument("--rounds", default="features,params,model,window")
+    s.add_argument("--freq", default="YS", help="개발 구간 재학습 주기 (YS: 빠름, QS: 정밀)")
+    s.add_argument("--promote", action="store_true", help="보류 구간에서도 좋으면 새 버전(v2, v3…) 학습·저장")
     s = add("predict", cmd_predict)
     s.add_argument("--target", default="y_up,y_down")
     s.add_argument("--suffix", default="", help=suffix_help)

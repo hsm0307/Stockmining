@@ -28,6 +28,32 @@ KS = (5, 10, 20)
 LGBM_PARAMS = dict(n_estimators=3000, learning_rate=0.03, num_leaves=31, min_child_samples=200,
                    subsample=0.8, subsample_freq=1, colsample_bytree=0.7, reg_lambda=1.0,
                    verbose=-1, n_jobs=-1)
+RANK_PARAMS = dict(objective="lambdarank", n_estimators=2000, learning_rate=0.05, num_leaves=31,
+                   min_child_samples=100, subsample=0.8, subsample_freq=1, colsample_bytree=0.7,
+                   reg_lambda=1.0, verbose=-1, n_jobs=-1)
+KINDS_HELP = ("lgbm: 이진분류 / rank: 날짜별 순위학습(LambdaRank) / bag3: 음성표본을 달리한 lgbm 3개 평균 / "
+              "ens: lgbm+rank 평균 / hgb / logit")
+
+
+class CalibratedRanker:
+    """LightGBM LambdaRank(하루 단위로 순위를 직접 학습) + 검증셋 Platt 보정으로 실제 확률 출력."""
+
+    def __init__(self, ranker, calibrator):
+        self.ranker, self.calibrator = ranker, calibrator
+
+    def true_proba(self, X) -> np.ndarray:
+        s = self.ranker.predict(X).reshape(-1, 1)
+        return self.calibrator.predict_proba(s)[:, 1]
+
+
+class EnsembleModel:
+    """여러 모델의 (보정된) 확률 평균."""
+
+    def __init__(self, members: list[tuple[object, float]]):
+        self.members = members  # (모델, 학습 시 음성 표본 비율)
+
+    def true_proba(self, X) -> np.ndarray:
+        return np.mean([predict_proba(m, X, nr) for m, nr in self.members], axis=0)
 
 
 def default_kind() -> str:
@@ -54,7 +80,7 @@ def make_model(kind: str, params: dict | None = None):
         from sklearn.linear_model import LogisticRegression
         from sklearn.pipeline import make_pipeline
         from sklearn.preprocessing import StandardScaler
-        return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(),
+        return make_pipeline(SimpleImputer(strategy="median", keep_empty_features=True), StandardScaler(),
                              LogisticRegression(**{"C": 0.1, "max_iter": 3000, **params}))
     raise ValueError(f"알 수 없는 모델 종류: {kind}")
 
@@ -102,9 +128,18 @@ def fit(df: pd.DataFrame, target: str, feats: list[str], kind: str, params=None,
     y = df[target].to_numpy()
     tr_m = mask & (dates < cut) & _downsample_mask(y, neg_rate, seed)
     va_m = mask & (dates >= cut)
+    if kind == "rank":
+        return _fit_ranker(df, target, feats, params, tr_m, va_m, seed)
+    if kind.startswith("bag"):  # 음성 표본 추출과 시드를 달리한 lgbm n개 평균 → 분산 감소
+        n = int(kind[3:] or 3)
+        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed + i, mask), neg_rate)
+                              for i in range(n)])
+    if kind == "ens":
+        return EnsembleModel([(fit(df, target, feats, "lgbm", params, neg_rate, valid_days, seed, mask), neg_rate),
+                              (fit(df, target, feats, "rank", None, neg_rate, valid_days, seed, mask), 1.0)])
     tr = df.loc[tr_m, feats + [target]]
     va = df.loc[va_m, feats + [target]]
-    model = make_model(kind, params)
+    model = make_model(kind, {**(params or {}), "random_state": seed} if kind == "lgbm" else params)
     if kind == "lgbm" and len(va) and va[target].sum() > 0:
         import lightgbm as lgb
         with warnings.catch_warnings():
@@ -119,7 +154,35 @@ def fit(df: pd.DataFrame, target: str, feats: list[str], kind: str, params=None,
     return model
 
 
+def _fit_ranker(df, target, feats, params, tr_m, va_m, seed):
+    import lightgbm as lgb
+    from sklearn.linear_model import LogisticRegression
+    cols = ["date"] + feats + [target]
+    tr = df.loc[tr_m, cols].sort_values("date", kind="mergesort")
+    va = df.loc[va_m, cols].sort_values("date", kind="mergesort")
+    ranker = lgb.LGBMRanker(**{**RANK_PARAMS, "random_state": seed, **(params or {})})
+    g_tr = tr.groupby("date", sort=True).size().to_numpy()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        if len(va) and va[target].sum() > 0:
+            g_va = va.groupby("date", sort=True).size().to_numpy()
+            ranker.fit(tr[feats], tr[target].astype(int), group=g_tr,
+                       eval_set=[(va[feats], va[target].astype(int))], eval_group=[g_va], eval_at=[10],
+                       callbacks=[lgb.early_stopping(100, verbose=False)])
+            cal = va
+        else:
+            ranker.set_params(n_estimators=300)
+            ranker.fit(tr[feats], tr[target].astype(int), group=g_tr)
+            cal = tr
+    s = ranker.predict(cal[feats]).reshape(-1, 1)
+    calibrator = LogisticRegression(C=1e4, max_iter=1000).fit(s, cal[target].astype(int))
+    return CalibratedRanker(ranker, calibrator)
+
+
 def predict_proba(model, X: pd.DataFrame, neg_rate: float) -> np.ndarray:
+    """실제 확률 척도의 예측값. 음성 표본 추출로 학습한 분류기는 확률을 되돌려 보정한다."""
+    if hasattr(model, "true_proba"):
+        return model.true_proba(X)
     return adjust_prob(model.predict_proba(X)[:, 1], neg_rate)
 
 
@@ -288,12 +351,15 @@ def _plot_backtest(results: dict, target: str, tag: str) -> None:
 
 # ------------------------------------------------------------------ 최종 학습/저장
 def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None = None, params: dict | None = None,
-                neg_rate: float = 0.1, drop_groups=(), exclude=(), name: str | None = None) -> dict:
+                neg_rate: float = 0.1, drop_groups=(), exclude=(), name: str | None = None,
+                features: list[str] | None = None, train_years: float | None = None) -> dict:
     """최종 모델 학습·저장. name 기본값은 target (예: y_up). 비교용 버전은 y_up_v2 처럼 이름을 다르게."""
     kind = kind or default_kind()
-    feats = select_features(drop_groups)
+    feats = features or select_features(drop_groups)
     df = feats_df
     m = df[target].notna().to_numpy() & universe_mask(df, exclude)
+    if train_years:
+        m &= (df["date"] >= df["date"].max() - pd.DateOffset(years=train_years)).to_numpy()
     model = fit(df, target, feats, kind, params, neg_rate, mask=m)
     best_iter = None
     if kind == "lgbm":
@@ -303,7 +369,8 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
         tr = df.loc[m & _downsample_mask(df[target].to_numpy(), neg_rate, config.RANDOM_SEED), feats + [target]]
         model.fit(tr[feats], tr[target].astype(int))
     meta = {"name": name or target, "target": target, "kind": kind, "features": feats, "neg_rate": neg_rate, "params": params or {},
-            "exclude": list(exclude), "trained_through": str(df.loc[m, "date"].max().date()),
+            "exclude": list(exclude), "train_years": train_years,
+            "trained_through": str(df.loc[m, "date"].max().date()),
             "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "best_iter": best_iter,
             "n_train": int(m.sum()), "n_pos": int(np.nansum(df[target].to_numpy()[m]))}
     config.ensure_dirs()
@@ -323,7 +390,18 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
     return {"model": model, "meta": meta}
 
 
+def retrain_like(feats_df: pd.DataFrame, meta: dict) -> dict:
+    """저장된 모델과 같은 설정(특징·모델·파라미터)으로 최신 데이터까지 다시 학습."""
+    return train_final(feats_df, meta["target"], kind=meta["kind"], params=meta.get("params") or None,
+                       neg_rate=meta["neg_rate"], exclude=tuple(meta.get("exclude", ())), name=meta["name"],
+                       features=meta["features"], train_years=meta.get("train_years"))
+
+
 def feature_importance(model, kind: str, feats: list[str]) -> pd.DataFrame | None:
+    if isinstance(model, EnsembleModel):
+        model, kind = model.members[0][0], "lgbm"
+    if isinstance(model, CalibratedRanker):
+        model, kind = model.ranker, "lgbm"
     if kind == "lgbm":
         gain = model.booster_.feature_importance("gain")
         return (pd.DataFrame({"feature": feats, "importance": gain / gain.sum()})
