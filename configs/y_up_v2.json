@@ -1,0 +1,27 @@
+{
+  "name": "y_up_v2",
+  "target": "y_up",
+  "kind": "bag3",
+  "params": {},
+  "neg_rate": 0.1,
+  "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+  ],
+  "exclude": [],
+  "train_years": null,
+  "hard_neg": false,
+  "dev_label": "bag3",
+  "holdout_gain_P@10": 0.0005917160306125879,
+  "holdout_t": 0.5894831551787005,
+  "ten_year_gain": 0.009432387538254261,
+  "created": "2026-10-16 19:35"
+}

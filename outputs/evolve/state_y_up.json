@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 17,
+ "iteration": 18,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "bag3",
@@ -27,10 +27,10 @@
   "score": 0.07883720844984055
  },
  "production": {
-  "name": "y_up",
-  "key": "488abe2759",
+  "name": "y_up_v2",
+  "key": "3d1ff1d4a5",
   "cfg": {
-   "kind": "lgbm",
+   "kind": "bag3",
    "params": {},
    "neg_rate": 0.1,
    "groups": [
@@ -51,7 +51,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "488abe2759": {
    "label": "v1(출발점)",
@@ -580,9 +580,31 @@
    }
   }
  },
- "versions": [],
- "validations": [],
- "last_event": "evolve y_up: try #17 bag3 (dP@10=+0.0008, t=+1.28, accepted)",
+ "versions": [
+  {
+   "name": "y_up_v2",
+   "time": "2026-10-16 19:35",
+   "label": "bag3",
+   "hold_gain": 0.0005917160306125879,
+   "hold_t": 0.5894831551787005,
+   "ten_gain": 0.009432387538254261,
+   "hold_P": 0.12115384638309479
+  }
+ ],
+ "validations": [
+  {
+   "time": "2026-10-16 19:35",
+   "production": "y_up",
+   "challenger": "bag3",
+   "challenger_key": "3d1ff1d4a5",
+   "hold_gain": 0.0005917160306125879,
+   "hold_t": 0.5894831551787005,
+   "ten_gain": 0.009432387538254261,
+   "ten_t": 8.724875119349003,
+   "result": "승격 → y_up_v2"
+  }
+ ],
+ "last_event": "evolve y_up: 10y validation — 승격 → y_up_v2 (holdout dP@10=+0.0006, t=+0.59)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
