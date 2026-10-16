@@ -198,12 +198,15 @@ def run(panel: pd.DataFrame, feats_df: pd.DataFrame, ctx: EventContext | None = 
         off = -0.2 if side == "up" else 0.2
         ax[0].bar(d.index + off, d.to_numpy(), 0.4, color=color, label="연상" if side == "up" else "연하")
         ct = res[f"continuation_{side}"]
-        ax[1].errorbar(ct["k일 연속"], ct["연속확률"], yerr=ct["95%CI"], marker="o", color=color, capsize=3,
-                       label="상한가" if side == "up" else "하한가")
+        ct = ct[ct["도달 건수"] >= 20]  # 표본이 너무 적은 k 는 그림에서 제외 (표에는 남김)
+        lo = (ct["연속확률"] - ct["95%CI"]).clip(lower=0)
+        hi = (ct["연속확률"] + ct["95%CI"]).clip(upper=1)
+        ax[1].errorbar(ct["k일 연속"], ct["연속확률"], yerr=[ct["연속확률"] - lo, hi - ct["연속확률"]], marker="o",
+                       color=color, capsize=3, label="상한가" if side == "up" else "하한가")
     ax[0].set_yscale("log")
     ax[0].set_title("연속 일수 분포 (10=10일 이상)")
     ax[0].legend()
-    ax[1].set_title("k일 연속 후 k+1일째도 이어질 확률")
+    ax[1].set_title("k일 연속 후 k+1일째도 이어질 확률 (도달 20건 이상)")
     ax[1].set_xlabel("k")
     ax[1].legend()
     after = res["after_up"]

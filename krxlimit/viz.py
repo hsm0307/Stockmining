@@ -59,4 +59,4 @@ def save_table(df: pd.DataFrame, name: str, index: bool = False) -> str:
 
 def read_table(name: str) -> pd.DataFrame | None:
     path = config.TABLE_DIR / f"{name}.csv"
-    return pd.read_csv(path, encoding="utf-8-sig") if path.exists() else None
+    return pd.read_csv(path, encoding="utf-8-sig", dtype={"code": str}) if path.exists() else None  # 종목코드 앞자리 0 유지

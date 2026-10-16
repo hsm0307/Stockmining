@@ -39,7 +39,7 @@ def run(panel: pd.DataFrame) -> dict:
     p["month"] = p["date"].dt.to_period("M").dt.to_timestamp()
     p["유형"] = _stock_type(p)
     p["가격대"] = pd.cut(p["base"], PRICE_BINS, labels=PRICE_LABELS, right=False)
-    p["시총5분위"] = np.ceil(p.groupby("date")["mktcap"].rank(pct=True) * 5).clip(1, 5)
+    p["시총5분위"] = np.ceil(p.groupby("date")["mktcap"].rank(pct=True) * 5).clip(1, 5).astype("Int64")
     res = {}
 
     # 1) 전체 요약
