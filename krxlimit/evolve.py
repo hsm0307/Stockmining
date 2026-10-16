@@ -296,7 +296,8 @@ def git_sync(message: str) -> None:
     trailer = ("\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n"
                "Claude-Session: https://claude.ai/code/session_01Azv4PmjewJvuqXFSnT9XVB")
     try:
-        subprocess.run(["git", "add", "outputs", "configs"], cwd=root, check=False, capture_output=True)
+        paths = [p for p in ("outputs", "configs") if (config.ROOT / p).exists()]  # 없는 경로가 있으면 git add 전체 실패
+        subprocess.run(["git", "add", *paths], cwd=root, check=False, capture_output=True)
         r = subprocess.run(["git", "commit", "-q", "-m", message + trailer], cwd=root, capture_output=True)
         if r.returncode != 0:
             return
