@@ -1,11 +1,11 @@
 {
  "target": "y_down",
- "iteration": 17,
+ "iteration": 18,
  "dev_champion": {
-  "key": "488abe2759",
-  "label": "y_down",
+  "key": "3d1ff1d4a5",
+  "label": "bag3",
   "cfg": {
-   "kind": "lgbm",
+   "kind": "bag3",
    "params": {},
    "neg_rate": 0.1,
    "groups": [
@@ -24,7 +24,7 @@
    "train_years": null,
    "hard_neg": false
   },
-  "score": null
+  "score": 0.006366278976202011
  },
  "production": {
   "name": "y_down",
@@ -50,8 +50,8 @@
    "hard_neg": false
   }
  },
- "queue_pos": 15,
- "accepted_since_validation": 0,
+ "queue_pos": 0,
+ "accepted_since_validation": 1,
  "tested": {
   "488abe2759": {
    "label": "v1(출발점)",
@@ -548,6 +548,36 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "3d1ff1d4a5": {
+   "label": "bag3",
+   "P@k": 0.006366278976202011,
+   "AP": 0.015522440066639052,
+   "gain": 0.00026162792346440256,
+   "t": 1.4416050518550223,
+   "accepted": true,
+   "time": "10-16 18:52",
+   "base": "488abe2759",
+   "cfg": {
+    "kind": "bag3",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
@@ -575,5 +605,5 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_down: try #16 neg0.3 (dP@20=-0.0004, t=-1.67)"
+ "last_event": "evolve y_down: try #17 bag3 (dP@20=+0.0003, t=+1.44, accepted)"
 }
