@@ -1,0 +1,15 @@
+# API 키 (절대 커밋 금지)
+.env
+
+# 원본/가공 데이터와 모델 파일 (용량이 크고 언제든 재생성 가능)
+data/
+models/
+outputs/*.parquet
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+.DS_Store

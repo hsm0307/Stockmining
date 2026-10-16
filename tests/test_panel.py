@@ -1,0 +1,36 @@
+import pandas as pd
+
+from krxlimit.panel import build_panel
+
+
+def _row(d, code, close, chg, o, h, l, vol, market="KOSDAQ", name="가나다"):
+    return {"BAS_DD": d, "ISU_CD": code, "ISU_NM": name, "MKT_NM": market, "SECT_TP_NM": "", "TDD_CLSPRC": str(close),
+            "CMPPREVDD_PRC": str(chg), "FLUC_RT": "0", "TDD_OPNPRC": str(o), "TDD_HGPRC": str(h), "TDD_LWPRC": str(l),
+            "ACC_TRDVOL": str(vol), "ACC_TRDVAL": str(vol * close), "MKTCAP": str(close * 1000),
+            "LIST_SHRS": "1000", "MARKET": market}
+
+
+def test_limit_flags_and_streaks():
+    rows = [
+        _row("20240102", "111110", 10_000, 0, 10_000, 10_100, 9_900, 100),
+        _row("20240103", "111110", 13_000, 3_000, 13_000, 13_000, 13_000, 5),        # 점상
+        _row("20240104", "111110", 16_900, 3_900, 15_000, 16_900, 14_500, 900),      # 일반 상한가 (2연상)
+        _row("20240105", "111110", 16_900, 0, 0, 0, 0, 0),                          # 거래정지
+        _row("20240108", "111110", 21_950, 5_050, 21_950, 21_950, 21_000, 50),       # 3연상 (정지일 건너뜀)
+        _row("20240109", "111110", 20_000, -1_950, 28_500, 28_500, 19_000, 999),     # 상한 터치 후 이탈
+        # 2:1 액면분할: 기준가 10,000 (전일 종가 20,000) → 수익률은 기준가 대비
+        _row("20240110", "111110", 10_500, 500, 10_000, 10_600, 9_900, 100),
+        # 초저가: 가격제한폭이 0원 → 상/하한가 판정 제외
+        _row("20240102", "222220", 2, 0, 2, 2, 2, 100),
+        _row("20240103", "222220", 2, 0, 2, 2, 2, 100),
+    ]
+    p = build_panel(pd.DataFrame(rows), save=False)
+    a = p[p["code"] == "111110"].set_index("date")
+    assert a["up_close"].tolist() == [False, True, True, False, True, False, False]
+    assert a["up_jeom"].tolist() == [False, True, False, False, False, False, False]
+    assert a["up_fail"].tolist() == [False, False, False, False, False, True, False]
+    assert a["up_streak"].tolist() == [0, 1, 2, 0, 3, 0, 0]
+    assert abs(a["ret"].iloc[-1] - 0.05) < 1e-6          # 분할일 수익률 = 10,500 / 10,000 - 1
+    assert abs(a["ri"].iloc[-1] / a["ri"].iloc[-2] - 1.05) < 1e-6
+    b = p[p["code"] == "222220"]
+    assert not b["limit_valid"].any() and not b["up_close"].any() and not b["down_close"].any()

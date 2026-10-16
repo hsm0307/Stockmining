@@ -1,0 +1,309 @@
+"""종목-일 단위 특징(feature)과 다음 거래일 라벨 생성.
+
+모든 특징은 '당일 장 마감 후' 알 수 있는 정보만 사용한다(룩어헤드 금지).
+라벨은 다음 거래일(t+1)의 상한가/하한가 여부.
+계산은 (일자 × 종목) 행렬로 한 번에 처리해 속도를 확보한다.
+"""
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+
+from . import config
+
+# 모델에 들어가는 특징 그룹 (ablation 실험 시 그룹 단위로 끄고 켤 수 있음)
+FEATURE_GROUPS: dict[str, list[str]] = {
+    "candle": ["ret1", "gap", "body", "ushadow", "lshadow", "hl_range", "close_pos", "dist_up", "high_ret"],
+    "momentum": ["ret5", "ret20", "ret60", "ret120", "ma5_gap", "ma20_gap", "ma60_gap", "ma120_gap",
+                 "hi250_pos", "lo250_pos", "box60"],
+    "limit_hist": ["up_close", "up_touch", "up_jeom", "up_fail", "down_close", "down_touch", "up_streak",
+                   "down_streak", "n_up20", "n_up60", "n_up250", "n_down20", "n_down60", "n_uptouch20",
+                   "days_since_up"],
+    "volume": ["log_value", "turnover", "turn20", "vr1_20", "vr5_60", "value_rank", "vol_spike60",
+               "low_vol_share60"],
+    "volatility": ["volat20", "volat60"],
+    "accumulation": ["cmf20", "obv_slope20", "upvol_ratio20", "shadow_test60"],
+    "size_type": ["log_price", "penny", "log_mcap", "mcap_rank", "is_kosdaq", "is_pref", "is_spac",
+                  "is_reit", "is_mgmt", "is_caution", "log_age"],
+    "market": ["mkt_ret", "mkt_ret5", "mkt_n_up", "mkt_n_up5", "mkt_n_down", "mkt_breadth", "all_n_up"],
+    "peer": ["peer_ret", "peer_n_up", "peer_max_ret", "peer_corr"],
+    "calendar": ["dow"],
+}
+ALL_FEATURES = [f for g in FEATURE_GROUPS.values() for f in g]
+AGE_CAP = 400       # 상장 경과 거래일 상한
+LIVE_LOOKBACK = 450  # 실시간 예측 시 사용하는 최근 거래일 수 (가장 긴 창 250일 + 동조종목 120일 + 여유)
+LABELS = ["y_up", "y_down", "y_uptouch", "next_ret", "next_open_ret", "next_tidx"]
+ID_COLS = ["date", "code", "name", "market", "close", "upper", "tidx"]
+
+
+class Wide:
+    """long 패널 ↔ (T 일자 × N 종목) numpy 행렬 변환기."""
+
+    def __init__(self, panel: pd.DataFrame):
+        self.days = np.sort(panel["date"].unique())
+        codes = panel["code"].astype(str).to_numpy()
+        self.codes = np.unique(codes)
+        self.ti = np.searchsorted(self.days, panel["date"].to_numpy())
+        self.ci = np.searchsorted(self.codes, codes)
+        self.shape = (len(self.days), len(self.codes))
+
+    def wide(self, values, fill=np.nan, dtype=np.float32) -> np.ndarray:
+        arr = np.full(self.shape, fill, dtype=dtype)
+        arr[self.ti, self.ci] = np.asarray(values, dtype=dtype)
+        return arr
+
+    def take(self, arr: np.ndarray) -> np.ndarray:
+        return arr[self.ti, self.ci]
+
+
+class _Gather:
+    """(T×N) 행렬 특징을 계산하는 즉시 필요한 (일자, 종목) 위치만 뽑아 float32 로 보관 → 메모리 절약."""
+
+    def __init__(self, ti, ci):
+        self.ti, self.ci, self.data = ti, ci, {}
+
+    def __setitem__(self, name, arr):
+        self.data[name] = np.asarray(arr)[self.ti, self.ci].astype(np.float32)
+
+    def __getitem__(self, name):
+        return self.data[name]
+
+    def update(self, d):
+        for k, v in d.items():
+            self[k] = v
+
+
+def _roll(arr, win, fn="mean", min_periods=None):
+    r = pd.DataFrame(arr).rolling(win, min_periods=min_periods or win)
+    return getattr(r, fn)().to_numpy()
+
+
+def _shift(arr, k):
+    out = np.full_like(arr, np.nan, dtype=np.float64)
+    if k > 0:
+        out[k:] = arr[:-k]
+    elif k < 0:
+        out[:k] = arr[-k:]
+    else:
+        out[:] = arr
+    return out
+
+
+def _div(a, b):
+    with np.errstate(divide="ignore", invalid="ignore"):
+        out = a / b
+    out[~np.isfinite(out)] = np.nan
+    return out
+
+
+def _xs_rank(arr, mask):
+    """일자별 횡단면 백분위 순위 (mask 밖은 NaN)."""
+    a = np.where(mask, arr, np.nan)
+    return pd.DataFrame(a).rank(axis=1, pct=True).to_numpy()
+
+
+def peer_features(ret: np.ndarray, up: np.ndarray, days: np.ndarray, k: int = 10,
+                  lookback: int = 120, min_obs: int = 80) -> dict[str, np.ndarray]:
+    """'테마' 대용 특징: 직전 lookback 거래일 수익률 상관이 가장 높은 k개 종목(동조 종목)의 당일 움직임.
+
+    매월 첫 거래일에 그 이전 데이터로만 동조 종목을 다시 고르므로 미래 정보가 섞이지 않는다.
+    우선주는 대개 보통주가, 테마주는 같은 테마 종목이 동조 종목으로 잡힌다.
+    """
+    T, N = ret.shape
+    out = {n: np.full((T, N), np.nan, dtype=np.float32) for n in ["peer_ret", "peer_n_up", "peer_max_ret", "peer_corr"]}
+    month = pd.DatetimeIndex(days).to_period("M")
+    starts = np.flatnonzero(np.r_[True, month[1:] != month[:-1]])
+    ends = np.r_[starts[1:], T]
+    for t0, t1 in zip(starts, ends):
+        if t0 < lookback:
+            continue
+        R = ret[t0 - lookback:t0]
+        alive = ~np.isnan(ret[t0 - 1])  # 직전 거래일에 존재한 종목
+        ok = (np.sum(~np.isnan(R), axis=0) >= min_obs) & alive
+        idx = np.flatnonzero(ok)
+        if len(idx) <= k + 1:
+            continue
+        Z = np.nan_to_num(R[:, idx]).astype(np.float32)
+        Z -= Z.mean(axis=0)
+        sd = Z.std(axis=0)
+        good = sd > 0
+        idx, Z = idx[good], Z[:, good] / sd[good]
+        C = (Z.T @ Z) / Z.shape[0]
+        np.fill_diagonal(C, -np.inf)
+        top = np.argpartition(-C, k, axis=1)[:, :k]
+        corr_top = np.take_along_axis(C, top, axis=1)
+        Rm = np.nan_to_num(ret[t0:t1][:, idx]).astype(np.float32)
+        Um = np.nan_to_num(up[t0:t1][:, idx]).astype(np.float32)
+        G = Rm[:, top]  # (D, n, k)
+        out["peer_ret"][t0:t1, idx] = G.mean(axis=2)
+        out["peer_max_ret"][t0:t1, idx] = G.max(axis=2)
+        out["peer_n_up"][t0:t1, idx] = Um[:, top].sum(axis=2)
+        out["peer_corr"][t0:t1, idx] = corr_top.mean(axis=1)
+    return out
+
+
+def market_daily(panel: pd.DataFrame) -> pd.DataFrame:
+    """시장별 일간 집계: 동일가중 수익률, 상/하한가 종목 수, 상승 비율."""
+    p = panel[panel["traded"] & panel["ret"].notna()]
+    g = p.groupby(["date", "market"], observed=True)
+    out = g.agg(n=("code", "size"), ew_ret=("ret", "mean"), n_up=("up_close", "sum"),
+                n_down=("down_close", "sum"), n_up_jeom=("up_jeom", "sum"), n_down_jeom=("down_jeom", "sum"),
+                n_up_fail=("up_fail", "sum"), n_down_fail=("down_fail", "sum"),
+                breadth=("ret", lambda s: float((s > 0).mean())))
+    out = out.reset_index()
+    out["date"] = pd.to_datetime(out["date"])
+    return out
+
+
+def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
+                   keep_from: str | None = None) -> pd.DataFrame:
+    """특징 테이블 생성. keep_from(YYYY-MM-DD) 이전 행은 계산에만 쓰고 결과에서 뺀다(실시간 예측용)."""
+    W = Wide(panel)
+    T, N = W.shape
+    w = lambda col, dtype=np.float32: W.wide(panel[col].to_numpy(), dtype=dtype)  # noqa: E731
+
+    close, open_, high, low, base = w("close"), w("open"), w("high"), w("low"), w("base")
+    upper = w("upper")
+    vol, value, mcap, shares = w("volume"), w("value"), w("mktcap"), w("shares")
+    ret = w("ret")
+    traded = W.wide(panel["traded"].to_numpy(), fill=False, dtype=bool)
+    exists = W.wide(np.ones(len(panel)), fill=0, dtype=np.int8).astype(bool)
+    ri = pd.DataFrame(w("ri")).ffill(limit=5).to_numpy()
+    flags = {c: W.wide(panel[c].to_numpy(), fill=0, dtype=np.float32) for c in
+             ["up_close", "down_close", "up_touch", "down_touch", "up_jeom", "up_fail"]}
+    limit_valid = W.wide(panel["limit_valid"].to_numpy(), fill=False, dtype=bool)
+    is_kosdaq_w = W.wide(panel["is_kosdaq"].to_numpy(), fill=False, dtype=bool)
+
+    keep = (panel["traded"] & ~panel["is_first_day"] & (panel["base"] > 0)).to_numpy()
+    if keep_from is not None:
+        keep = keep & (panel["date"] >= pd.Timestamp(keep_from)).to_numpy()
+    f = _Gather(W.ti[keep], W.ci[keep])
+    # ---- 캔들
+    t_ret = np.where(traded, ret, np.nan)
+    f["ret1"] = ret
+    f["gap"] = np.where(traded, _div(open_, base) - 1, np.nan)
+    f["body"] = np.where(traded, _div(close - open_, base), np.nan)
+    f["ushadow"] = np.where(traded, _div(high - np.maximum(open_, close), base), np.nan)
+    f["lshadow"] = np.where(traded, _div(np.minimum(open_, close) - low, base), np.nan)
+    f["hl_range"] = np.where(traded, _div(high - low, base), np.nan)
+    f["close_pos"] = np.where(traded, _div(close - low, high - low), np.nan)
+    f["dist_up"] = _div(upper - close, base)
+    high_ret = np.where(traded, _div(high, base) - 1, np.nan)
+    f["high_ret"] = high_ret
+
+    # ---- 모멘텀 / 가격 위치 (수익률지수 ri 사용 → 분할 등 영향 없음)
+    for k in (5, 20, 60, 120):
+        f[f"ret{k}"] = _div(ri, _shift(ri, k)) - 1
+        f[f"ma{k}_gap"] = _div(ri, _roll(ri, k, "mean")) - 1
+    f["hi250_pos"] = _div(ri, _roll(ri, 250, "max", 60))
+    f["lo250_pos"] = _div(ri, _roll(ri, 250, "min", 60)) - 1
+    f["box60"] = _div(_roll(ri, 60, "max"), _roll(ri, 60, "min")) - 1
+
+    # ---- 상/하한가 이력
+    for c in ["up_close", "up_touch", "up_jeom", "up_fail", "down_close", "down_touch"]:
+        f[c] = np.where(exists, flags[c], np.nan)
+    f["up_streak"] = w("up_streak")
+    f["down_streak"] = w("down_streak")
+    for k in (20, 60, 250):
+        f[f"n_up{k}"] = _roll(flags["up_close"], k, "sum", 1)
+    for k in (20, 60):
+        f[f"n_down{k}"] = _roll(flags["down_close"], k, "sum", 1)
+    f["n_uptouch20"] = _roll(flags["up_touch"], 20, "sum", 1)
+    rows = np.arange(T)[:, None]
+    last_up = np.maximum.accumulate(np.where(flags["up_close"] > 0, rows, -1), axis=0)
+    f["days_since_up"] = np.where(last_up >= 0, np.minimum(rows - last_up, 260), 260).astype(np.float64)
+
+    # ---- 거래량 / 유동성
+    tvol = np.where(traded, vol, 0.0)
+    tvol = np.where(exists, tvol, np.nan)
+    f["log_value"] = np.log1p(np.where(exists, value, np.nan))
+    turnover = _div(tvol, shares)
+    f["turnover"] = turnover
+    f["turn20"] = _roll(turnover, 20, "mean", 10)
+    f["vr1_20"] = _div(tvol, _shift(_roll(tvol, 20, "mean", 10), 1))
+    f["vr5_60"] = _div(_roll(tvol, 5, "mean"), _roll(tvol, 60, "mean", 30))
+    f["value_rank"] = _xs_rank(value, traded)
+    med60 = _shift(_roll(tvol, 60, "median", 30), 1)
+    f["vol_spike60"] = _roll(np.where(exists, (tvol > 3 * med60).astype(float), np.nan), 60, "sum", 20)
+    f["low_vol_share60"] = _roll(np.where(exists, (tvol < 0.5 * med60).astype(float), np.nan), 60, "mean", 20)
+
+    # ---- 변동성
+    f["volat20"] = _roll(t_ret, 20, "std", 10)
+    f["volat60"] = _roll(t_ret, 60, "std", 30)
+
+    # ---- 매집 흔적 대용 지표
+    clv = np.where(traded, _div((close - low) - (high - close), high - low), np.nan)
+    clv = np.where(traded & np.isnan(clv), 0.0, clv)
+    f["cmf20"] = _div(_roll(np.nan_to_num(clv) * np.nan_to_num(tvol), 20, "sum", 10), _roll(tvol, 20, "sum", 10))
+    signed_vol = np.where(exists, np.sign(np.nan_to_num(t_ret)) * np.nan_to_num(tvol), np.nan)
+    f["obv_slope20"] = _div(_roll(signed_vol, 20, "sum"), 20 * _roll(tvol, 60, "mean", 30))  # OBV 20일 변화량
+    f["upvol_ratio20"] = _div(_roll(np.where(t_ret > 0, tvol, 0.0), 20, "sum", 10), _roll(tvol, 20, "sum", 10))
+    test_day = np.where(exists, ((high_ret >= 0.10) & (t_ret <= 0.03)).astype(float), np.nan)
+    f["shadow_test60"] = _roll(test_day, 60, "sum", 20)
+
+    # ---- 규모 / 종목 유형
+    f["log_price"] = np.log(np.where(close > 0, close, np.nan))
+    f["penny"] = np.where(exists, (close < 1000).astype(float), np.nan)
+    f["log_mcap"] = np.log(np.where(mcap > 0, mcap, np.nan))
+    f["mcap_rank"] = _xs_rank(mcap, exists)
+    for c in ["is_kosdaq", "is_pref", "is_spac", "is_reit", "is_mgmt", "is_caution"]:
+        f[c] = np.where(exists, W.wide(panel[c].to_numpy(), fill=0, dtype=np.float32), np.nan)
+    age = np.minimum(np.cumsum(exists, axis=0), AGE_CAP)  # 상한을 둬야 실시간 예측(최근 구간만 계산)과 값이 같다
+    f["log_age"] = np.where(exists, np.log1p(age), np.nan)
+
+    # ---- 시장 상황 (같은 시장의 당일 지표)
+    md = market_daily(panel)
+    day_pos = np.searchsorted(W.days, md["date"].to_numpy())
+    mk = {}
+    for mname in ["KOSPI", "KOSDAQ"]:
+        sub = md[md["market"] == mname]
+        arrs = {}
+        for c in ["ew_ret", "n_up", "n_down", "breadth"]:
+            a = np.full(T, np.nan)
+            a[day_pos[md["market"].to_numpy() == mname]] = sub[c].to_numpy()
+            arrs[c] = a
+        arrs["ew_ret5"] = pd.Series(arrs["ew_ret"]).rolling(5, min_periods=1).sum().to_numpy()
+        arrs["n_up5"] = pd.Series(arrs["n_up"]).rolling(5, min_periods=1).mean().to_numpy()
+        mk[mname] = arrs
+    both_up = np.nan_to_num(mk["KOSPI"]["n_up"]) + np.nan_to_num(mk["KOSDAQ"]["n_up"])
+    sel = lambda c: np.where(is_kosdaq_w, mk["KOSDAQ"][c][:, None], mk["KOSPI"][c][:, None])  # noqa: E731
+    f["mkt_ret"], f["mkt_ret5"] = sel("ew_ret"), sel("ew_ret5")
+    f["mkt_n_up"], f["mkt_n_up5"] = sel("n_up"), sel("n_up5")
+    f["mkt_n_down"], f["mkt_breadth"] = sel("n_down"), sel("breadth")
+    f["all_n_up"] = np.broadcast_to(both_up[:, None], (T, N))
+
+    # ---- 동조 종목(테마 대용)
+    if peer:
+        f.update(peer_features(t_ret, flags["up_close"], W.days))
+    else:
+        for c in FEATURE_GROUPS["peer"]:
+            f[c] = np.full((T, N), np.nan, dtype=np.float32)
+
+    f["dow"] = np.broadcast_to(pd.DatetimeIndex(W.days).dayofweek.to_numpy()[:, None], (T, N)).astype(float)
+
+    # ---- 라벨: 다음 거래일(t+1)
+    nxt_valid = _shift(limit_valid.astype(float), -1) > 0
+    f["y_up"] = np.where(nxt_valid, _shift(flags["up_close"], -1), np.nan)
+    f["y_down"] = np.where(nxt_valid, _shift(flags["down_close"], -1), np.nan)
+    f["y_uptouch"] = np.where(nxt_valid, _shift(flags["up_touch"], -1), np.nan)
+    f["next_ret"] = np.where(nxt_valid, _shift(ret, -1), np.nan)
+    f["next_open_ret"] = np.where(nxt_valid, _shift(_div(open_, base) - 1, -1), np.nan)
+
+    # ---- long 형태로 모으기
+    out = panel.loc[keep, ID_COLS].reset_index(drop=True)
+    out["code"] = out["code"].astype(str)
+    cols = ALL_FEATURES + ["y_up", "y_down", "y_uptouch", "next_ret", "next_open_ret"]
+    out = pd.concat([out, pd.DataFrame({name: f.data.pop(name) for name in cols})], axis=1)
+    out["next_tidx"] = (out["tidx"] + 1).astype(np.int32)
+
+    if save:
+        config.ensure_dirs()
+        out.to_parquet(config.FEATURES_PATH, index=False)
+        print(f"특징 저장: {config.FEATURES_PATH} ({len(out):,}행 × {len(ALL_FEATURES)}개 특징)")
+    return out
+
+
+def load_features() -> pd.DataFrame:
+    if not config.FEATURES_PATH.exists():
+        raise FileNotFoundError("특징 파일이 없습니다. 먼저 `python -m krxlimit features` 를 실행하세요.")
+    return pd.read_parquet(config.FEATURES_PATH)
