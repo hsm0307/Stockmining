@@ -1,0 +1,151 @@
+{
+ "target": "y_up",
+ "iteration": 1,
+ "dev_champion": {
+  "key": "3d1ff1d4a5",
+  "label": "y_up_v2",
+  "cfg": {
+   "kind": "bag3",
+   "params": {},
+   "neg_rate": 0.1,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  },
+  "score": 0.07697674632072449
+ },
+ "production": {
+  "name": "y_up_v2",
+  "key": "3d1ff1d4a5",
+  "cfg": {
+   "kind": "bag3",
+   "params": {},
+   "neg_rate": 0.1,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  }
+ },
+ "queue_pos": 0,
+ "accepted_since_validation": 0,
+ "tested": {
+  "3d1ff1d4a5": {
+   "label": "y_up_v2(출발점)",
+   "P@k": 0.07697674632072449,
+   "AP": 0.058088077079273825,
+   "gain": 0.0,
+   "t": 0.0,
+   "accepted": true,
+   "time": "10-17 12:28",
+   "cfg": {
+    "kind": "bag3",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
+  }
+ },
+ "versions": [],
+ "validations": [],
+ "last_event": "evolve y_up: 10y baseline of y_up_v2 P@10=0.0891",
+ "ten_baseline": [
+  {
+   "기간": "10년 전체",
+   "모델": "규칙",
+   "일수": 2396,
+   "기저율": 0.002218,
+   "P@5": 0.11494199931621552,
+   "P@10": 0.08009199798107147,
+   "P@20": 0.04991700127720833,
+   "Lift@10": 36.110459
+  },
+  {
+   "기간": "10년 전체",
+   "모델": "y_up_v2",
+   "일수": 2396,
+   "기저율": 0.002218,
+   "P@5": 0.13263800740242004,
+   "P@10": 0.08910699933767319,
+   "P@20": 0.059223998337984085,
+   "Lift@10": 40.175002
+  },
+  {
+   "기간": "개발 2017~2023",
+   "모델": "규칙",
+   "일수": 1720,
+   "기저율": 0.002022,
+   "P@5": 0.1033720001578331,
+   "P@10": 0.0694189965724945,
+   "P@20": 0.04363400116562843,
+   "Lift@10": 34.326517
+  },
+  {
+   "기간": "개발 2017~2023",
+   "모델": "y_up_v2",
+   "일수": 1720,
+   "기저율": 0.002022,
+   "P@5": 0.1165120005607605,
+   "P@10": 0.0772090032696724,
+   "P@20": 0.05159899964928627,
+   "Lift@10": 38.178908
+  },
+  {
+   "기간": "보류 2024~",
+   "모델": "규칙",
+   "일수": 676,
+   "기저율": 0.002649,
+   "P@5": 0.14437900483608246,
+   "P@10": 0.10724899917840958,
+   "P@20": 0.06590200215578079,
+   "Lift@10": 40.48849
+  },
+  {
+   "기간": "보류 2024~",
+   "모델": "y_up_v2",
+   "일수": 676,
+   "기저율": 0.002649,
+   "P@5": 0.1736689954996109,
+   "P@10": 0.11937899887561798,
+   "P@20": 0.07862400263547897,
+   "Lift@10": 45.067879
+  }
+ ]
+}
