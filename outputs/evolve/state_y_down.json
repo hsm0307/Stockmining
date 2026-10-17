@@ -1,9 +1,9 @@
 {
  "target": "y_down",
- "iteration": 24,
+ "iteration": 25,
  "dev_champion": {
-  "key": "beb681b958",
-  "label": "+peer2",
+  "key": "3d1ff1d4a5",
+  "label": "y_down_v2",
   "cfg": {
    "kind": "bag3",
    "params": {},
@@ -18,14 +18,13 @@
     "size_type",
     "market",
     "peer",
-    "calendar",
-    "peer2"
+    "calendar"
    ],
    "exclude": [],
    "train_years": null,
    "hard_neg": false
   },
-  "score": 0.006627907045185566
+  "score": null
  },
  "production": {
   "name": "y_down_v2",
@@ -52,7 +51,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "488abe2759": {
    "label": "v1(출발점)",
@@ -780,7 +779,18 @@
    "ten_gain": 0.0027128546498715878,
    "ten_t": 8.304567337192925,
    "result": "승격 → y_down_v2"
+  },
+  {
+   "time": "2026-10-17 00:16",
+   "production": "y_down_v2",
+   "challenger": "+peer2",
+   "challenger_key": "beb681b958",
+   "hold_gain": -7.396448927465826e-05,
+   "hold_t": -0.21806406745357043,
+   "ten_gain": 0.0026919867377728224,
+   "ten_t": 8.578123785390362,
+   "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_down: try #22 +peer2 (dP@20=+0.0003, t=+1.57, accepted)"
+ "last_event": "evolve y_down: 10y validation — 기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림 (holdout dP@20=-0.0001, t=-0.22)"
 }
