@@ -100,6 +100,11 @@ def build_report() -> str:
         for p in sorted(config.FIG_DIR.glob(f"g5_backtest_{target}*.png"))[:3]:
             out.append(fig(p.stem))
         out.append(fig(f"g5_importance_{target}"))
+    for target, name in [("y_up", "익일 상한가"), ("y_down", "익일 하한가")]:
+        if T(f"g5_window_{target}") is not None:
+            out.append(f"\n### 학습 기간 비교 — {name} (전체 누적 / 최근 1년 / 최근 3년 / 평균 앙상블)\n"
+                       + md_table(T(f"g5_window_{target}")) + "\n전체 누적 대비 짝지은 차이 (t 값):\n"
+                       + md_table(T(f"g5_window_paired_{target}")) + fig(f"g5_window_{target}"))
     for sb in sorted(config.PRED_DIR.glob("*/scoreboard.csv")):
         name = sb.parent.name
         s = pd.read_csv(sb, encoding="utf-8-sig")
