@@ -4,7 +4,7 @@
   collect        KOSPI/KOSDAQ 일별 시세 수집 (이어받기)
   build          패널 생성 + 상/하한가 판정 점검표
   features       특징/라벨 생성
-  counts|pre|post|streak   목표 1/2/3/4 분석
+  counts|pre|post|streak|peak   목표 1/2/3/4 분석 (peak: 연속 상·하한가 최고점·최저점 대비 변화)
   analyze        목표 1~4 전체
   backtest       목표 5 워크포워드 백테스트
   ablation       특징 그룹 제거 실험
@@ -58,16 +58,17 @@ def cmd_features(a):
     build_features(_panel(), peer=not a.no_peer)
 
 
-def cmd_analyze(a, which=("counts", "post", "pre", "streak")):
+def cmd_analyze(a, which=("counts", "post", "pre", "streak", "peak")):
     from .events import EventContext
     p = _panel()
-    ctx = EventContext(p) if set(which) & {"post", "pre", "streak"} else None
-    from . import analysis_counts, analysis_post, analysis_pre, analysis_streak
+    ctx = EventContext(p) if set(which) & {"post", "pre", "streak", "peak"} else None
+    from . import analysis_counts, analysis_peak, analysis_post, analysis_pre, analysis_streak
     steps = {
         "counts": ("[목표1] 건수 분석", lambda: analysis_counts.run(p)),
         "pre": ("[목표2] 직전 패턴 분석", lambda: analysis_pre.run(p, ctx)),
         "post": ("[목표3] 이후 수익률 분석", lambda: analysis_post.run(p, ctx)),
         "streak": ("[목표4] 연속 상/하한가 분석", lambda: analysis_streak.run(p, _features(), ctx, split=a.split)),
+        "peak": ("[목표4] 연속 상/하한가 최고점·최저점 대비 가격 변화", lambda: analysis_peak.run(p, ctx)),
     }
     for name in which:
         title, fn = steps[name]
@@ -232,8 +233,8 @@ def main(argv=None):
     add("build", cmd_build)
     s = add("features", cmd_features)
     s.add_argument("--no-peer", action="store_true", help="동조종목(테마) 특징 생략")
-    for name in ["counts", "pre", "post", "streak", "analyze"]:
-        which = ("counts", "post", "pre", "streak") if name == "analyze" else (name,)
+    for name in ["counts", "pre", "post", "streak", "peak", "analyze"]:
+        which = ("counts", "post", "pre", "streak", "peak") if name == "analyze" else (name,)
         s = add(name, lambda a, w=which: cmd_analyze(a, w))
         s.add_argument("--split", default=None, help="목표4 모델 검증 시작일 (기본: 70% 시점)")
     for name, fn in [("backtest", cmd_backtest), ("ablation", cmd_ablation)]:

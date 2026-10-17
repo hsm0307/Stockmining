@@ -83,6 +83,8 @@ def build_report() -> str:
     out.append("\n### 연하 예측 모델 성능\n" + md_table(T("g4_model_metrics_down")))
     out.append("\n### 연상 성공 vs 실패 (첫 상한가 당일 특징, |SMD| 상위 12)\n"
                + md_table(T("g4_first_day_compare_up"), 12))
+    out.append("\n### 연속 상한가: 최고점 대비 가격 변화 (연속 일수별 중앙값)\n" + md_table(T("g4_peak_up")))
+    out.append("\n### 연속 하한가: 최저점 대비 가격 변화\n" + md_table(T("g4_peak_down")) + fig("g4_peak"))
     out.append(fig("g4_model_up") + fig("g4_tree_up"))
     rules = config.TABLE_DIR / "g4_tree_rules_up.txt"
     if rules.exists():
