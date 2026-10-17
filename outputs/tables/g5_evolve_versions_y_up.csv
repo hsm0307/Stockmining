@@ -1,2 +1,2 @@
-﻿name,time,label,hold_gain,hold_t,ten_gain,hold_P
-y_up_v2,2026-10-16 19:35,bag3,0.00059,0.58948,0.00943,0.12115
+﻿name,time,label,hold_gain,hold_t,ten_gain,hold_P,ten_t
+y_up_v2,2026-10-16 19:35,bag3,0.00059,0.58948,0.00092,0.12115,1.60504

@@ -214,7 +214,7 @@ class Evolver:
         ten = ten_year_tables(runs, target, k, HOLD_START)
         gain, t = ten["hold_gain"], ten["hold_t"]
         pr = ten["paired"]
-        ten_row = pr[(pr["기간"] == "10년 전체") & pr["비교"].str.startswith("도전자")]
+        ten_row = pr[(pr["기간"] == "10년 전체") & (pr["비교"] == f"도전자 − {prod['name']}")]  # 운영 버전 대비
         rec = {"time": f"{datetime.now():%Y-%m-%d %H:%M}", "production": prod["name"], "challenger": champ["label"],
                "challenger_key": champ["key"], "hold_gain": gain, "hold_t": t,
                "ten_gain": float(ten_row[f"ΔP@{k}"].iloc[0]), "ten_t": float(ten_row["t"].iloc[0])}
