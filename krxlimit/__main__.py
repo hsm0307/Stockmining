@@ -5,6 +5,7 @@
   build          패널 생성 + 상/하한가 판정 점검표
   features       특징/라벨 생성
   counts|pre|post|streak|peak   목표 1/2/3/4 분석 (peak: 연속 상·하한가 최고점·최저점 대비 변화)
+  volume-signal  사전20일/직전40일 평균 3배 신호와 1·21·126거래일 수익률 비교
   analyze        목표 1~4 전체
   backtest       목표 5 워크포워드 백테스트
   ablation       특징 그룹 제거 실험
@@ -56,6 +57,11 @@ def cmd_build(a):
 def cmd_features(a):
     from .features import build_features
     build_features(_panel(), peer=not a.no_peer)
+
+
+def cmd_volume_signal(a):
+    from .analysis_signal import run
+    run(_panel(), event_start=a.event_start, event_end=a.event_end)
 
 
 def cmd_analyze(a, which=("counts", "post", "pre", "streak", "peak")):
@@ -152,7 +158,7 @@ def cmd_evaluate_live(a):
     from .live import evaluate_live
     p = _panel()
     for _, name in _names(a):
-        evaluate_live(p, name)
+        evaluate_live(p, name, include_retrospective=a.include_retrospective)
 
 
 def cmd_daily(a):
@@ -233,10 +239,13 @@ def main(argv=None):
     add("build", cmd_build)
     s = add("features", cmd_features)
     s.add_argument("--no-peer", action="store_true", help="동조종목(테마) 특징 생략")
+    s = add("volume-signal", cmd_volume_signal)
+    s.add_argument("--event-start", default="2016-01-01")
+    s.add_argument("--event-end", default=None)
     for name in ["counts", "pre", "post", "streak", "peak", "analyze"]:
         which = ("counts", "post", "pre", "streak", "peak") if name == "analyze" else (name,)
         s = add(name, lambda a, w=which: cmd_analyze(a, w))
-        s.add_argument("--split", default=None, help="목표4 모델 검증 시작일 (기본: 70% 시점)")
+        s.add_argument("--split", default=None, help="목표4 모델 검증 시작일 (기본: 70%% 시점)")
     for name, fn in [("backtest", cmd_backtest), ("ablation", cmd_ablation)]:
         s = add(name, fn)
         model_opts(s)
@@ -269,6 +278,8 @@ def main(argv=None):
     s = add("evaluate-live", cmd_evaluate_live)
     s.add_argument("--target", default="y_up,y_down")
     s.add_argument("--suffix", default="", help=suffix_help)
+    s.add_argument("--include-retrospective", action="store_true",
+                   help="사후 예측도 과거 재생 평가에 포함하고 replay_scoreboard.csv로 별도 저장")
     s = add("daily", cmd_daily)
     model_opts(s, "y_up,y_down")
     s.add_argument("--suffix", default="", help=suffix_help)
@@ -292,3 +303,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
+

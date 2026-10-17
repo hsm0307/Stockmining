@@ -85,9 +85,14 @@ def test_peak_analysis_censoring():
         end_ti = np.searchsorted(ctx.days, df["종료일"].to_numpy())
         assert (end_ti + PEAK_WIN < ctx.T).all()
         censored = end_ti + df["극점도달(종료후일)"].to_numpy() + 250 >= ctx.T
-        assert df.loc[censored, "상장폐지"].isna().all()
-        assert df.loc[censored, "극점후1년_거래정지"].isna().all()
+        assert df.loc[censored, "목표일전관측소실"].isna().all()
+        assert df.loc[censored, "극점후1년_정규장미거래"].isna().all()
         col = "1년후_연상전보다낮음" if side == "up" else "1년내하락전가격회복"
         first = df["시작일"] == ctx.days[0]
         assert df.loc[first, col].isna().all()
-        assert df.loc[~first & ~censored, col].notna().all()
+        starts = np.searchsorted(ctx.days, df["시작일"].to_numpy())
+        codes = np.searchsorted(ctx.W.codes, df["code"].astype(str).to_numpy())
+        pre_observed = ctx.observed_path_mask(starts, codes, [-1])[:, 0]
+        assert df.loc[~pre_observed, col].isna().all()
+        assert df.loc[pre_observed & df["1년수익률관측"], col].notna().all()
+

@@ -9,6 +9,7 @@
 from __future__ import annotations
 
 import hashlib
+from importlib.metadata import PackageNotFoundError, version
 import json
 import pickle
 import shutil
@@ -277,6 +278,65 @@ def rule_score(df: pd.DataFrame, target: str) -> np.ndarray:
 
 
 # ------------------------------------------------------------------ 워크포워드 백테스트
+def _cache_source_fingerprint() -> str:
+    """캐시를 만든 계산 코드가 바뀌면 이전 예측을 재사용하지 않는다."""
+    digest = hashlib.sha256()
+    for path in sorted(Path(__file__).resolve().parent.glob("*.py")):
+        digest.update(path.name.encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
+
+
+def _cache_data_fingerprint(df: pd.DataFrame, columns: list[str]) -> str:
+    """행 순서·결측값까지 포함한 입력 지문. 큰 특징 테이블을 복제하지 않고 열별로 해시한다."""
+    digest = hashlib.sha256()
+    digest.update(str(len(df)).encode())
+    for column in sorted(set(columns)):
+        if column not in df:
+            digest.update(json.dumps([column, "absent"]).encode())
+            continue
+        values = df[column]
+        digest.update(json.dumps([column, str(values.dtype)]).encode())
+        digest.update(pd.util.hash_pandas_object(values, index=False).to_numpy().tobytes())
+    return digest.hexdigest()
+
+
+def _cache_runtime_versions() -> dict:
+    result = {}
+    for package in ("numpy", "pandas", "scikit-learn", "lightgbm"):
+        try:
+            result[package] = version(package)
+        except PackageNotFoundError:
+            result[package] = None
+    return result
+
+
+def _walk_forward_columns(target: str) -> list[str]:
+    return ["date", "code", "name", "market", target, "next_ret", "next_open_ret", "up_close",
+            "up_streak", "down_close", "down_streak", "up_touch", "ret1"]
+
+
+def walk_forward_cache_signature(df: pd.DataFrame, target: str, start: str, end: str | None = None,
+                                 freq: str = "QS", kind: str | None = None, params: dict | None = None,
+                                 neg_rate: float = 0.1, features: list[str] | None = None, exclude=(),
+                                 train_years: float | None = None, hard_neg: bool = False) -> str:
+    """분기 캐시와 이를 감싸는 전체기간 캐시가 함께 쓰는 유효성 서명."""
+    features = features or ALL_FEATURES
+    end_ts = pd.Timestamp(end) if end else df["date"].max() + pd.Timedelta(days=1)
+    input_columns = _walk_forward_columns(target) + features + ["tidx", "next_tidx"]
+    input_columns += [f"is_{e}" for e in exclude]
+    if hard_neg:
+        input_columns += HARD_COLS
+    return json.dumps({"schema": 2, "rows": int(len(df)), "last": str(df["date"].max().date()),
+                       "data": _cache_data_fingerprint(df, input_columns),
+                       "source": _cache_source_fingerprint(), "runtime": _cache_runtime_versions(),
+                       "defaults": {"seed": config.RANDOM_SEED, "lgbm": LGBM_PARAMS, "rank": RANK_PARAMS},
+                       "target": target, "kind": kind or default_kind(), "params": params,
+                       "neg_rate": neg_rate, "hard_neg": hard_neg, "train_years": train_years,
+                       "exclude": list(exclude), "start": start, "end": end_ts.isoformat(),
+                       "freq": freq, "features": features}, sort_keys=True, default=str)
+
+
 def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "2019-01-01", end: str | None = None,
                  freq: str = "QS", kind: str | None = None, params: dict | None = None, neg_rate: float = 0.1,
                  features: list[str] | None = None, exclude=(), train_years: float | None = None,
@@ -294,17 +354,13 @@ def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "201
         bounds = [pd.Timestamp(start)] + bounds
     if bounds[-1] < end_ts:
         bounds.append(end_ts)
-    keep_cols = ["date", "code", "name", "market", target, "next_ret", "next_open_ret", "up_close",
-                 "up_streak", "down_close", "down_streak", "up_touch", "ret1"]
+    keep_cols = _walk_forward_columns(target)
     out = []
     y = df[target].to_numpy()
     if cache:
         cache = Path(cache)
-        sig = json.dumps({"rows": int(len(df)), "last": str(df["date"].max().date()), "n_pos": int(np.nansum(y)),
-                          "target": target, "kind": kind, "params": params, "neg_rate": neg_rate, "hard_neg": hard_neg,
-                          "train_years": train_years, "exclude": list(exclude), "start": start, "freq": freq,
-                          "features": hashlib.md5(",".join(features).encode()).hexdigest()},
-                         sort_keys=True, default=str)
+        sig = walk_forward_cache_signature(df, target, start, end, freq, kind, params, neg_rate,
+                                           features, exclude, train_years, hard_neg)
         sig_path = cache / "signature.json"
         if cache.exists() and (not sig_path.exists() or sig_path.read_text() != sig):
             shutil.rmtree(cache)
@@ -519,3 +575,4 @@ def load_model(name: str = "y_up") -> dict:
         raise FileNotFoundError(f"{path} 가 없습니다. 먼저 `python -m krxlimit train --target {name}` 를 실행하세요.")
     with open(path, "rb") as fh:
         return pickle.load(fh)
+

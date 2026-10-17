@@ -4,7 +4,10 @@
 - 당일 진입: 이벤트 당일 상한가(하한가) 가격에 매수. 상한가 마감 종목은 종가와 같고,
   장중 터치 후 이탈 종목은 '상한가에 샀다가 물린' 경우가 된다.
 - 익일 시가: 다음 거래일 시가 매수 (뉴스·커뮤니티를 보고 따라 들어가는 경우)
-매도: 진입일 기준 h 거래일 뒤 종가 (익일=1, 1주=5, 1달=20, 3달=60, 반년=120, 1년=250)
+평가일: 이벤트일 D 기준 D+h 종가 (익일=1, 1주=5, 1달=20, 3달=60, 반년=120, 1년=250).
+따라서 익일 시가 진입의 h=1은 D+1 시가→D+1 종가다. 진입일로부터 h일 보유한 값이 아니다.
+시가 진입과 같은 시각에 시작하는 시장 벤치마크가 없으므로 익일 시가의 시장초과수익률은 미산출한다.
+수익률은 기준가격 연결 대용치이며, 미관측 경로·끝점 무거래 제외는 체결 조건에 따른 표본 선택이다.
 """
 from __future__ import annotations
 
@@ -37,19 +40,31 @@ ENTRIES = {"당일(제한가 매수)": "price", "익일 시가": "next_open"}
 PATH_MAX_EVENTS = 30_000
 
 
-def _stats(r: np.ndarray, mr: np.ndarray, delisted: np.ndarray) -> dict:
-    ok = ~np.isnan(r)
-    r, mr, delisted = r[ok], mr[ok], delisted[ok]
-    if len(r) == 0:
-        return {"n": 0}
+def _stats(r: np.ndarray, mr: np.ndarray, observation_ended: np.ndarray,
+           horizon_available: np.ndarray | None = None) -> dict:
+    r, mr = np.asarray(r, dtype=float), np.asarray(mr, dtype=float)
+    available = np.ones(len(r), dtype=bool) if horizon_available is None else np.asarray(horizon_available, bool)
+    ended = np.asarray(observation_ended, bool) & available
+    ok = np.isfinite(r)
+    st = {"사건수": len(r), "관측기간충족수": int(available.sum()), "n": int(ok.sum()),
+          "수익률미산출수": int((~ok).sum()), "관측소실건수": int(ended.sum()),
+          "관측소실비율": ended.sum() / available.sum() if available.any() else np.nan}
+    st.update({k: np.nan for k in ["평균", "중앙값", "절사평균(1%)", "승률", "p10", "p90",
+                                  "시장초과평균", "비용차감평균"]})
+    r, mr = r[ok], mr[ok]
+    if not len(r):
+        return st
     lo, hi = np.quantile(r, [0.01, 0.99])
     trimmed = r[(r >= lo) & (r <= hi)]
-    return {
-        "n": len(r), "평균": r.mean(), "중앙값": np.median(r), "절사평균(1%)": trimmed.mean(),
+    comparable = np.isfinite(mr)
+    st.update({
+        "n": len(r), "평균": r.mean(), "중앙값": np.median(r),
+        "절사평균(1%)": trimmed.mean() if len(trimmed) else np.nan,
         "승률": (r > 0).mean(), "p10": np.quantile(r, 0.1), "p90": np.quantile(r, 0.9),
-        "시장초과평균": np.nanmean(r - mr), "비용차감평균": r.mean() - config.ROUND_TRIP_COST,
-        "상장폐지비율": delisted.mean(),
-    }
+        "시장초과평균": (r[comparable] - mr[comparable]).mean() if comparable.any() else np.nan,
+        "비용차감평균": r.mean() - config.ROUND_TRIP_COST,
+    })
+    return st
 
 
 def event_returns(ctx: EventContext, ev: pd.DataFrame, entry: str, side: str) -> pd.DataFrame:
@@ -57,11 +72,27 @@ def event_returns(ctx: EventContext, ev: pd.DataFrame, entry: str, side: str) ->
     price = (ev["upper"] if side == "up" else ev["lower"]).to_numpy(dtype=float)
     out = {}
     for hname, h in config.HORIZONS.items():
-        r, _, dl = ctx.fwd_return(ti, ci, h, entry=entry, entry_price=price)
+        r, _, observation_ended = ctx.fwd_return(ti, ci, h, entry=entry, entry_price=price)
         out[f"r_{hname}"] = r
-        out[f"m_{hname}"] = ctx.mkt_fwd(ti, mi, h)
-        out[f"dl_{hname}"] = dl
+        out[f"m_{hname}"] = (np.full(len(ti), np.nan) if entry == "next_open" else ctx.mkt_fwd(ti, mi, h))
+        out[f"observation_ended_{hname}"] = observation_ended
+        out[f"horizon_available_{hname}"] = ti + h < ctx.T
     return pd.DataFrame(out, index=ev.index)
+
+
+def _path_statistics(rp: np.ndarray, mp: np.ndarray) -> dict[str, np.ndarray]:
+    """Avoid warnings and preserve NaN for offsets with no observed paths."""
+    n = np.isfinite(rp).sum(axis=0)
+    mean, median, excess = (np.full(rp.shape[1], np.nan) for _ in range(3))
+    seen = n > 0
+    if seen.any():
+        mean[seen] = np.nanmean(rp[:, seen], axis=0)
+        median[seen] = np.nanmedian(rp[:, seen], axis=0)
+    difference = rp - mp
+    comparable = np.isfinite(difference).any(axis=0)
+    if comparable.any():
+        excess[comparable] = np.nanmean(difference[:, comparable], axis=0)
+    return {"평균": mean, "중앙값": median, "시장초과평균": excess, "표본수": n}
 
 
 def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
@@ -79,7 +110,8 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
                 cache[(tname, ename)] = rr
                 for hname in config.HORIZONS:
                     st = _stats(rr[f"r_{hname}"].to_numpy(), rr[f"m_{hname}"].to_numpy(),
-                                rr[f"dl_{hname}"].to_numpy())
+                                rr[f"observation_ended_{hname}"].to_numpy(),
+                                rr[f"horizon_available_{hname}"].to_numpy())
                     rows.append({"방향": side, "이벤트": tname, "진입": ename, "보유기간": hname, **st})
     full = pd.DataFrame(rows)
     save_table(full.round(4), "g3_returns_full")
@@ -88,7 +120,7 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
     piv = {}
     for metric in ["평균", "중앙값", "승률", "시장초과평균"]:
         t = full.pivot_table(index=["방향", "이벤트", "진입"], columns="보유기간", values=metric, sort=False)
-        t = t[list(config.HORIZONS)]
+        t = t.reindex(columns=list(config.HORIZONS))
         piv[metric] = t
         save_table(t.round(4).reset_index(), f"g3_returns_{metric}")
 
@@ -131,14 +163,18 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
             ev = ev.sample(PATH_MAX_EVENTS, random_state=config.RANDOM_SEED)
         ti, ci, mi = ctx.locate(ev)
         price = (ev["upper"] if side == "up" else ev["lower"]).to_numpy(dtype=float)
-        rp = ctx.path(ti, ci, offs, ctx.ri) / ctx.ri[ti, ci][:, None] * (ctx.close[ti, ci] / price)[:, None] - 1
+        with np.errstate(divide="ignore", invalid="ignore"):
+            rp = ctx.path(ti, ci, offs, ctx.ri) / ctx.ri[ti, ci][:, None] * (ctx.close[ti, ci] / price)[:, None] - 1
+        observed = ctx.observed_path_mask(ti, ci, offs)
+        rp[~observed | ~np.isfinite(rp) | ~(price > 0)[:, None]] = np.nan
         mp = ctx.mi[np.clip(ti[:, None] + offs, 0, ctx.T - 1), mi[:, None]] / ctx.mi[ti, mi][:, None] - 1
         mp[ti[:, None] + offs >= ctx.T] = np.nan
-        paths[tname] = pd.DataFrame({"평균": np.nanmean(rp, 0), "중앙값": np.nanmedian(rp, 0),
-                                     "시장초과평균": np.nanmean(rp - mp, 0),
-                                     "표본수": np.sum(~np.isnan(rp), 0)}, index=offs)
-    path_df = pd.concat(paths, names=["이벤트", "경과일"]).reset_index()
+        paths[tname] = pd.DataFrame(_path_statistics(rp, mp), index=offs)
+    path_df = (pd.concat(paths, names=["이벤트", "경과일"]).reset_index() if paths else
+               pd.DataFrame(columns=["이벤트", "경과일", "평균", "중앙값", "시장초과평균", "표본수"]))
     save_table(path_df.round(5), "g3_paths")
+    if not full["n"].any():
+        return {"full": full, "pivot": piv, "paths": path_df, "breakdown": bd}
 
     # ---------------- 그림
     hz = list(config.HORIZONS)
@@ -190,3 +226,4 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
     ax.set_title("상한가/하한가 마감 종목 보유기간별 수익률 분포 (이상치 제외)")
     save_fig(fig, "g3_box")
     return {"full": full, "pivot": piv, "paths": path_df, "breakdown": bd}
+
