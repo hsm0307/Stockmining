@@ -1,0 +1,19 @@
+{
+  "comparison_base_commit": "ce87af8d91c3eebd3410d3f33028f2028da48d87",
+  "event_start": "2016-01-01",
+  "event_end": "2026-10-14",
+  "data_start": "2015-10-01",
+  "data_end": "2026-10-14",
+  "panel_rows": 6527311,
+  "event_period_rows": 6400556,
+  "security_codes": 3271,
+  "market_security_pairs": 3287,
+  "missing_adapter_fields": [
+    "value",
+    "mktcap",
+    "sect"
+  ],
+  "note": "Same local source quotes; not a re-run on the unavailable GitHub raw data.",
+  "volume_signal_event_checks": 14533,
+  "volume_signal_mismatches": 0
+}

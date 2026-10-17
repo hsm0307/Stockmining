@@ -1,0 +1,7 @@
+﻿direction,reason,count
+up,reference_change_or_price_adjustment,239
+up,previous_session_untraded_or_unknown,267
+down,reference_change_or_price_adjustment,34
+down,previous_session_untraded_or_unknown,90
+down,observed_price_outside_standard_limits,20
+up,observed_price_outside_standard_limits,2

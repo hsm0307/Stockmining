@@ -1,0 +1,48 @@
+{
+  "threshold_multiple": 3.0,
+  "calendar_start": "2015-10-01",
+  "calendar_end": "2026-10-14",
+  "calendar_sessions": 2705,
+  "market_calendar_sessions": {
+    "KOSPI": 2705,
+    "KOSDAQ": 2705
+  },
+  "kospi_kosdaq_calendars_match": true,
+  "invalid_or_missing_observed_volume_rows": 0,
+  "definition": "Any V[d] >= threshold * mean(V[d-40:d]) for d in D-20..D-1; 60 complete preceding market-session observations and positive means required",
+  "missing": "Missing rows and invalid volumes remain unknown; observed zero volume is included",
+  "history_flags": "share and zero-volume flags use D-60..D-1; they do not change the main signal; missing share counts are flagged separately",
+  "event_labels": "Copied from input without relabeling; results depend on supplied event and eligibility definitions",
+  "event_start": "2016-01-01",
+  "event_end": "2026-10-14",
+  "label_eligible_column": "limit_valid",
+  "event_columns": {
+    "close_up": "up_close",
+    "close_down": "down_close"
+  },
+  "rate_denominator": "evaluable_count; unknown histories are not treated as no signal",
+  "horizons_sessions_from_event": [
+    1,
+    21,
+    126
+  ],
+  "entries": {
+    "close": "D close",
+    "next_open": "D+1 open; horizon 1 is the same-day close"
+  },
+  "return_definition": "Product of close/(close-change), a reference-linked price proxy; not verified total return",
+  "observation_policy": "Observed contiguous path and tradable endpoint required; missing is not zero return or confirmed delisting",
+  "source_sha256": {
+    "analysis_signal.py": "fa357ba39b713823649e394ef0ebcba9c95d2b9b81aeeca368971a1e50d8d67c",
+    "volume_signal.py": "ffbfc87466eb6b78f930c9ec28e4a97c2974520f5dbf8f77a1f6836523b63f0c",
+    "events.py": "bf1ba7cb0f5b4be273451337a3c3343e45e89cdb340e4e19f7dcfd346ee39fb6",
+    "panel.py": "3b8c3042e0bf6c5b53d3cfd52c531ac2a64e239c222bda4e376a9d9f7fffd2e8",
+    "ticks.py": "bb5a7bf0e24724a17faf6ae074dc1e897fb8e6f3eb29e8f7e93aea1659e39d3f"
+  },
+  "limitations": [
+    "No execution guarantee, cash dividends, rights cash flows or delisting recovery",
+    "Future path selection changes the sample; not a return lower bound",
+    "Signal frequency conditional on events is not future-event precision",
+    "Repeated events and overlapping horizons are not independent observations"
+  ]
+}

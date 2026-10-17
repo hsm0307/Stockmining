@@ -45,6 +45,9 @@ def build_report() -> str:
 
     out.append("## 0. 데이터와 상한가 판정 점검\n")
     out.append(md_table(T("g1_summary")))
+    out.append("\n수익률은 역산 기준가격을 연결한 가격지수 대용치이며 기업행위 현금흐름과 체결을 검증한 총수익률이 아닙니다. "
+               "관측 누락·만기 미거래를 결측으로 두며, 관측 소실을 상장폐지로 확정하지 않습니다. "
+               "관측 가능한 미래 경로를 선별하므로 전체 사건의 투자성과로 일반화할 수 없습니다.\n")
     out.append("\n규정 계산(기준가·호가단위)과 등락률 기준 판정의 일치도. '누락 의심'이 크면 `KRX_LIMIT_RULE=loose` 로 비교.\n\n")
     out.append(md_table(T("g0_limit_validation")))
 
@@ -68,6 +71,13 @@ def build_report() -> str:
     out.append("\n### 직전 패턴 군집 (K-means)\n" + md_table(T("g2_clusters_up")) + fig("g2_clusters"))
 
     out.append("\n## 3. 상따·하따 이후 수익률 (목표 3)\n")
+    out.append("\n평가일은 사건일 D에서 세는 D+h입니다. 익일 시가 진입의 1일 결과는 D+1 시가→D+1 종가입니다. "
+               "같은 시가 기준 시장 벤치마크가 없어 그 진입 방식의 시장초과수익은 산출하지 않습니다.\n")
+    observation = T("g3_returns_full")
+    if observation is not None and "관측기간충족수" in observation:
+        cols = ["방향", "이벤트", "진입", "보유기간", "사건수", "관측기간충족수", "n", "수익률미산출수", "관측소실건수"]
+        out.append("\n### 표본 유지와 관측 누락\n" + md_table(observation.loc[
+            observation["이벤트"].isin(["상한가 마감", "하한가 마감"]) & observation["진입"].eq("당일(제한가 매수)"), cols]))
     for metric in ["평균", "중앙값", "승률", "시장초과평균"]:
         out.append(f"\n### {metric}\n" + md_table(T(f"g3_returns_{metric}")))
     out.append(fig("g3_returns_by_horizon") + fig("g3_paths") + fig("g3_box"))
@@ -110,8 +120,20 @@ def build_report() -> str:
         s = pd.read_csv(sb, encoding="utf-8-sig")
         out.append(f"\n### 실전 예측 성적표 ({name})\n" + md_table(s.tail(15)) + fig(f"live_{name}"))
 
+    rates = T("g6_volume_signal_rates")
+    signal_returns = T("g6_signal_returns")
+    if rates is not None:
+        out.append("\n## 6. 사전 20일 거래량 3배 신호\n"
+                   "D−20~D−1 각일의 거래량을 그 직전 40시장일 평균과 비교합니다. 사건일은 제외하며, "
+                   "이력 불완전은 신호 없음과 구분합니다. 아래 비율은 예측 적중률이 아닙니다.\n")
+        out.append(md_table(rates[rates["market"].eq("ALL")]))
+        if signal_returns is not None:
+            out.append("\n### 신호별 D종가→D+1·21·126 가격지수 변화\n" + md_table(signal_returns.loc[
+                signal_returns["market"].eq("ALL") & signal_returns["entry"].eq("close")]))
+
     text = "\n".join(out)
     path = config.OUTPUT_DIR / "REPORT.md"
     path.write_text(text, encoding="utf-8")
     print(f"보고서: {path}")
     return text
+
