@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 from krxlimit.panel import build_panel
@@ -34,3 +35,25 @@ def test_limit_flags_and_streaks():
     assert abs(a["ri"].iloc[-1] / a["ri"].iloc[-2] - 1.05) < 1e-6
     b = p[p["code"] == "222220"]
     assert not b["limit_valid"].any() and not b["up_close"].any() and not b["down_close"].any()
+
+
+def test_next_day_halt_counts_as_miss():
+    """다음 날 거래정지면 라벨은 NaN 이 아니라 0(실패), 데이터 마지막 날만 NaN."""
+    from krxlimit.features import build_features
+    rows = [
+        _row("20240102", "111110", 10_000, 0, 10_000, 10_100, 9_900, 100),
+        _row("20240103", "111110", 13_000, 3_000, 13_000, 13_000, 13_000, 5),   # 상한가
+        _row("20240104", "111110", 13_000, 0, 0, 0, 0, 0),                     # 거래정지
+        _row("20240105", "111110", 16_900, 3_900, 15_000, 16_900, 14_500, 900),  # 상한가
+        _row("20240102", "222220", 5_000, 0, 5_000, 5_100, 4_900, 100),
+        _row("20240103", "222220", 5_000, 0, 5_000, 5_100, 4_900, 100),
+        _row("20240104", "222220", 5_000, 0, 5_000, 5_100, 4_900, 100),
+        _row("20240105", "222220", 5_000, 0, 5_000, 5_100, 4_900, 100),
+    ]
+    p = build_panel(pd.DataFrame(rows), save=False)
+    f = build_features(p, save=False, peer=False).set_index(["code", "date"])
+    a = f.loc["111110"]
+    assert a.loc["2024-01-03", "y_up"] == 0          # 다음 날(01-04) 거래정지 → 실패
+    assert a.loc["2024-01-02", "y_up"] == 1
+    assert np.isnan(a.loc["2024-01-05", "y_up"])      # 마지막 날 → 결과 모름
+    assert a.loc["2024-01-03", "next_ret"] == 0       # 정지일 수익률 0

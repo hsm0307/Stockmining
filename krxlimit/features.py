@@ -183,7 +183,6 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     ri = pd.DataFrame(w("ri")).ffill(limit=5).to_numpy()
     flags = {c: W.wide(panel[c].to_numpy(), fill=0, dtype=np.float32) for c in
              ["up_close", "down_close", "up_touch", "down_touch", "up_jeom", "up_fail"]}
-    limit_valid = W.wide(panel["limit_valid"].to_numpy(), fill=False, dtype=bool)
     is_kosdaq_w = W.wide(panel["is_kosdaq"].to_numpy(), fill=False, dtype=bool)
 
     keep = (panel["traded"] & ~panel["is_first_day"] & (panel["base"] > 0)).to_numpy()
@@ -330,12 +329,17 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     f["dow"] = np.broadcast_to(pd.DatetimeIndex(W.days).dayofweek.to_numpy()[:, None], (T, N)).astype(float)
 
     # ---- 라벨: 다음 거래일(t+1)
-    nxt_valid = _shift(limit_valid.astype(float), -1) > 0
-    f["y_up"] = np.where(nxt_valid, _shift(flags["up_close"], -1), np.nan)
-    f["y_down"] = np.where(nxt_valid, _shift(flags["down_close"], -1), np.nan)
-    f["y_uptouch"] = np.where(nxt_valid, _shift(flags["up_touch"], -1), np.nan)
-    f["next_ret"] = np.where(nxt_valid, _shift(ret, -1), np.nan)
-    f["next_open_ret"] = np.where(nxt_valid, _shift(_div(open_, base) - 1, -1), np.nan)
+    # 다음 날 거래정지(시장경보 등)·가격제한 무효(정리매매)·상장폐지로 상/하한가가 불가능한 종목도 '실패(0)'로 둔다.
+    # 예측 시점에는 이런 사정을 모르므로, 후보에서 빼 버리면 백테스트가 실전보다 좋아 보인다.
+    # 데이터 마지막 날만 결과를 몰라서 NaN.
+    has_next = np.zeros((T, 1), dtype=bool)
+    has_next[:-1] = True
+    nxt_exists = _shift(exists.astype(float), -1) > 0
+    nxt_traded = _shift(traded.astype(float), -1) > 0
+    for lab, flag in [("y_up", "up_close"), ("y_down", "down_close"), ("y_uptouch", "up_touch")]:
+        f[lab] = np.where(has_next, np.nan_to_num(_shift(flags[flag], -1)), np.nan)
+    f["next_ret"] = np.where(nxt_exists, _shift(ret, -1), np.nan)  # 거래정지일은 0, 정리매매는 실제 손익
+    f["next_open_ret"] = np.where(nxt_traded, _shift(_div(open_, base) - 1, -1), np.nan)
 
     # ---- long 형태로 모으기
     out = panel.loc[keep, ID_COLS].reset_index(drop=True)

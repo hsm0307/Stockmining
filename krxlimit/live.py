@@ -86,9 +86,11 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True)
             continue  # 아직 결과 없음
         nxt = days[pos]
         pred = pd.read_csv(fp, dtype={"code": str}, encoding="utf-8-sig")
-        act = panel.loc[(panel["date"] == nxt) & panel["limit_valid"], ["code", label]]
+        # 다음 날 거래정지·무효·상장폐지 종목도 '실패'로 채점 (백테스트 라벨과 같은 기준)
+        act = panel.loc[panel["date"] == nxt, ["code", label]]
         act = act.assign(code=act["code"].astype(str))
-        m = pred.merge(act, on="code", how="inner")
+        m = pred.merge(act, on="code", how="left")
+        m[label] = m[label].fillna(False).astype(bool)
         if m.empty:
             continue
         y = m[label].astype(int).to_numpy()
