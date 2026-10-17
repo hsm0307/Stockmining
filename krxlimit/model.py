@@ -398,16 +398,9 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
     if train_years:
         m &= (df["date"] >= df["date"].max() - pd.DateOffset(years=train_years)).to_numpy()
     model = fit(df, target, feats, kind, params, neg_rate, mask=m, hard_neg=hard_neg)
-    best_iter = None
-    if kind == "lgbm":
-        inner = model.model if isinstance(model, HardNegModel) else model
-        best_iter = int(inner.best_iteration_ or inner.n_estimators)
-        # 검증 구간까지 포함해 최적 반복수로 다시 학습
-        model = make_model(kind, {**(params or {}), "n_estimators": max(best_iter, 50)})
-        tr = df.loc[m & sample_mask(df, target, neg_rate, config.RANDOM_SEED, hard_neg), feats + [target]]
-        model.fit(tr[feats], tr[target].astype(int))
-        if hard_neg:
-            model = HardNegModel(model, neg_rate)
+    # 조기종료로 정한 반복수를 그대로 쓰고, 검증에 떼어 둔 마지막 60거래일까지 포함해 다시 학습한다.
+    # (배깅·앙상블·순위학습도 마찬가지 — 그래야 실전 예측 모델이 가장 최근 데이터를 배운다)
+    model, best_iter = _refit_all(model, df, m, target, feats, params, neg_rate, hard_neg)
     meta = {"name": name or target, "target": target, "kind": kind, "features": feats, "neg_rate": neg_rate, "params": params or {},
             "exclude": list(exclude), "train_years": train_years, "hard_neg": hard_neg,
             "trained_through": str(df.loc[m, "date"].max().date()),
@@ -428,6 +421,47 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
         save_fig(fig, f"g5_importance_{name}")
     print(f"모델 저장: {config.MODEL_DIR / (name + '.pkl')} (학습 데이터 ~{meta['trained_through']})")
     return {"model": model, "meta": meta}
+
+
+def _refit_lgbm(model, df, m, target, feats, params, neg_rate, hard_neg, seed):
+    inner = model.model if isinstance(model, HardNegModel) else model
+    best = int(inner.best_iteration_ or inner.n_estimators)
+    new = make_model("lgbm", {**(params or {}), "n_estimators": max(best, 50), "random_state": seed})
+    tr = df.loc[m & sample_mask(df, target, neg_rate, seed, hard_neg), feats + [target]]
+    new.fit(tr[feats], tr[target].astype(int))
+    return (HardNegModel(new, neg_rate) if hard_neg else new), best
+
+
+def _refit_ranker(model: CalibratedRanker, df, m, target, feats, params, neg_rate, hard_neg, seed):
+    import lightgbm as lgb
+    best = int(model.ranker.best_iteration_ or model.ranker.n_estimators)
+    tr = df.loc[m & sample_mask(df, target, neg_rate, seed, hard_neg), ["date"] + feats + [target]]
+    tr = tr.sort_values("date", kind="mergesort")
+    rk = lgb.LGBMRanker(**{**RANK_PARAMS, "random_state": seed, **(params or {}), "n_estimators": max(best, 50)})
+    rk.fit(tr[feats], tr[target].astype(int), group=tr.groupby("date", sort=True).size().to_numpy())
+    return CalibratedRanker(rk, model.calibrator), best  # 확률 보정은 조기종료 때 검증셋으로 맞춘 것을 유지
+
+
+def _refit_all(model, df, m, target, feats, params, neg_rate, hard_neg, seed=config.RANDOM_SEED):
+    """조기종료 모델(들)을 전체 기간으로 다시 학습. 반환: (모델, 반복수 정보)."""
+    if isinstance(model, EnsembleModel):
+        # fit() 과 같은 시드 규칙: 배깅(bagN)은 구성원마다 seed+i, lgbm+rank 앙상블은 모두 seed
+        is_bag = not any(isinstance(x, CalibratedRanker) for x, _ in model.members)
+        members, iters = [], []
+        for i, (mem, nr) in enumerate(model.members):
+            s = seed + i if is_bag else seed
+            if isinstance(mem, CalibratedRanker):
+                new, best = _refit_ranker(mem, df, m, target, feats, None, neg_rate, hard_neg, s)
+            else:
+                new, best = _refit_lgbm(mem, df, m, target, feats, params, neg_rate, hard_neg, s)
+            members.append((new, nr))
+            iters.append(best)
+        return EnsembleModel(members), iters
+    if isinstance(model, CalibratedRanker):
+        return _refit_ranker(model, df, m, target, feats, params, neg_rate, hard_neg, seed)
+    if isinstance(model, (HardNegModel,)) or hasattr(model, "best_iteration_"):
+        return _refit_lgbm(model, df, m, target, feats, params, neg_rate, hard_neg, seed)
+    return model, None  # hgb, logit: 재학습 없음
 
 
 def retrain_like(feats_df: pd.DataFrame, meta: dict) -> dict:

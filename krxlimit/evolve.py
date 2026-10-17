@@ -32,7 +32,12 @@ from .improve import (BASE_CFG, DEV, HOLD_START, MIN_T, MODEL_CANDIDATES, NEW_GR
 from .model import TARGETS, evaluate, select_features, train_final
 from .viz import NEUTRAL, UP_COLOR, plt, save_fig, save_table
 
-STATE_DIR = config.OUTPUT_DIR / "evolve"
+# 라벨·특징 정의가 바뀌면 올린다 → 이전 세대의 상태·캐시와 섞이지 않는다.
+#   v1: 최초 (다음 날 거래정지 종목을 후보에서 제외하던 라벨)
+#   v2-haltlabel: 다음 날 거래정지·무효·상폐도 '실패'로 세는 라벨 + 시장경보·단기과열 특징 + 동조종목·리츠 수정
+DATA_VERSION = "v2-haltlabel"
+STATE_DIR = config.OUTPUT_DIR / "evolve" / DATA_VERSION
+DEV_STAGE, TEN_STAGE = f"evo-{DATA_VERSION}", f"10y-{DATA_VERSION}"
 PROTECTED_GROUPS = {"candle", "limit_hist"}  # hard_neg 규칙과 핵심 신호에 필요한 그룹은 빼지 않음
 SPACE = {
     "num_leaves": [15, 31, 63, 127],
@@ -72,7 +77,22 @@ def save_state(st: dict) -> None:
 
 
 def _dev_hits(target: str, key: str) -> pd.DataFrame:
-    return pd.read_parquet(_exp_dir(target) / f"evo__{key}.parquet")
+    return pd.read_parquet(_exp_dir(target) / f"{DEV_STAGE}__{key}.parquet")
+
+
+def latest_config(target: str) -> tuple[str, dict]:
+    """configs/ 의 가장 최근 승격 버전 (없으면 v1 기본 설정)."""
+    cdir = config.ROOT / "configs"
+    best, ver = None, 1
+    for p in cdir.glob(f"{target}_v*.json"):
+        tail = p.stem.rsplit("_v", 1)[1]
+        if tail.isdigit() and int(tail) > ver:
+            best, ver = p, int(tail)
+    if best is None:
+        return target, json.loads(json.dumps(BASE_CFG))
+    c = json.loads(best.read_text())
+    cfg = {k: c.get(k, BASE_CFG[k]) for k in BASE_CFG}
+    return c["name"], cfg
 
 
 def systematic(cfg: dict) -> list[tuple[str, dict]]:
@@ -134,19 +154,19 @@ class Evolver:
 
     def eval_dev(self, target: str, name: str, cfg: dict) -> dict:
         key = cfg_key(cfg)
-        res = run_cfg(self.f, target, key, cfg, DEV[0], DEV[1], "YS", "evo")
+        res = run_cfg(self.f, target, key, cfg, DEV[0], DEV[1], "YS", DEV_STAGE)
         res["key"], res["label"] = key, name
         return res
 
     def ensure_baseline(self, st: dict) -> None:
         target = st["target"]
         if st["dev_champion"] is None:
-            cfg = json.loads(json.dumps(BASE_CFG))
-            res = self.eval_dev(target, "v1(출발점)", cfg)
+            name, cfg = latest_config(target)  # 가장 최근 승격 버전에서 출발
+            res = self.eval_dev(target, f"{name}(출발점)", cfg)
             k = PRIMARY_K[target]
-            st["dev_champion"] = {"key": res["key"], "label": "v1", "cfg": cfg, "score": res["summary"][f"P@{k}"]}
-            st["production"] = {"name": target, "key": res["key"], "cfg": cfg}
-            st["tested"][res["key"]] = {"label": "v1(출발점)", "P@k": res["summary"][f"P@{k}"],
+            st["dev_champion"] = {"key": res["key"], "label": name, "cfg": cfg, "score": res["summary"][f"P@{k}"]}
+            st["production"] = {"name": name, "key": res["key"], "cfg": cfg}
+            st["tested"][res["key"]] = {"label": f"{name}(출발점)", "P@k": res["summary"][f"P@{k}"],
                                         "AP": res["summary"]["AP"], "gain": 0.0, "t": 0.0, "accepted": True,
                                         "time": f"{datetime.now():%m-%d %H:%M}", "cfg": cfg}
             st["last_event"] = f"evolve {target}: baseline P@{k}={res['summary'][f'P@{k}']:.4f}"
@@ -207,7 +227,7 @@ class Evolver:
                 ev = evaluate(preds, target)
                 runs[label] = {"preds": preds, "daily": ev["daily"], "summary": ev["summary"]}
             else:
-                r = run_cfg(self.f, target, f"{label}_{item['key']}", item["cfg"], DEV[0], None, "QS", "10y",
+                r = run_cfg(self.f, target, f"{label}_{item['key']}", item["cfg"], DEV[0], None, "QS", TEN_STAGE,
                             keep_preds=True)
                 r["preds"].to_parquet(cache, index=False)
                 runs[label] = r
@@ -225,7 +245,8 @@ class Evolver:
             cfg = champ["cfg"]
             (cdir / f"{name}.json").write_text(json.dumps(
                 {"name": name, "target": target, **cfg, "dev_label": champ["label"], f"holdout_gain_P@{k}": gain,
-                 "holdout_t": t, "ten_year_gain": rec["ten_gain"], "created": rec["time"]},
+                 "holdout_t": t, "ten_year_gain": rec["ten_gain"], "ten_year_t": rec["ten_t"],
+                "data_version": DATA_VERSION, "created": rec["time"]},
                 ensure_ascii=False, indent=2, default=float))
             train_final(self.f, target, kind=cfg["kind"], params=cfg["params"] or None, neg_rate=cfg["neg_rate"],
                         exclude=tuple(cfg["exclude"]), name=name, features=select_features(only_groups=cfg["groups"]),
@@ -255,7 +276,7 @@ class Evolver:
         target, k = st["target"], PRIMARY_K[st["target"]]
         prod = st["production"]
         self.log(f"{target}: 운영 버전 {prod['name']} 10년 백테스트 (기준선)")
-        r = run_cfg(self.f, target, f"{prod['name']}_{prod['key']}", prod["cfg"], DEV[0], None, "QS", "10y",
+        r = run_cfg(self.f, target, f"{prod['name']}_{prod['key']}", prod["cfg"], DEV[0], None, "QS", TEN_STAGE,
                     keep_preds=True)
         r["preds"].to_parquet(self._ten_cache(target, prod["key"]), index=False)
         ten = ten_year_tables({prod["name"]: r}, target, k, HOLD_START)

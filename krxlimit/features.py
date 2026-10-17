@@ -35,8 +35,8 @@ FEATURE_GROUPS: dict[str, list[str]] = {
     "market2": ["mkt_n_fail", "all_n_up_prev", "mkt_jeom_ratio"],  # 시장 과열/실패 분위기
     "peer2": ["peer_n_touch"],  # 동조 종목의 상한가 터치 수
     # 시장경보(투자주의·경고·위험) 상태기계 재구성 — krxlimit/alerts.py
-    "market_alert": ["alert_lvl_next", "alert_days", "alert_event", "halt_pred", "warn_need", "halt_need",
-                     "rel_need", "soft_trig", "n_desig250"],
+    "market_alert": ["al_state_next", "al_nd", "al_event", "al_halt_next", "al_halt_used", "al_trip_halt",
+                     "al_need_halt", "al_need_notice", "al_lim_hi15", "n_desig250"],
     "overheat": ["oh_price", "oh_turn", "oh_vol", "oh_lvl_next", "oh_left", "pref_prem"],  # 단기과열종목 요건
 }
 V1_GROUPS = ["candle", "momentum", "limit_hist", "volume", "volatility", "accumulation", "size_type", "market",
@@ -115,7 +115,8 @@ def _xs_rank(arr, mask):
 
 
 def peer_features(ret: np.ndarray, up: np.ndarray, days: np.ndarray, k: int = 10,
-                  lookback: int = 120, min_obs: int = 80, touch: np.ndarray | None = None) -> dict[str, np.ndarray]:
+                  lookback: int = 120, min_obs: int = 80, touch: np.ndarray | None = None,
+                  exists: np.ndarray | None = None) -> dict[str, np.ndarray]:
     """'테마' 대용 특징: 직전 lookback 거래일 수익률 상관이 가장 높은 k개 종목(동조 종목)의 당일 움직임.
 
     매월 첫 거래일에 그 이전 데이터로만 동조 종목을 다시 고르므로 미래 정보가 섞이지 않는다.
@@ -131,7 +132,8 @@ def peer_features(ret: np.ndarray, up: np.ndarray, days: np.ndarray, k: int = 10
         if t0 < lookback:
             continue
         R = ret[t0 - lookback:t0]
-        alive = ~np.isnan(ret[t0 - 1])  # 직전 거래일에 존재한 종목
+        # 직전 거래일에 상장돼 있던 종목 (그날 거래정지였어도 포함)
+        alive = exists[t0 - 1] if exists is not None else ~np.isnan(ret[t0 - 1])
         ok = (np.sum(~np.isnan(R), axis=0) >= min_obs) & alive
         idx = np.flatnonzero(ok)
         if len(idx) <= k + 1:
@@ -293,7 +295,7 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
 
     # ---- 동조 종목(테마 대용)
     if peer:
-        f.update(peer_features(t_ret, flags["up_close"], W.days, touch=flags["up_touch"]))
+        f.update(peer_features(t_ret, flags["up_close"], W.days, touch=flags["up_touch"], exists=exists))
     else:
         for c in FEATURE_GROUPS["peer"] + FEATURE_GROUPS["peer2"]:
             f[c] = np.full((T, N), np.nan, dtype=np.float32)

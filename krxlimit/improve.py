@@ -135,7 +135,7 @@ class Search:
 
     def round_features(self):
         good = []
-        for g in NEW_GROUPS:  # 그룹별로는 '합쳐 볼 후보'만 고르고, 채택은 합친 결과로 판단
+        for g in [g for g in NEW_GROUPS if g not in self.champ["cfg"]["groups"]]:  # 합쳐 볼 후보만 고르고, 채택은 합친 결과로
             _, gain, t, _ = self.challenge(f"+{g}", {"groups": self.champ["cfg"]["groups"] + [g]}, "features",
                                            accept=False)
             if gain > 0 and t >= 0.5:  # 합쳐 볼 후보는 조금 느슨하게

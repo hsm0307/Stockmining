@@ -82,7 +82,9 @@ def collect(start: str, end: str | None = None, markets=("KOSPI", "KOSDAQ"),
                 continue
             p = raw_path(m, ds)
             p.parent.mkdir(parents=True, exist_ok=True)
-            df.to_parquet(p, index=False)
+            tmp = p.with_suffix(".parquet.tmp")
+            df.to_parquet(tmp, index=False)
+            tmp.replace(p)
             status = "open"
         return ds, status, calls
 

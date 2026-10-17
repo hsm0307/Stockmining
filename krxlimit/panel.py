@@ -108,7 +108,7 @@ def build_panel(raw: pd.DataFrame | None = None, save: bool = True) -> pd.DataFr
     df["is_pref"] = np.where(numeric_code, ~df["code"].str.endswith("0"),
                              df["name"].str.contains(_PREF_NAME))
     df["is_spac"] = df["name"].str.contains("스팩|SPAC", regex=True)
-    df["is_reit"] = df["name"].str.contains("리츠|REIT", regex=True)
+    df["is_reit"] = df["name"].str.contains("(?<![메블])리츠|REIT", regex=True)  # 메리츠·블리츠웨이 등 제외
     df["is_mgmt"] = df["sect"].str.contains("관리")
     df["is_caution"] = df["sect"].str.contains("투자주의|환기")
 

@@ -57,3 +57,11 @@ def test_next_day_halt_counts_as_miss():
     assert a.loc["2024-01-02", "y_up"] == 1
     assert np.isnan(a.loc["2024-01-05", "y_up"])      # 마지막 날 → 결과 모름
     assert a.loc["2024-01-03", "next_ret"] == 0       # 정지일 수익률 0
+
+
+def test_reit_detection_excludes_meritz():
+    names = ["메리츠금융지주", "메리츠화재", "블리츠웨이엔터테인먼트", "신한알파리츠", "이리츠코크렙", "SK리츠"]
+    rows = [_row("20240102", f"{100000 + i * 10:06d}", 5_000, 0, 5_000, 5_100, 4_900, 100, name=n) for i, n in enumerate(names)]
+    p = build_panel(pd.DataFrame(rows), save=False).set_index("name")
+    assert p.loc[["신한알파리츠", "이리츠코크렙", "SK리츠"], "is_reit"].all()
+    assert not p.loc[["메리츠금융지주", "메리츠화재", "블리츠웨이엔터테인먼트"], "is_reit"].any()
