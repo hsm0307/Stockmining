@@ -1,2 +1,3 @@
 ﻿time,production,challenger,challenger_key,hold_gain,hold_t,ten_gain,ten_t,result
 2026-10-16 19:35,y_up,bag3,3d1ff1d4a5,0.00059,0.58948,0.00092,1.60504,승격 → y_up_v2
+2026-10-17 01:34,y_up_v2,-volume,530225730d,-0.00222,-1.50898,-0.00075,-1.12069,기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림
