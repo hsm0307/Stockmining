@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 29,
+ "iteration": 30,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "y_down_v2",
@@ -50,7 +50,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 9,
+ "queue_pos": 10,
  "accepted_since_validation": 0,
  "tested": {
   "488abe2759": {
@@ -857,6 +857,38 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "053a176111": {
+   "label": "minchild50",
+   "P@k": 0.006337209139019251,
+   "AP": 0.01758636528250858,
+   "gain": -2.90697662421735e-05,
+   "t": -0.15245525310860733,
+   "accepted": false,
+   "time": "10-17 01:40",
+   "base": "3d1ff1d4a5",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "min_child_samples": 50
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -917,5 +949,5 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_down: try #26 leaves63 (dP@20=-0.0001, t=-0.60)"
+ "last_event": "evolve y_down: try #27 minchild50 (dP@20=-0.0000, t=-0.15)"
 }
