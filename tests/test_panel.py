@@ -65,3 +65,29 @@ def test_reit_detection_excludes_meritz():
     p = build_panel(pd.DataFrame(rows), save=False).set_index("name")
     assert p.loc[["신한알파리츠", "이리츠코크렙", "SK리츠"], "is_reit"].all()
     assert not p.loc[["메리츠금융지주", "메리츠화재", "블리츠웨이엔터테인먼트"], "is_reit"].any()
+
+
+def test_peak_analysis_censoring():
+    """최고점 분석: 극점 창이 데이터 끝에 잘린 구간은 빼고, 1년 창이 끝을 넘으면 상장폐지도 NaN,
+    첫날에 시작한 구간은 연상 전 가격이 없어 비교 지표가 NaN 이어야 한다."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from synthetic import make_raw
+    from krxlimit.analysis_peak import PEAK_WIN, streak_extremes
+    from krxlimit.events import EventContext
+    panel = build_panel(make_raw(n_stocks=60, start="2020-01-01", end="2022-12-31", seed=3), save=False)
+    ctx = EventContext(panel)
+    for side in ("up", "down"):
+        df = streak_extremes(panel, ctx, side)
+        if df.empty:
+            continue
+        end_ti = np.searchsorted(ctx.days, df["종료일"].to_numpy())
+        assert (end_ti + PEAK_WIN < ctx.T).all()
+        censored = end_ti + df["극점도달(종료후일)"].to_numpy() + 250 >= ctx.T
+        assert df.loc[censored, "상장폐지"].isna().all()
+        assert df.loc[censored, "극점후1년_거래정지"].isna().all()
+        col = "1년후_연상전보다낮음" if side == "up" else "1년내하락전가격회복"
+        first = df["시작일"] == ctx.days[0]
+        assert df.loc[first, col].isna().all()
+        assert df.loc[~first & ~censored, col].notna().all()

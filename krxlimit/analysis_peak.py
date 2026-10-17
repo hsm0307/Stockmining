@@ -7,6 +7,8 @@
 - 1년 안에 최고점을 다시 넘은 비율
 연속 하한가(연하): 위와 대칭(최저점, 반등률, 1년 내 최대 반등, 하락 전 가격 회복 비율)
 상장폐지 종목은 마지막 거래 가격으로 확정, 데이터 끝을 넘는 구간은 제외(NaN).
+종료 후 20거래일 창이 데이터 끝에 잘리는 최근 연속 구간은 극점을 정할 수 없어 제외한다.
+주의: 극점은 사후에 고른 창의 극값이라, 추세 없는 무작위 가격에서도 극점 뒤에는 되돌림이 나온다(선택 효과).
 """
 from __future__ import annotations
 
@@ -28,15 +30,21 @@ def _group(lengths: np.ndarray, side: str) -> np.ndarray:
     return np.where(lengths >= cap, f"{cap}+", g)
 
 
+def _streaks(panel: pd.DataFrame, ctx: EventContext, side: str) -> pd.DataFrame:
+    """극점 창(종료 후 20거래일)이 데이터 안에 온전히 있는 연속 구간만."""
+    st = streak_table(panel, side)
+    return st[~st["데이터끝"] & (st["tidx"] + PEAK_WIN < ctx.T)].reset_index(drop=True)
+
+
 def streak_extremes(panel: pd.DataFrame, ctx: EventContext, side: str = "up") -> pd.DataFrame:
     """연속 구간별 최고점(최저점)과 이후 가격 변화 지표."""
-    st = streak_table(panel, side)
-    st = st[~st["데이터끝"]].reset_index(drop=True)
+    st = _streaks(panel, ctx, side)
     e_ti = st["tidx"].to_numpy()
     s_ti = np.searchsorted(ctx.days, st["시작일"].to_numpy())
     ci = np.searchsorted(ctx.W.codes, st["code"].astype(str).to_numpy())
     pre = ctx.ri[np.maximum(s_ti - 1, 0), ci]
     pre = np.where(s_ti >= 1, pre, np.nan)
+    ok_pre = ~np.isnan(pre)
     end_px = ctx.ri[e_ti, ci]
     offs = np.arange(0, PATH_MAX + 1)
     P = ctx.path(e_ti, ci, offs, ctx.ri)  # 종료일 기준 경로 (0 = 종료일)
@@ -67,18 +75,23 @@ def streak_extremes(panel: pd.DataFrame, ctx: EventContext, side: str = "up") ->
     seg_idx = ext_off[:, None] + np.arange(1, 251)[None, :]
     seg = np.where(seg_idx <= PATH_MAX, P[rows, np.minimum(seg_idx, PATH_MAX)], np.nan)
     full_year = ~np.isnan(seg[:, -1])
+    # 가격은 float32 라 1e-9 로는 같은 값을 못 거른다. 1e-6 은 float32 오차보다 크고 호가 한 단위보다 작다.
+    TOL = 1e-6
     with np.errstate(all="ignore"):
         if side == "up":
             out["1년내최대낙폭"] = np.where(full_year, np.nanmin(seg, axis=1) / ext - 1, np.nan)
             # 최고점을 '넘어서야' 회복 (거래정지일은 직전 종가 그대로라 같음으로 잡히면 안 됨)
-            out["1년내최고점회복"] = np.where(full_year, (np.nanmax(seg, axis=1) > ext * (1 + 1e-9)).astype(float), np.nan)
+            out["1년내최고점회복"] = np.where(full_year, (np.nanmax(seg, axis=1) > ext * (1 + TOL)).astype(float), np.nan)
             out["상승분반납률(1년)"] = (ext - after(250)) / (ext - pre)
-            out["1년후_연상전보다낮음"] = np.where(full_year, (after(250) < pre).astype(float), np.nan)
+            out["1년후_연상전보다낮음"] = np.where(full_year & ok_pre, (after(250) < pre).astype(float), np.nan)
         else:
             out["1년내최대반등"] = np.where(full_year, np.nanmax(seg, axis=1) / ext - 1, np.nan)
-            out["1년내하락전가격회복"] = np.where(full_year, (np.nanmax(seg, axis=1) >= pre).astype(float), np.nan)
+            out["1년내하락전가격회복"] = np.where(full_year & ok_pre,
+                                         (np.nanmax(seg, axis=1) >= pre * (1 - TOL)).astype(float), np.nan)
             out["하락분회복률(1년)"] = (after(250) - ext) / (pre - ext)
-    out["상장폐지"] = (ctx.last_t[ci] < np.minimum(e_ti + ext_off + 250, ctx.T - 1)) & (ctx.last_t[ci] < ctx.T - 1)
+    # 극점 뒤 1년 안에 상장폐지. 1년 창이 데이터 끝을 넘으면 알 수 없음(NaN) → 거래정지 비율과 같은 분모
+    delisted = ctx.last_t[ci] < np.minimum(e_ti + ext_off + 250, ctx.T - 1)
+    out["상장폐지"] = np.where(full_year, delisted.astype(float), np.nan)
     # 극점 6달·1년 뒤 거래정지 여부 (가격이 멈춰 있어 실제로 팔 수 없는 경우)
     for name, h in [("6달", 120), ("1년", 250)]:
         t2 = e_ti + ext_off + h
@@ -124,7 +137,9 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
                 n=("길이", "size"), 최고점후1달=("극점후1달", "median"), 최고점후1년=("극점후1년", "median"),
                 최대낙폭=("1년내최대낙폭", "median"), 최고점회복=("1년내최고점회복", "mean"))
             save_table(bm.round(4).reset_index(), "g4_peak_up_by_market_2plus")
-            top = df.sort_values("극점까지변화", ascending=False).head(20)[
+            # 같은 종목이 20일 안에 다시 연상하면 같은 최고점을 공유하므로, 최고점 날짜가 같은 구간은 하나만
+            top = df.assign(극점키=df["code"] + "_" + (st_end_ti(df, ctx) + df["극점도달(종료후일)"].to_numpy()).astype(str))
+            top = top.sort_values("극점까지변화", ascending=False).drop_duplicates("극점키").head(20)[
                 ["code", "name", "market", "시작일", "길이", "극점까지변화", "극점후1년", "1년내최대낙폭"]]
             save_table(top.round(4), "g4_peak_up_top20")
         res[side] = (df, tab)
@@ -134,13 +149,16 @@ def run(panel: pd.DataFrame, ctx: EventContext | None = None) -> dict:
     return res
 
 
+def st_end_ti(df: pd.DataFrame, ctx: EventContext) -> np.ndarray:
+    return np.searchsorted(ctx.days, df["종료일"].to_numpy())
+
+
 def _plot(panel, ctx, res) -> None:
     fig, ax = plt.subplots(2, 2, figsize=(15, 9))
     offs = np.arange(-PEAK_WIN, 251)
     for r, side in enumerate(["up", "down"]):
         df, tab = res[side]
-        st = streak_table(panel, side)
-        st = st[~st["데이터끝"]].reset_index(drop=True)
+        st = _streaks(panel, ctx, side)
         e_ti = st["tidx"].to_numpy()
         ci = np.searchsorted(ctx.W.codes, st["code"].astype(str).to_numpy())
         ext_ti = e_ti + df["극점도달(종료후일)"].to_numpy()
