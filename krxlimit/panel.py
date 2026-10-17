@@ -1,10 +1,11 @@
 """원본 일별 시세 → 분석용 패널(종목×일자) 생성.
 
-핵심 아이디어
-- 기준가격 = 종가 − 대비(CMPPREVDD_PRC). KRX 의 '대비'는 기준가 대비 등락이므로
-  분할·병합·무상증자·권리락 등으로 기준가가 조정된 날도 정확한 일간 수익률을 얻는다.
-  → 수정주가 없이도 수익률지수(ri)로 장기 수익률을 계산할 수 있다.
-- 상·하한가는 기준가격과 호가단위 규정으로 정확히 계산한 뒤 종가/고가/저가와 비교한다.
+기준가격 = 종가 − 대비(CMPPREVDD_PRC)를 역산하고 close/base를 연결한 ri를 만든다.
+ri는 기준가격을 연결한 가격수익률 대용치이며, 기업행위가 검증된 수정주가나
+현금배당·권리대금 등을 포함한 총수익률이 아니다. 대비 결측은 0으로 가정하지 않는다.
+수익률을 사용할 때는 EventContext 등에서 해당 구간의 관측과 연결 가능 여부를 확인한다.
+상·하한가 라벨은 역산 기준가격에 보통 주식의 호가단위·가격제한 규칙을 적용한 결과로,
+특수 거래 상태까지 확인한 공식 사건 라벨이 아니다.
 """
 from __future__ import annotations
 
@@ -69,7 +70,8 @@ def build_panel(raw: pd.DataFrame | None = None, save: bool = True) -> pd.DataFr
             .reset_index(drop=True))
 
     # ---- 기준가, 거래 여부, 상장 첫날
-    df["chg"] = df["chg"].fillna(0)
+    # Unknown reference changes must remain unknown: imputing zero fabricates a
+    # flat daily link and can turn an unavailable holding return into 0%.
     df["base"] = df["close"] - df["chg"]
     df["traded"] = (df["volume"].fillna(0) > 0) & (df["open"].fillna(0) > 0)
     first_date = df.groupby("code", sort=False)["date"].transform("min")
@@ -112,7 +114,9 @@ def build_panel(raw: pd.DataFrame | None = None, save: bool = True) -> pd.DataFr
     df["is_mgmt"] = df["sect"].str.contains("관리")
     df["is_caution"] = df["sect"].str.contains("투자주의|환기")
 
-    # ---- 수익률지수(수정주가 대용), 연속 상/하한가
+    # ---- 기준가격 연결 지수, 연속 상/하한가
+    # ri has an arbitrary level across an unknown link. Keep ret missing so the
+    # event-return path checks reject intervals spanning that link.
     df["ri"] = (1 + df["ret"].fillna(0).astype("float64")).groupby(df["code"], sort=False).cumprod()
     tr = df["traded"]
     sub = df.loc[tr, ["code", "up_close", "down_close"]]
@@ -176,3 +180,4 @@ def to_wide(df: pd.DataFrame, col: str, days: np.ndarray | None = None) -> pd.Da
     if days is not None:
         w = w.reindex(days)
     return w
+

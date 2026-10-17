@@ -29,7 +29,7 @@ from . import config
 from .features import FEATURE_GROUPS, load_features
 from .improve import (BASE_CFG, DEV, HOLD_START, MIN_T, MODEL_CANDIDATES, NEW_GROUPS, PARAM_CANDIDATES, PRIMARY_K,
                       WINDOW_CANDIDATES, _exp_dir, _merge, _next_version, paired, run_cfg, ten_year_tables)
-from .model import TARGETS, evaluate, select_features, train_final
+from .model import TARGETS, evaluate, select_features, train_final, walk_forward_cache_signature
 from .viz import NEUTRAL, UP_COLOR, plt, save_fig, save_table
 
 # 라벨·특징 정의가 바뀌면 올린다 → 이전 세대의 상태·캐시와 섞이지 않는다.
@@ -221,15 +221,15 @@ class Evolver:
         self.log(f"{target}: 10년 검증 시작 — 운영 {prod['name']} vs 개발 챔피언 '{champ['label']}'")
         runs = {}
         for label, item in [(prod["name"], prod), ("도전자", champ)]:
-            cache = STATE_DIR / f"ten_{target}_{item['key']}.parquet"
-            if cache.exists():
+            cache = self._ten_cache(target, item["key"])
+            if self._ten_cache_valid(target, item):
                 preds = pd.read_parquet(cache)
                 ev = evaluate(preds, target)
                 runs[label] = {"preds": preds, "daily": ev["daily"], "summary": ev["summary"]}
             else:
                 r = run_cfg(self.f, target, f"{label}_{item['key']}", item["cfg"], DEV[0], None, "QS", TEN_STAGE,
                             keep_preds=True, resumable=True)
-                r["preds"].to_parquet(cache, index=False)
+                self._save_ten_cache(target, item, r["preds"])
                 runs[label] = r
         ten = ten_year_tables(runs, target, k, HOLD_START)
         gain, t = ten["hold_gain"], ten["hold_t"]
@@ -271,6 +271,24 @@ class Evolver:
     def _ten_cache(self, target: str, key: str):
         return STATE_DIR / f"ten_{target}_{key}.parquet"
 
+    def _ten_signature(self, target: str, item: dict) -> str:
+        cfg = item["cfg"]
+        return walk_forward_cache_signature(
+            self.f, target, DEV[0], None, freq="QS", kind=cfg["kind"], params=cfg["params"] or None,
+            neg_rate=cfg["neg_rate"], features=select_features(only_groups=cfg["groups"]),
+            exclude=tuple(cfg["exclude"]), train_years=cfg["train_years"], hard_neg=cfg.get("hard_neg", False))
+
+    def _ten_cache_valid(self, target: str, item: dict) -> bool:
+        cache = self._ten_cache(target, item["key"])
+        manifest = cache.with_suffix(".signature.json")
+        return cache.exists() and manifest.exists() and manifest.read_text() == self._ten_signature(target, item)
+
+    def _save_ten_cache(self, target: str, item: dict, preds: pd.DataFrame) -> None:
+        cache = self._ten_cache(target, item["key"])
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        preds.to_parquet(cache, index=False)
+        cache.with_suffix(".signature.json").write_text(self._ten_signature(target, item))
+
     def baseline_10y(self, st: dict) -> None:
         """운영 버전의 10년 워크포워드 성적(규칙 기준선 포함)을 한 번 만들어 둔다 → 이후 검증 때 재사용."""
         target, k = st["target"], PRIMARY_K[st["target"]]
@@ -278,7 +296,7 @@ class Evolver:
         self.log(f"{target}: 운영 버전 {prod['name']} 10년 백테스트 (기준선)")
         r = run_cfg(self.f, target, f"{prod['name']}_{prod['key']}", prod["cfg"], DEV[0], None, "QS", TEN_STAGE,
                     keep_preds=True, resumable=True)
-        r["preds"].to_parquet(self._ten_cache(target, prod["key"]), index=False)
+        self._save_ten_cache(target, prod, r["preds"])
         ten = ten_year_tables({prod["name"]: r}, target, k, HOLD_START)
         per = ten["periods"]
         st["ten_baseline"] = per.round(6).to_dict("records")
@@ -289,7 +307,7 @@ class Evolver:
         """한 단계 실행. 남은 시간 안에 못 끝낼 것 같으면 False."""
         self.ensure_baseline(st)
         prod = st["production"]
-        if not self._ten_cache(st["target"], prod["key"]).exists() and not self.needs_validation(st):
+        if not self._ten_cache_valid(st["target"], prod) and not self.needs_validation(st):
             if minutes_left < EST_TEN_MIN.get(prod["cfg"]["kind"], 60):
                 return False
             self.baseline_10y(st)
@@ -297,7 +315,7 @@ class Evolver:
             return True
         if self.needs_validation(st):
             need = EST_TEN_MIN.get(st["dev_champion"]["cfg"]["kind"], 60)
-            if not (STATE_DIR / f"ten_{st['target']}_{st['production']['key']}.parquet").exists():
+            if not self._ten_cache_valid(st["target"], prod):
                 need += EST_TEN_MIN.get(st["production"]["cfg"]["kind"], 60)
             if minutes_left < need:
                 return False
@@ -380,3 +398,4 @@ def run(targets=("y_up", "y_down"), hours: float = 1.6, sync: bool = True) -> No
             if idle >= 1:
                 break
     print("이번 실행 종료 (다음 실행에서 이어서 진행)", flush=True)
+

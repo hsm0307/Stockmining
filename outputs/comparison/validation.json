@@ -1,0 +1,63 @@
+{
+  "validated_at": "2026-10-17T17:55:58+09:00",
+  "comparison_base_commit": "ce87af8d91c3eebd3410d3f33028f2028da48d87",
+  "runtime": {
+    "python": "3.14.6",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "pyarrow": "23.0.1",
+    "scipy": "1.18.0",
+    "scikit-learn": "1.9.0",
+    "lightgbm": "4.7.0",
+    "pytest": "9.0.3",
+    "matplotlib": "3.11.0"
+  },
+  "tests": {
+    "baseline": {
+      "passed": 14,
+      "warnings": 8
+    },
+    "improved_full_suite_before_cli_cases_added": {
+      "passed": 99,
+      "warnings": 8,
+      "seconds": 105.22
+    },
+    "additional_cli_help_regressions": {
+      "passed": 5,
+      "warnings": 0,
+      "seconds": 0.35
+    },
+    "final_collection_count": 104,
+    "distinct_test_cases_passed": 104,
+    "note": "Full 99-case suite plus separately executed five new CLI-help cases; no claim of a single 104-case execution.",
+    "known_warnings": [
+      "Matplotlib date tick interval on a tiny synthetic fixture",
+      "joblib physical core detection on this machine",
+      "Existing windows.py empty-period division"
+    ]
+  },
+  "same_data_analysis": {
+    "event_end": "2026-10-14",
+    "panel_rows": 6527311,
+    "event_period_rows": 6400556,
+    "original_event_signal_checks": 14533,
+    "signal_mismatches": 0,
+    "upper_shared": 13524,
+    "upper_repository_only": 367,
+    "lower_shared": 1009,
+    "lower_repository_only": 110
+  },
+  "recorded_calculation_source_hashes_match": {
+    "analysis_signal.py": true,
+    "volume_signal.py": true,
+    "events.py": true,
+    "panel.py": true,
+    "ticks.py": true
+  },
+  "not_performed": [
+    "Full ten-year model retraining",
+    "Reproduction on repository raw data not committed to GitHub",
+    "Historical industry or financial-data integration",
+    "Verification of executable trading returns or improved predictive accuracy"
+  ]
+}

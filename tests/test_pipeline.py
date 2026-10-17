@@ -76,9 +76,9 @@ def test_end_to_end(env):
         out = predict(p, "y_up", date=str(pd.Timestamp(d).date()), verbose=False)
         assert out["prob"].between(0, 1).all()
         predict(p, "y_down_v2", date=str(pd.Timestamp(d).date()), verbose=False)
-    sb = evaluate_live(p, "y_up", verbose=False)
+    sb = evaluate_live(p, "y_up", verbose=False, include_retrospective=True)
     assert len(sb) == 9
-    assert len(evaluate_live(p, "y_down_v2", verbose=False)) == 9
+    assert len(evaluate_live(p, "y_down_v2", verbose=False, include_retrospective=True)) == 9
 
     # 실시간 예측(최근 구간만 계산)과 전체 계산의 특징값이 같아야 함 (train/serve 불일치 방지)
     from krxlimit.features import ALL_FEATURES, LIVE_LOOKBACK
@@ -174,3 +174,4 @@ def test_windows(env):
     assert set(res["table"]["전략"]) == {"전체 누적", "최근 1년", "최근 3년", "평균 앙상블", "단순 규칙"}
     cross = windows.cross_period(f, "y_up", verbose=False)
     windows.plot(res, cross, "y_up")
+
