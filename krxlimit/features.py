@@ -34,6 +34,10 @@ FEATURE_GROUPS: dict[str, list[str]] = {
     "stock_hist": ["hist_cont_rate", "hist_n_cont500"],  # 이 종목의 과거 연상 성향
     "market2": ["mkt_n_fail", "all_n_up_prev", "mkt_jeom_ratio"],  # 시장 과열/실패 분위기
     "peer2": ["peer_n_touch"],  # 동조 종목의 상한가 터치 수
+    # 시장경보(투자주의·경고·위험) 상태기계 재구성 — krxlimit/alerts.py
+    "market_alert": ["alert_lvl_next", "alert_days", "alert_event", "halt_pred", "warn_need", "halt_need",
+                     "rel_need", "soft_trig", "n_desig250"],
+    "overheat": ["oh_price", "oh_turn", "oh_vol", "oh_lvl_next", "oh_left", "pref_prem"],  # 단기과열종목 요건
 }
 V1_GROUPS = ["candle", "momentum", "limit_hist", "volume", "volatility", "accumulation", "size_type", "market",
              "peer", "calendar"]  # 1차 모델(v1) 특징 그룹
@@ -293,6 +297,13 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     else:
         for c in FEATURE_GROUPS["peer"] + FEATURE_GROUPS["peer2"]:
             f[c] = np.full((T, N), np.nan, dtype=np.float32)
+
+    # ---- 시장경보·단기과열 지정 재구성 (규정 기반 추정, 행 t 는 t일 종가까지만 사용)
+    from .alerts import market_alert_features
+    f.update(market_alert_features(
+        W.days, W.codes, ri, ret, mcap, close, high, low, vol, shares, traded, exists, is_kosdaq_w,
+        W.wide(panel["is_pref"].to_numpy(), fill=False, dtype=bool),
+        W.wide(panel["is_spac"].to_numpy(), fill=False, dtype=bool)))
 
     # ---- v2: 오늘 상한가 종목끼리의 상대 강도 (회전율·거래대금이 낮을수록 매물이 잠긴 '강한' 상한가)
     up_today = flags["up_close"] > 0
