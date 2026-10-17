@@ -1,22 +1,25 @@
 |--- turnover <= 0.01
-|   |--- weights: [15.49, 161.61] class: 1
+|   |--- turnover <= 0.01
+|   |   |--- weights: [3.30, 130.94] class: 1
+|   |--- turnover >  0.01
+|   |   |--- weights: [13.76, 38.19] class: 1
 |--- turnover >  0.01
 |   |--- turnover <= 0.10
-|   |   |--- value_rank <= 0.72
-|   |   |   |--- weights: [32.08, 5.21] class: 0
-|   |   |--- value_rank >  0.72
-|   |   |   |--- mkt_ret5 <= -0.03
-|   |   |   |   |--- weights: [22.12, 72.99] class: 1
-|   |   |   |--- mkt_ret5 >  -0.03
-|   |   |   |   |--- weights: [41.48, 36.49] class: 0
+|   |   |--- mkt_jeom_ratio <= 0.05
+|   |   |   |--- mkt_n_up5 <= 1.30
+|   |   |   |   |--- weights: [16.51, 0.00] class: 0
+|   |   |   |--- mkt_n_up5 >  1.30
+|   |   |   |   |--- weights: [60.55, 120.03] class: 1
+|   |   |--- mkt_jeom_ratio >  0.05
+|   |   |   |--- weights: [23.67, 0.00] class: 0
 |   |--- turnover >  0.10
 |   |   |--- log_price <= 7.89
-|   |   |   |--- peer_corr <= 0.31
-|   |   |   |   |--- weights: [16.04, 5.21] class: 0
-|   |   |   |--- peer_corr >  0.31
-|   |   |   |   |--- weights: [91.80, 0.00] class: 0
+|   |   |   |--- ma120_gap <= 0.05
+|   |   |   |   |--- weights: [98.53, 0.00] class: 0
+|   |   |   |--- ma120_gap >  0.05
+|   |   |   |   |--- weights: [15.96, 5.46] class: 0
 |   |   |--- log_price >  7.89
 |   |   |   |--- peer_ret <= -0.03
-|   |   |   |   |--- weights: [40.93, 0.00] class: 0
+|   |   |   |   |--- weights: [44.04, 0.00] class: 0
 |   |   |   |--- peer_ret >  -0.03
-|   |   |   |   |--- weights: [94.57, 72.99] class: 0
+|   |   |   |   |--- weights: [94.68, 76.38] class: 0
