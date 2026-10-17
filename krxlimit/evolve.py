@@ -228,7 +228,7 @@ class Evolver:
                 runs[label] = {"preds": preds, "daily": ev["daily"], "summary": ev["summary"]}
             else:
                 r = run_cfg(self.f, target, f"{label}_{item['key']}", item["cfg"], DEV[0], None, "QS", TEN_STAGE,
-                            keep_preds=True)
+                            keep_preds=True, resumable=True)
                 r["preds"].to_parquet(cache, index=False)
                 runs[label] = r
         ten = ten_year_tables(runs, target, k, HOLD_START)
@@ -277,7 +277,7 @@ class Evolver:
         prod = st["production"]
         self.log(f"{target}: 운영 버전 {prod['name']} 10년 백테스트 (기준선)")
         r = run_cfg(self.f, target, f"{prod['name']}_{prod['key']}", prod["cfg"], DEV[0], None, "QS", TEN_STAGE,
-                    keep_preds=True)
+                    keep_preds=True, resumable=True)
         r["preds"].to_parquet(self._ten_cache(target, prod["key"]), index=False)
         ten = ten_year_tables({prod["name"]: r}, target, k, HOLD_START)
         per = ten["periods"]

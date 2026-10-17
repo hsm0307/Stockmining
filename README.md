@@ -8,7 +8,7 @@
 | 1 | 상한가·점상·하한가·점하는 몇 건, 언제, 어떤 종목에서? | `counts` | `g1_*` |
 | 2 | 상·하한가 직전 20/60거래일에 특이사항(매집 흔적)이 있는가? | `pre` | `g2_*` |
 | 3 | 상한가/하한가를 따라 산 개미의 수익률은? (익일·1주·1달·3달·반년·1년) | `post` | `g3_*` |
-| 4 | 연속 상한가/하한가 종목의 특징은? 예측 가능한가? | `streak` | `g4_*` |
+| 4 | 연속 상한가/하한가 종목의 특징은? 예측 가능한가? 최고점/최저점 대비 얼마나 변하나? | `streak`, `peak` | `g4_*` |
 | 5 | 익일 상한가/하한가 예측 모델 + 백테스트 + 2달 실전 예측 | `backtest`, `train`, `daily` | `g5_*`, `predictions/` |
 
 결과 표는 `outputs/tables/*.csv`(엑셀에서 바로 열림), 그림은 `outputs/figures/*.png`,
@@ -42,7 +42,7 @@ python -m krxlimit check      # 최근 영업일 데이터가 나오면 성공
 python -m krxlimit collect            # ① 2016-01-01 ~ 오늘 수집 (약 5,500회 호출, 동시 6개 요청으로 15~30분, 중단돼도 이어받기)
 python -m krxlimit build              # ② 패널 생성 + 상/하한가 판정 점검표 출력
 python -m krxlimit features           # ③ 특징·라벨 생성 (수 분)
-python -m krxlimit analyze            # ④ 목표 1~4 분석 (counts / pre / post / streak 개별 실행도 가능)
+python -m krxlimit analyze            # ④ 목표 1~4 분석 (counts / pre / post / streak / peak 개별 실행도 가능)
 python -m krxlimit backtest --target y_up,y_down   # ⑤ 워크포워드 백테스트 (2019~현재)
 python -m krxlimit train --target y_up,y_down      # ⑥ 최종 모델 학습 → models/
 python -m krxlimit predict            # ⑦ 다음 거래일 상한가/하한가 후보 → predictions/
@@ -112,6 +112,9 @@ python -m krxlimit report             # ⑧ outputs/REPORT.md
   의사결정나무(깊이 4, 규칙 텍스트·그림), 그래디언트 부스팅(순열 중요도). 시간 기준 분할(과거 70% 학습 → 최근 30% 검증),
   기준선(연속일수+점상 규칙)과 AUC·AP·상위10% 적중률 비교, 예측 10분위별 실제 연상률
 - 연상이 끝난 뒤 수익률(연상 길이별)
+- **최고점/최저점 대비 변화** (`analysis_peak.py`, `g4_peak_*`): 연속 구간 시작~종료 후 20거래일 사이의 최고(최저) 종가를 찾아,
+  그 뒤 1주·1달·3달·6달·1년 변화, 1년 내 최대 낙폭(반등), 최고점 재돌파·하락 전 가격 회복 비율, 상승분 반납률,
+  6달·1년 뒤 거래정지·상장폐지 비율을 연속 일수별로 집계. 분할·증자는 수익률지수로 조정
 
 ### 목표 5. 익일 상한가/하한가 예측 (`features.py`, `model.py`, `live.py`)
 **문제 정의**: 매일 장 마감 후 전 종목(약 2,600개)에 대해 *다음 거래일 상한가 마감 확률*을 계산하고 상위 k개를 고릅니다.
@@ -231,7 +234,7 @@ krxlimit/            분석 패키지
   panel.py           패널 생성, 상/하한가 판정, 연속일수, 판정 점검
   features.py        특징·라벨 (룩어헤드 없음), 동조 종목 특징
   events.py          이벤트 이후 수익률 계산 공통
-  analysis_counts.py / analysis_pre.py / analysis_post.py / analysis_streak.py   목표 1~4
+  analysis_counts.py / analysis_pre.py / analysis_post.py / analysis_streak.py / analysis_peak.py   목표 1~4
   model.py           목표 5 모델·워크포워드 백테스트·실험 기록
   live.py            실전 예측 저장·채점
   report.py          outputs/REPORT.md 생성

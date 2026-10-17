@@ -8,9 +8,12 @@
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import pickle
+import shutil
 import time
+from pathlib import Path
 import warnings
 from datetime import datetime
 
@@ -277,7 +280,9 @@ def rule_score(df: pd.DataFrame, target: str) -> np.ndarray:
 def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "2019-01-01", end: str | None = None,
                  freq: str = "QS", kind: str | None = None, params: dict | None = None, neg_rate: float = 0.1,
                  features: list[str] | None = None, exclude=(), train_years: float | None = None,
-                 verbose: bool = True, hard_neg: bool = False) -> pd.DataFrame:
+                 verbose: bool = True, hard_neg: bool = False, cache: Path | str | None = None) -> pd.DataFrame:
+    """cache: 기간별 예측을 parquet 로 저장하는 폴더. 같은 설정·데이터로 다시 부르면 끝난 기간은 건너뛴다
+    (긴 워크포워드가 중간에 끊겨도 이어서 돌리기 위함). 데이터나 설정이 바뀌면 폴더를 비운다."""
     kind = kind or default_kind()
     features = features or ALL_FEATURES
     df = feats_df
@@ -293,6 +298,18 @@ def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "201
                  "up_streak", "down_close", "down_streak", "up_touch", "ret1"]
     out = []
     y = df[target].to_numpy()
+    if cache:
+        cache = Path(cache)
+        sig = json.dumps({"rows": int(len(df)), "last": str(df["date"].max().date()), "n_pos": int(np.nansum(y)),
+                          "target": target, "kind": kind, "params": params, "neg_rate": neg_rate, "hard_neg": hard_neg,
+                          "train_years": train_years, "exclude": list(exclude), "start": start, "freq": freq,
+                          "features": hashlib.md5(",".join(features).encode()).hexdigest()},
+                         sort_keys=True, default=str)
+        sig_path = cache / "signature.json"
+        if cache.exists() and (not sig_path.exists() or sig_path.read_text() != sig):
+            shutil.rmtree(cache)
+        cache.mkdir(parents=True, exist_ok=True)
+        sig_path.write_text(sig)
     for ps, pe in zip(bounds[:-1], bounds[1:]):
         test_m = base & (dates >= np.datetime64(ps)) & (dates < np.datetime64(pe))
         if not test_m.any():
@@ -304,12 +321,18 @@ def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "201
         n_pos = int(np.nansum(y[train_m]))
         if n_pos < 20:
             continue
+        cached = cache / f"{ps:%Y%m%d}.parquet" if cache else None
+        if cached is not None and cached.exists():
+            out.append(pd.read_parquet(cached))
+            continue
         t = time.time()
         model = fit(df, target, features, kind, params, neg_rate, mask=train_m, hard_neg=hard_neg)
         test = df.loc[test_m, keep_cols + [c for c in features if c not in keep_cols]]
         pr = test[keep_cols].copy()
         pr["prob"] = predict_proba(model, test[features], neg_rate)
         out.append(pr)
+        if cached is not None:
+            pr.to_parquet(cached, index=False)
         if verbose:
             print(f"  {ps:%Y-%m}~{pe:%Y-%m}: 학습 {int(train_m.sum()):,}행(양성 {n_pos:,}) "
                   f"→ 예측 {len(test):,}행, {time.time() - t:.0f}초")

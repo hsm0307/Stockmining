@@ -14,12 +14,14 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from . import config
 from .features import V1_GROUPS
 from .improve import PRIMARY_K, paired
 from .model import TARGETS, evaluate, fit, predict_proba, rule_score, select_features, walk_forward
 from .viz import NEUTRAL, plt, save_fig, save_table
 
 STRATEGIES = {"전체 누적": None, "최근 1년": 1, "최근 3년": 3}
+SLUG = {"전체 누적": "all", "최근 1년": "y1", "최근 3년": "y3"}
 COLORS = {"전체 누적": "#1f77b4", "최근 1년": "#ff7f0e", "최근 3년": "#2ca02c", "평균 앙상블": "#d62728",
           "단순 규칙": NEUTRAL}
 KEEP = ["date", "code", "name", "market", "next_ret", "next_open_ret", "up_close", "up_streak", "down_close",
@@ -41,7 +43,8 @@ def compare_windows(feats: pd.DataFrame, target: str, start: str = "2017-01-01",
         if verbose:
             print(f"  [{TARGETS[target]}] {name} 워크포워드 ({start}~, {freq})", flush=True)
         preds[name] = walk_forward(feats, target, start, freq=freq, kind="lgbm", neg_rate=0.1, features=features,
-                                   train_years=years, verbose=False)
+                                   train_years=years, verbose=verbose,
+                                   cache=config.OUTPUT_DIR / "experiments" / "windows" / f"{target}_{SLUG[name]}")
     # ④ 앙상블: 같은 (날짜, 종목)의 확률 평균
     base = preds["전체 누적"].set_index(["date", "code"])
     probs = pd.concat({n: p.set_index(["date", "code"])["prob"] for n, p in preds.items()}, axis=1).dropna()

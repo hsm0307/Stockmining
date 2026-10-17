@@ -147,6 +147,24 @@ def test_evolve_steps(env, monkeypatch):
     assert len(st2["tested"]) > len(st["tested"]) - 1
 
 
+def test_walk_forward_cache(env, tmp_path):
+    """워크포워드 기간별 캐시: 같은 설정이면 저장된 예측을 그대로 쓰고, 설정이 바뀌면 캐시를 비운다."""
+    from krxlimit.features import V1_GROUPS, load_features
+    from krxlimit.model import select_features, walk_forward
+    f = load_features()
+    feats = select_features(only_groups=V1_GROUPS)
+    kw = dict(start="2022-07-01", kind="lgbm", features=feats, verbose=False, cache=tmp_path / "c")
+    a = walk_forward(f, "y_up", **kw)
+    files = sorted((tmp_path / "c").glob("*.parquet"))
+    assert len(files) >= 2
+    sig = (tmp_path / "c" / "signature.json").read_text()
+    b = walk_forward(f, "y_up", **kw)
+    pd.testing.assert_frame_equal(a, b)
+    assert sorted((tmp_path / "c").glob("*.parquet")) == files
+    walk_forward(f, "y_up", **{**kw, "neg_rate": 0.3})  # 설정이 다르면 서명이 바뀌고 캐시를 새로 만든다
+    assert (tmp_path / "c" / "signature.json").read_text() != sig
+
+
 def test_windows(env):
     """학습 기간 비교(전체 누적/1년/3년/앙상블)와 기간별 교차표가 끝까지 도는지."""
     from krxlimit import windows

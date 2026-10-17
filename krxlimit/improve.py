@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from datetime import datetime
 
 import numpy as np
@@ -66,11 +67,17 @@ def _merge(cfg: dict, change: dict) -> dict:
 
 
 def run_cfg(feats_df: pd.DataFrame, target: str, name: str, cfg: dict, start: str, end: str | None,
-            freq: str, stage: str, keep_preds: bool = False) -> dict:
+            freq: str, stage: str, keep_preds: bool = False, resumable: bool = False) -> dict:
+    """resumable=True 이면 기간별 예측을 디스크에 남겨 두어, 긴 워크포워드가 중간에 끊겨도 다시 부르면 이어서 돈다.
+    평가가 끝나면 그 임시 파일은 지운다."""
     features = select_features(only_groups=cfg["groups"])
+    cache = _exp_dir(target) / "wf" / f"{stage}__{name}" if resumable else None
     preds = walk_forward(feats_df, target, start, end, freq=freq, kind=cfg["kind"], params=cfg["params"] or None,
                          neg_rate=cfg["neg_rate"], features=features, exclude=tuple(cfg["exclude"]),
-                         train_years=cfg["train_years"], verbose=False, hard_neg=cfg.get("hard_neg", False))
+                         train_years=cfg["train_years"], verbose=False, hard_neg=cfg.get("hard_neg", False),
+                         cache=cache)
+    if cache is not None:
+        shutil.rmtree(cache, ignore_errors=True)
     ev = evaluate(preds, target)
     hits = ev["daily"][["n", "양성"] + [c for c in ev["daily"].columns if c.startswith("hit@")]]
     hits.to_parquet(_exp_dir(target) / f"{stage}__{name}.parquet")
