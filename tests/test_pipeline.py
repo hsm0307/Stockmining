@@ -145,3 +145,14 @@ def test_evolve_steps(env, monkeypatch):
     for _ in range(2):  # 체계적 후보를 다 쓰면 무작위 변이로 계속
         ev.step(st2, minutes_left=1e9)
     assert len(st2["tested"]) > len(st["tested"]) - 1
+
+
+def test_windows(env):
+    """학습 기간 비교(전체 누적/1년/3년/앙상블)와 기간별 교차표가 끝까지 도는지."""
+    from krxlimit import windows
+    from krxlimit.features import load_features
+    f = load_features()
+    res = windows.compare_windows(f, "y_up", start="2021-07-01", verbose=False)
+    assert set(res["table"]["전략"]) == {"전체 누적", "최근 1년", "최근 3년", "평균 앙상블", "단순 규칙"}
+    cross = windows.cross_period(f, "y_up", verbose=False)
+    windows.plot(res, cross, "y_up")
