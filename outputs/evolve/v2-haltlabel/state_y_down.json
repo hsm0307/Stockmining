@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 7,
+ "iteration": 8,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "y_down_v2",
@@ -50,7 +50,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 6,
+ "queue_pos": 7,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -267,11 +267,42 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "24433dfb60": {
+   "label": "+overheat",
+   "P@k": 0.0062500000931322575,
+   "AP": 0.014691308043708837,
+   "gain": -8.72093005455099e-05,
+   "t": -0.5221225085298908,
+   "accepted": false,
+   "time": "10-18 19:22",
+   "base": "3d1ff1d4a5",
+   "cfg": {
+    "kind": "bag3",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_down: try #7 +market_alert (dP@20=+0.0000, t=+0.00)",
+ "last_event": "evolve y_down: try #8 +overheat (dP@20=-0.0001, t=-0.52)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
