@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 11,
+ "iteration": 12,
  "dev_champion": {
   "key": "92de754fb7",
   "label": "+pref_link",
@@ -52,7 +52,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 7,
+ "queue_pos": 8,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -368,6 +368,37 @@
     "train_years": null,
     "hard_neg": true
    }
+  },
+  "a07847a014": {
+   "label": "hardneg+neg0.03",
+   "P@k": 0.07005813717842102,
+   "AP": 0.04079095817333978,
+   "gain": -0.007790698204189539,
+   "t": -6.603310421337008,
+   "accepted": false,
+   "time": "10-18 02:21",
+   "base": "92de754fb7",
+   "cfg": {
+    "kind": "bag3",
+    "params": {},
+    "neg_rate": 0.03,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": true
+   }
   }
  },
  "versions": [
@@ -394,7 +425,7 @@
    "result": "승격 → y_up_v3"
   }
  ],
- "last_event": "evolve y_up: try #10 hardneg (dP@10=-0.0046, t=-4.29)",
+ "last_event": "evolve y_up: try #11 hardneg+neg0.03 (dP@10=-0.0078, t=-6.60)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
