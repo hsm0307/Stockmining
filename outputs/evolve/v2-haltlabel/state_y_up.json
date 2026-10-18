@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 3,
+ "iteration": 4,
  "dev_champion": {
   "key": "92de754fb7",
   "label": "+pref_link",
@@ -28,8 +28,8 @@
   "score": 0.07784883677959442
  },
  "production": {
-  "name": "y_up_v2",
-  "key": "3d1ff1d4a5",
+  "name": "y_up_v3",
+  "key": "92de754fb7",
   "cfg": {
    "kind": "bag3",
    "params": {},
@@ -44,7 +44,8 @@
     "size_type",
     "market",
     "peer",
-    "calendar"
+    "calendar",
+    "pref_link"
    ],
    "exclude": [],
    "train_years": null,
@@ -52,7 +53,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
    "label": "y_up_v2(출발점)",
@@ -146,9 +147,31 @@
    }
   }
  },
- "versions": [],
- "validations": [],
- "last_event": "evolve y_up: try #3 +pref_link (dP@10=+0.0009, t=+1.40, accepted)",
+ "versions": [
+  {
+   "name": "y_up_v3",
+   "time": "2026-10-18 01:31",
+   "label": "+pref_link",
+   "hold_gain": 0.0005917160888202488,
+   "hold_t": 0.5342399730161908,
+   "ten_gain": 0.0011268781963735819,
+   "hold_P": 0.1199704110622406
+  }
+ ],
+ "validations": [
+  {
+   "time": "2026-10-18 01:31",
+   "production": "y_up_v2",
+   "challenger": "+pref_link",
+   "challenger_key": "92de754fb7",
+   "hold_gain": 0.0005917160888202488,
+   "hold_t": 0.5342399730161908,
+   "ten_gain": 0.0011268781963735819,
+   "ten_t": 2.066149734885715,
+   "result": "승격 → y_up_v3"
+  }
+ ],
+ "last_event": "evolve y_up: 10y validation — 승격 → y_up_v3 (holdout dP@10=+0.0006, t=+0.53)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
