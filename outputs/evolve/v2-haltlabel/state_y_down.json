@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 55,
+ "iteration": 56,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "y_down_v2",
@@ -1731,11 +1731,41 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "887f048cfc": {
+   "label": "num_leaves=31",
+   "P@k": 0.006337209139019251,
+   "AP": 0.02010022258031731,
+   "gain": 0.0,
+   "t": 0.0,
+   "accepted": false,
+   "time": "10-19 16:30",
+   "base": "3d1ff1d4a5",
+   "cfg": {
+    "kind": "bag3",
+    "params": null,
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_down: try #54 neg=0.03 (dP@20=+0.0000, t=+0.00)",
+ "last_event": "evolve y_down: try #55 num_leaves=31 (dP@20=+0.0000, t=+0.00)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
