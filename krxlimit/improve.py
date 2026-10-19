@@ -60,9 +60,13 @@ def _exp_dir(target: str):
 
 
 def _merge(cfg: dict, change: dict) -> dict:
+    """설정에 변경을 덮어쓴다. 기본값과 같은 하이퍼파라미터는 지워서, 같은 뜻의 설정이 다른 키로 중복 평가되지 않게 한다."""
+    from .model import LGBM_PARAMS
     out = json.loads(json.dumps(cfg))
     for k, v in change.items():
         out[k] = {**out.get(k, {}), **v} if k == "params" and v else v
+    if out.get("params"):
+        out["params"] = {k: v for k, v in out["params"].items() if LGBM_PARAMS.get(k) != v} or None
     return out
 
 
