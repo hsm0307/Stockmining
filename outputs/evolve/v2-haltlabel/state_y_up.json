@@ -2,13 +2,12 @@
  "target": "y_up",
  "iteration": 60,
  "dev_champion": {
-  "key": "0bd946a4c2",
-  "label": "years=3 & reg_lambda=1.0",
+  "key": "fe91875e23",
+  "label": "y_up_v4",
   "cfg": {
    "kind": "bag3",
    "params": {
-    "num_leaves": 63,
-    "reg_lambda": 1.0
+    "num_leaves": 63
    },
    "neg_rate": 0.1,
    "groups": [
@@ -25,10 +24,10 @@
     "pref_link"
    ],
    "exclude": [],
-   "train_years": 3,
+   "train_years": null,
    "hard_neg": false
   },
-  "score": 0.08029069751501083
+  "score": null
  },
  "production": {
   "name": "y_up_v4",
@@ -58,7 +57,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
    "label": "y_up_v2(출발점)",
@@ -2009,6 +2008,12 @@
    "ten_gain": 0.0004173621709924191,
    "ten_t": 0.6536421497306504,
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
+  },
+  {
+   "label": "years=3 & reg_lambda=1.0",
+   "key": "0bd946a4c2",
+   "result": "skipped: same model as rejected 'recent3y' (reg_lambda=1.0 is the default)",
+   "time": "10-19 11:00"
   }
  ],
  "last_event": "evolve y_up: try #57 years=3 & reg_lambda=1.0 (dP@10=+0.0018, t=+2.67, accepted)",
