@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 48,
+ "iteration": 49,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "y_down_v2",
@@ -1551,7 +1551,7 @@
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_down: try #48 neg=0.03 & spac 제외 (dP@20=-0.0001, t=-0.30)",
+ "last_event": "evolve y_down: 10y baseline of y_down_v2 P@20=0.0074",
  "ten_baseline": [
   {
    "기간": "10년 전체",
