@@ -1,0 +1,50 @@
+{
+  "reason": "Cluster crash fraction treated missing future returns as non-crashes",
+  "pre_followup_source_sha256": "bc277087f043b70eb64cd45fa8e458ea031683aeeb7facb9282f78a1d5f02dc6",
+  "post_followup_source_sha256": "d70e57b47446f81113c05211883c7bdb04ce5b80b947c80a99bd0e90abc65d0a",
+  "regression_test_file": "tests/test_pre_missing_outcomes.py",
+  "regression_tests_passed": 3,
+  "status": "recomputed",
+  "pre_followup_tables": {
+    "g2_accum_post_up.csv": "3607bce4eb49d8c5e0a1a5b044d2dbf3e479a901ae33b9bfef7b989ded18e073",
+    "g2_accum_score_dist_down.csv": "14ac32601458f04154d9976bb158b5a598e37034523a9a33cbbb110cfac6f4b2",
+    "g2_accum_flags_down.csv": "ede26f09ae470cdb3c35a430e2e375ec524120e22d517479b8fdca5eb1b59e4d",
+    "g2_cluster_silhouette.csv": "e7d52b0428fa902cf9736e9ea99bd631456d843315d0075b1943e59d4b443c4d",
+    "g2_accum_post_down.csv": "8e1599f902073ac665308fecafe7455eeec9eeb81cc20665bf9906161212dff5",
+    "g2_event_study_paths.csv": "10e958628382ed772db7df3456482a9a8938471d8bc420465d673fc58dab047c",
+    "g2_compare_down.csv": "eb9e26a017753fd48489aabb7ddb0c3af25e5d1e6457849a74ca1414a597bc79",
+    "g2_accum_flags_up.csv": "a13a2e86ca11cbed72c0c55ec869821c840ee93533b96abe1e7dd1c2398de228",
+    "g2_compare_up.csv": "bf84dbeb4ee28a940b3d0db267e5768e6b28504abda3152b7522b2e1f966e012",
+    "g2_accum_score_dist_up.csv": "652b8bf46d4111f677f5e237cc8f04c5f84f0210b64e24ca502dfaf624c89d85",
+    "g2_clusters_up.csv": "5b002db7ba65cd6231faa1208d3ca5db7ae5005dedc9e7872d911d76ab785aec"
+  },
+  "applied_after_model_training": true,
+  "applied_date": "2026-10-20",
+  "recomputed_date": "2026-10-20",
+  "checks": {
+    "g2_accum_post_up.csv": "identical",
+    "g2_accum_score_dist_down.csv": "identical",
+    "g2_accum_flags_down.csv": "identical",
+    "g2_cluster_silhouette.csv": "identical",
+    "g2_accum_post_down.csv": "identical",
+    "g2_event_study_paths.csv": "identical",
+    "g2_compare_down.csv": "identical",
+    "g2_accum_flags_up.csv": "identical",
+    "g2_compare_up.csv": "identical",
+    "g2_accum_score_dist_up.csv": "identical",
+    "g2_clusters_up.csv": "Same clusters/features/medians; corrected rate and explicit denominator columns"
+  },
+  "post_followup_tables": {
+    "g2_accum_post_up.csv": "3607bce4eb49d8c5e0a1a5b044d2dbf3e479a901ae33b9bfef7b989ded18e073",
+    "g2_accum_score_dist_down.csv": "14ac32601458f04154d9976bb158b5a598e37034523a9a33cbbb110cfac6f4b2",
+    "g2_accum_flags_down.csv": "ede26f09ae470cdb3c35a430e2e375ec524120e22d517479b8fdca5eb1b59e4d",
+    "g2_cluster_silhouette.csv": "e7d52b0428fa902cf9736e9ea99bd631456d843315d0075b1943e59d4b443c4d",
+    "g2_accum_post_down.csv": "8e1599f902073ac665308fecafe7455eeec9eeb81cc20665bf9906161212dff5",
+    "g2_event_study_paths.csv": "10e958628382ed772db7df3456482a9a8938471d8bc420465d673fc58dab047c",
+    "g2_compare_down.csv": "eb9e26a017753fd48489aabb7ddb0c3af25e5d1e6457849a74ca1414a597bc79",
+    "g2_accum_flags_up.csv": "a13a2e86ca11cbed72c0c55ec869821c840ee93533b96abe1e7dd1c2398de228",
+    "g2_compare_up.csv": "bf84dbeb4ee28a940b3d0db267e5768e6b28504abda3152b7522b2e1f966e012",
+    "g2_accum_score_dist_up.csv": "652b8bf46d4111f677f5e237cc8f04c5f84f0210b64e24ca502dfaf624c89d85",
+    "g2_clusters_up.csv": "0527bd20dfee2e99c5b86f3a41d1395521de0afa9ba9268ed5f5eef813b33b09"
+  }
+}

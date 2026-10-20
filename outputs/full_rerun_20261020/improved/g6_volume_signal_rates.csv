@@ -1,0 +1,13 @@
+﻿population,market,observation_count,evaluable_count,signal_count,no_signal_count,unknown_count,signal_rate_pct,unknown_status_counts
+all_observed_stock_days,ALL,6400556,6163198,2910874,3252324,237358,47.22992835862161,"{'zero_baseline_in_pre20': 161689, 'missing_history_observation': 75669}"
+all_observed_stock_days,KOSDAQ,3959339,3760468,1871092,1889376,198871,49.75689196131971,"{'zero_baseline_in_pre20': 134760, 'missing_history_observation': 64111}"
+all_observed_stock_days,KOSPI,2441217,2402730,1039782,1362948,38487,43.275024659449876,"{'zero_baseline_in_pre20': 26929, 'missing_history_observation': 11558}"
+label_eligible_stock_days,ALL,6195779,6112714,2890482,3222232,83065,47.28639357247861,"{'missing_history_observation': 74169, 'zero_baseline_in_pre20': 8896}"
+label_eligible_stock_days,KOSDAQ,3793421,3722856,1856910,1865946,70565,49.87864155906111,"{'missing_history_observation': 62790, 'zero_baseline_in_pre20': 7775}"
+label_eligible_stock_days,KOSPI,2402358,2389858,1033572,1356286,12500,43.24825993845659,"{'missing_history_observation': 11379, 'zero_baseline_in_pre20': 1121}"
+close_up,ALL,13891,13209,9640,3569,682,72.98054356877886,"{'missing_history_observation': 540, 'zero_baseline_in_pre20': 142}"
+close_up,KOSDAQ,9544,8971,6401,2570,573,71.35213465611415,"{'missing_history_observation': 467, 'zero_baseline_in_pre20': 106}"
+close_up,KOSPI,4347,4238,3239,999,109,76.42756016989146,"{'missing_history_observation': 73, 'zero_baseline_in_pre20': 36}"
+close_down,ALL,1119,1039,700,339,80,67.37247353224254,"{'zero_baseline_in_pre20': 56, 'missing_history_observation': 24}"
+close_down,KOSDAQ,855,784,520,264,71,66.3265306122449,"{'zero_baseline_in_pre20': 47, 'missing_history_observation': 24}"
+close_down,KOSPI,264,255,180,75,9,70.58823529411765,{'zero_baseline_in_pre20': 9}
