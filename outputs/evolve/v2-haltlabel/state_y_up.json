@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 95,
+ "iteration": 96,
  "dev_champion": {
   "key": "fe91875e23",
   "label": "y_up_v4",
@@ -3134,7 +3134,7 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_up: try #90 -volume (dP@10=-0.0012, t=-1.57)",
+ "last_event": "evolve y_up: 10y baseline of y_up_v4 P@10=0.0898",
  "ten_baseline": [
   {
    "기간": "10년 전체",
