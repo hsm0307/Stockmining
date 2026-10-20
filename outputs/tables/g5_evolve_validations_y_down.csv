@@ -1,1 +1,2 @@
-﻿
+﻿time,production,challenger,challenger_key,hold_gain,hold_t,ten_gain,ten_t,result
+2026-10-20 02:28,y_down_v2,neg=0.2 & neg=0.2,e17cdf036c,-7e-05,-0.25802,6e-05,0.40445,기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림
