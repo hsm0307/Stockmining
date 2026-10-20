@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 101,
+ "iteration": 102,
  "dev_champion": {
   "key": "3d1ff1d4a5",
   "label": "y_down_v2",
@@ -3064,6 +3064,37 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "edaad770b9": {
+   "label": "+overheat & kind=lgbm",
+   "P@k": 0.006075581535696983,
+   "AP": 0.01114726602369795,
+   "gain": -0.00026162792346440256,
+   "t": -1.3419531688914608,
+   "accepted": false,
+   "time": "10-20 17:53",
+   "base": "3d1ff1d4a5",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {},
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
@@ -3091,7 +3122,7 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_down: try #97 -size_type & reg_lambda=1.0 (dP@20=-0.0001, t=-0.45)",
+ "last_event": "evolve y_down: try #98 +overheat & kind=lgbm (dP@20=-0.0003, t=-1.34)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
