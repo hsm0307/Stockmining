@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "suite": "Complete repository pytest suite including three new missing-outcome regressions",
+  "passed": 107,
+  "warnings": 7,
+  "failed": 0,
+  "duration_seconds": 62.19,
+  "test_completed_utc": "2026-10-17T09:28:49.304308+00:00",
+  "verified_on": "2026-10-20",
+  "execution": "pytest.main([\"-q\"]), synthetic fixtures only, test-process LightGBM/RANK n_jobs=1 and threadpool_limits(1)",
+  "raw_log": "work/full_rerun/followup_full_tests.log",
+  "raw_log_sha256": "e81eb833590cfadbbd06e99e22ebe1a8d358742436d624d86b361ae59b53e5c2",
+  "raw_log_publishable": false,
+  "warning_summary": {
+    "matplotlib_date_locator": 2,
+    "empty_synthetic_window_division": 5
+  },
+  "tested_file_sha256": {
+    "krxlimit/analysis_pre.py": "d70e57b47446f81113c05211883c7bdb04ce5b80b947c80a99bd0e90abc65d0a",
+    "tests/test_pre_missing_outcomes.py": "38a426199883908e803a9490a214c2cd32234ed68d7a187169c5872d5ff49d22"
+  },
+  "current_file_sha256": {
+    "krxlimit/analysis_pre.py": "d70e57b47446f81113c05211883c7bdb04ce5b80b947c80a99bd0e90abc65d0a",
+    "tests/test_pre_missing_outcomes.py": "38a426199883908e803a9490a214c2cd32234ed68d7a187169c5872d5ff49d22"
+  },
+  "tested_files_unchanged": true,
+  "frozen_analysis_source_modified_by_reviewer": false
+}

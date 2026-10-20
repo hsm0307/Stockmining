@@ -1,0 +1,215 @@
+{
+  "historical_baseline_commit": "ce87af8d91c3eebd3410d3f33028f2028da48d87",
+  "status": "complete",
+  "validation": {
+    "y_up": {
+      "coverage": {
+        "complete": true,
+        "folds": 40,
+        "prediction_rows": 5694908,
+        "prediction_days": 2395,
+        "first_prediction_date": "2017-01-02",
+        "last_prediction_date": "2026-10-13",
+        "missing_folds": [],
+        "all_fold_input_row_digests_match": true
+      },
+      "seed_prediction_checks": 120,
+      "member_probability_values_compared": 17084724,
+      "max_abs_probability_difference": 0.0,
+      "all_12_scope_evaluation_outputs_exact": true,
+      "input_signature": "3cbc7839608d16e70ce83c6429456f85fca1b9ca92f5fdca00ade431b0d2373a",
+      "runtime": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.3",
+        "scikit-learn": "1.9.0",
+        "lightgbm": "4.7.0"
+      },
+      "python": "3.14.6",
+      "n_jobs": 4,
+      "shared_feature_and_fitted_model_method": "Single deterministic feature build shared by versions after all panel column values and feature implementation parity were verified; not independently built twice.",
+      "model_function_equivalence": {
+        "model_functions_ast_identical": {
+          "fit": true,
+          "make_model": true,
+          "_fit_ranker": true,
+          "sample_mask": true,
+          "_downsample_mask": true,
+          "predict_proba": true,
+          "adjust_prob": true,
+          "HardNegModel": true,
+          "EnsembleModel": true,
+          "CalibratedRanker": true,
+          "_refit_all": true,
+          "_refit_lgbm": true,
+          "_refit_ranker": true,
+          "evaluate": true,
+          "rule_score": true,
+          "universe_mask": true,
+          "hard_mask": true,
+          "train_final": true
+        },
+        "other_source_identical": {
+          "features.py": true,
+          "alerts.py": true,
+          "config.py": true
+        },
+        "model_constants_ast_identical": {
+          "LGBM_PARAMS": true,
+          "RANK_PARAMS": true,
+          "KS": true
+        },
+        "all_training_prediction_evaluation_identical": true
+      }
+    },
+    "y_down": {
+      "coverage": {
+        "complete": true,
+        "folds": 40,
+        "prediction_rows": 5694908,
+        "prediction_days": 2395,
+        "first_prediction_date": "2017-01-02",
+        "last_prediction_date": "2026-10-13",
+        "missing_folds": [],
+        "all_fold_input_row_digests_match": true
+      },
+      "seed_prediction_checks": 120,
+      "member_probability_values_compared": 17084724,
+      "max_abs_probability_difference": 0.0,
+      "all_12_scope_evaluation_outputs_exact": true,
+      "input_signature": "272fce265232d9975875adc9c546416072daf289624dcc7404953ae48b70aa66",
+      "runtime": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.3",
+        "scikit-learn": "1.9.0",
+        "lightgbm": "4.7.0"
+      },
+      "python": "3.14.6",
+      "n_jobs": 4,
+      "shared_feature_and_fitted_model_method": "Single deterministic feature build shared by versions after all panel column values and feature implementation parity were verified; not independently built twice.",
+      "model_function_equivalence": {
+        "model_functions_ast_identical": {
+          "fit": true,
+          "make_model": true,
+          "_fit_ranker": true,
+          "sample_mask": true,
+          "_downsample_mask": true,
+          "predict_proba": true,
+          "adjust_prob": true,
+          "HardNegModel": true,
+          "EnsembleModel": true,
+          "CalibratedRanker": true,
+          "_refit_all": true,
+          "_refit_lgbm": true,
+          "_refit_ranker": true,
+          "evaluate": true,
+          "rule_score": true,
+          "universe_mask": true,
+          "hard_mask": true,
+          "train_final": true
+        },
+        "other_source_identical": {
+          "features.py": true,
+          "alerts.py": true,
+          "config.py": true
+        },
+        "model_constants_ast_identical": {
+          "LGBM_PARAMS": true,
+          "RANK_PARAMS": true,
+          "KS": true
+        },
+        "all_training_prediction_evaluation_identical": true
+      }
+    }
+  },
+  "default101_validation": {
+    "y_up": {
+      "coverage": {
+        "complete": true,
+        "folds": 40,
+        "prediction_rows": 5694908,
+        "prediction_days": 2395,
+        "first_prediction_date": "2017-01-02",
+        "last_prediction_date": "2026-10-13",
+        "all_fold_input_row_digests_match": true
+      },
+      "seed_prediction_checks": 40,
+      "member_probability_values_compared": 5694908,
+      "max_abs_probability_difference": 0.0,
+      "all_4_scope_evaluation_outputs_exact": true,
+      "input_signature": "a80076e6018aad93aff1224c3a5cab3997d3ac6988892dc9d5ba992ed554a2ca",
+      "runtime": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.3",
+        "scikit-learn": "1.9.0",
+        "lightgbm": "4.7.0"
+      },
+      "n_jobs": 4,
+      "definition": "Current default: LGBM, all 101 features, neg_rate=.1, no exclusions, seed42"
+    },
+    "y_down": {
+      "coverage": {
+        "complete": true,
+        "folds": 40,
+        "prediction_rows": 5694908,
+        "prediction_days": 2395,
+        "first_prediction_date": "2017-01-02",
+        "last_prediction_date": "2026-10-13",
+        "all_fold_input_row_digests_match": true
+      },
+      "seed_prediction_checks": 40,
+      "member_probability_values_compared": 5694908,
+      "max_abs_probability_difference": 0.0,
+      "all_4_scope_evaluation_outputs_exact": true,
+      "input_signature": "a80076e6018aad93aff1224c3a5cab3997d3ac6988892dc9d5ba992ed554a2ca",
+      "runtime": {
+        "numpy": "2.4.6",
+        "pandas": "3.0.3",
+        "scikit-learn": "1.9.0",
+        "lightgbm": "4.7.0"
+      },
+      "n_jobs": 4,
+      "definition": "Current default: LGBM, all 101 features, neg_rate=.1, no exclusions, seed42"
+    }
+  },
+  "notes": [
+    "2016년은 첫 학습용이며 분기별 워크포워드 예측 평가는 2017년부터다. 2019년 이후 비교는 동일 분기 예측에서 추출한다.",
+    "현재 재실행 원자료는 2026-10-14까지이고 다음 거래일 라벨을 아는 예측 기준일은 2026-10-13까지다. 기존 게시 결과의 원자료는 2026-10-15까지다.",
+    "기존 결과의 예측 마지막 날짜 2026-10-14는 원자료 종단과 다음날 라벨 정의로 추론한 값이며, 커밋된 원시 예측파일로 직접 확인한 값이 아니다.",
+    "과거 게시 결과와 재실행 결과의 차이에는 데이터 종단, 원자료 개정 여부, 표본 적격성·당시 실행 소스 및 실행 라이브러리와 스레드 차이가 포함될 수 있다. 당시 원자료·특징·예측 파일이 커밋되지 않아 구성요소를 완전히 분리할 수 없다. 이 차이를 PR의 인과효과로 해석하지 않는다.",
+    "재실행 종단이 하루 더 이른데도 2019년 이후 적격 관측 행은 기존 게시 표보다 많다. 따라서 게시 결과 대비 차이를 단순히 마지막 하루 차이로 설명할 수 없으며, 그 이상의 표본·과거 실행 차이는 미해명 상태다.",
+    "두 코드 버전의 원자료 패널 전체 열 값/순서/스키마 및 특징 계산 코드가 같음을 확인하여 특징을 한 번 계산하고 공유했다. 독립적으로 특징을 두 번 계산한 실험은 아니다.",
+    "학습/추론/평가 함수 AST와 모델 상수를 대조했다. 동일하게 학습한 모델에서 구/신 추론 함수를 실제 호출하고, 구/신 평가 함수를 실제 호출하여 일치 여부를 확인했다.",
+    "v1은 72개 특징의 LGBM, 커밋된 v2는 같은 72개 특징의 bag3다. bag3 첫 구성원은 동일한 시드42의 v1 학습 결과를 공유했고 시드43/44는 별도 학습했다.",
+    "2024년 이후 구간은 과거 모델 선택과 승격에 이미 사용되었으므로 독립적인 미사용 검증 구간이 아니다.",
+    "원래 게시 표는 반올림되어 있다. v2 기간 표의 5자리 비율 반올림은 최대 약 0.0005%p의 표시 오차를 만든다. 연도 표는 4자리여서 최대 약 0.005%p다.",
+    "수익률은 기존 모델 평가의 비용가정(왕복 0.25%)과 일별 상위 k개 평균을 유지한다. 실제 상한가 주문 체결 가능성이나 공식 기업행동 총수익을 보장하지 않는다."
+  ],
+  "historical_population_discrepancy": [
+    {
+      "target": "y_up",
+      "scope": "2019_full",
+      "published_rows": 4665737,
+      "rerun_rows": 4666887,
+      "delta_rows": 1150,
+      "published_days": 1909,
+      "rerun_days": 1908,
+      "beyond_endpoint_difference_unexplained": true,
+      "original_raw_features_predictions_available": false
+    },
+    {
+      "target": "y_down",
+      "scope": "2019_full",
+      "published_rows": 4665737,
+      "rerun_rows": 4666887,
+      "delta_rows": 1150,
+      "published_days": 1909,
+      "rerun_days": 1908,
+      "beyond_endpoint_difference_unexplained": true,
+      "original_raw_features_predictions_available": false
+    }
+  ],
+  "feature_comparison_rows": 240,
+  "historical_comparison_rows": 132,
+  "same_data_comparison_rows": 480,
+  "historical_annual_comparison_rows": 40
+}

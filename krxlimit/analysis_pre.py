@@ -265,7 +265,15 @@ def _cluster(ev: pd.DataFrame, k_range=range(3, 7)) -> pd.DataFrame:
     prof = ev.loc[X.index, cols + ["post_1m", "post_3m", "post_6m"]].groupby(lab).median()
     prof.insert(0, "n", lab.value_counts().sort_index())
     prof.insert(1, "특징(정규점수 중심 상위3)", desc)
-    prof["급락비율_3m(≤-30%)"] = ev.loc[X.index, "post_3m"].le(-0.3).groupby(lab).mean()
+    # Missing future returns are unknown outcomes, not non-crashes. Keep the
+    # full cluster size above and expose the observed denominator separately.
+    post3 = ev.loc[X.index, "post_3m"]
+    observed = post3.notna().groupby(lab).sum()
+    crashes = post3.le(-0.3).groupby(lab).sum()
+    prof["3m수익률관측수"] = observed
+    prof["3m수익률미관측수"] = prof["n"] - observed
+    prof["급락건수_3m(≤-30%)"] = crashes
+    prof["급락비율_3m(≤-30%)"] = crashes / observed.replace(0, np.nan)
     prof.attrs["silhouette"] = scores
     save_table(prof.round(4).reset_index(), "g2_clusters_up")
     save_table(pd.DataFrame({"k": list(scores), "silhouette": list(scores.values())}), "g2_cluster_silhouette")
