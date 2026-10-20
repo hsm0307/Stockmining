@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 116,
+ "iteration": 117,
  "dev_champion": {
   "key": "fe91875e23",
   "label": "y_up_v4",
@@ -3689,6 +3689,40 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "ac7189725e": {
+   "label": "learning_rate=0.02 & hard_neg=True",
+   "P@k": 0.07401163130998611,
+   "AP": 0.056169890631172496,
+   "gain": -0.004476744215935469,
+   "t": -4.4037353764259635,
+   "accepted": false,
+   "time": "10-20 12:30",
+   "base": "fe91875e23",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.02
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": true
+   }
   }
  },
  "versions": [
@@ -3774,7 +3808,7 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_up: try #109 num_leaves=127 & years=3 (dP@10=+0.0006, t=+0.76)",
+ "last_event": "evolve y_up: try #110 learning_rate=0.02 & hard_neg=True (dP@10=-0.0045, t=-4.40)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
