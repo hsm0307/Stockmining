@@ -1,0 +1,13 @@
+{
+  "baseline_commit": "ce87af8d91c3eebd3410d3f33028f2028da48d87",
+  "improved_commit": "ae8c7336a55add47d8aa9bdd2c3eaa3da9eaf7ef",
+  "merge_commit": "0b91b5f16820f98b5e4941b61eb860cf48d9a58e",
+  "event_start": "2016-01-01",
+  "data_end": "2026-10-14",
+  "volume_warmup_start": "2015-10-01",
+  "notes": [
+    "Source snapshots isolated from original outputs",
+    "Both versions use identical original API records; original GitHub reports include one extra day",
+    "No raw market data or credentials will be published"
+  ]
+}

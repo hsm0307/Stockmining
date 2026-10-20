@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "base_commit": "7e80c4bd1f6b12e3c56d81def8c6a4523549020c",
+  "base_tree": "7247553a3a57e5c9722d09edb7cc23acd3842ab3",
+  "downloaded_files": 44,
+  "downloaded_python_files": 39,
+  "all_remote_blob_sha_verified": true,
+  "tests": {
+    "passed": 107,
+    "failed": 0,
+    "warnings": 7,
+    "seconds": 60.62,
+    "execution": "Complete pytest suite; synthetic fixtures only; test process LightGBM/RANK n_jobs=1 and threadpool_limits(1)",
+    "completed_utc": "2026-10-20T02:20:19.693982+00:00"
+  },
+  "test_log_publishable": false,
+  "base_analysis_pre_equivalence": {
+    "exact": false,
+    "ignoring_final_newlines": true,
+    "ast_identical": true
+  },
+  "published_patch_ast_matches_tested_patch": true,
+  "published_preserves_remote_terminal_newline": true,
+  "only_published_tested_difference": "One extra terminal blank line from older local snapshot removed; AST and all other bytes identical.",
+  "published_file_sha256": {
+    "krxlimit/analysis_pre.py": "f084ffeee1161ff842a7b6cf24ce14c940b33cd868c97f4a43cae8008f90bc6d",
+    "tests/test_pre_missing_outcomes.py": "38a426199883908e803a9490a214c2cd32234ed68d7a187169c5872d5ff49d22"
+  },
+  "tested_file_sha256": {
+    "krxlimit/analysis_pre.py": "d70e57b47446f81113c05211883c7bdb04ce5b80b947c80a99bd0e90abc65d0a",
+    "tests/test_pre_missing_outcomes.py": "38a426199883908e803a9490a214c2cd32234ed68d7a187169c5872d5ff49d22"
+  },
+  "previous_workspace_and_frozen_snapshots_modified_by_reviewer": false,
+  "publishable_files_secret_scan": "passed; raw execution logs excluded"
+}
