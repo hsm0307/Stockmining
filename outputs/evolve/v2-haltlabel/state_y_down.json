@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 169,
+ "iteration": 170,
  "dev_champion": {
   "key": "c1eb20ecbc",
   "label": "neg=0.05 & learning_rate=0.02",
@@ -54,7 +54,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 11,
+ "queue_pos": 12,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -5138,6 +5138,39 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "3a8dcf43a1": {
+   "label": "minchild50",
+   "P@k": 0.006366278976202011,
+   "AP": 0.01424088130991174,
+   "gain": -0.00020348838006611913,
+   "t": -1.2187155419462061,
+   "accepted": false,
+   "time": "10-21 23:18",
+   "base": "c1eb20ecbc",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02,
+     "min_child_samples": 50
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -5186,7 +5219,7 @@
    "result": "승격 → y_down_v3"
   }
  ],
- "last_event": "evolve y_down: try #163 leaves63 (dP@20=-0.0001, t=-0.41)",
+ "last_event": "evolve y_down: try #164 minchild50 (dP@20=-0.0002, t=-1.22)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
