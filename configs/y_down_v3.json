@@ -1,0 +1,31 @@
+{
+  "name": "y_down_v3",
+  "target": "y_down",
+  "kind": "bag3",
+  "params": {
+    "learning_rate": 0.02
+  },
+  "neg_rate": 0.05,
+  "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+  ],
+  "exclude": [],
+  "train_years": null,
+  "hard_neg": false,
+  "dev_label": "neg=0.05 & learning_rate=0.02",
+  "holdout_gain_P@20": 0.0003681885136757046,
+  "holdout_t": 1.0000000345947584,
+  "ten_year_gain": 0.0002501042326912284,
+  "ten_year_t": 1.4774620876757731,
+  "data_version": "v2-haltlabel",
+  "created": "2026-10-21 17:45"
+}

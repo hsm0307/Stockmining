@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 157,
+ "iteration": 158,
  "dev_champion": {
   "key": "c1eb20ecbc",
   "label": "neg=0.05 & learning_rate=0.02",
@@ -29,12 +29,14 @@
   "score": 0.0065697673708200455
  },
  "production": {
-  "name": "y_down_v2",
-  "key": "3d1ff1d4a5",
+  "name": "y_down_v3",
+  "key": "c1eb20ecbc",
   "cfg": {
    "kind": "bag3",
-   "params": {},
-   "neg_rate": 0.1,
+   "params": {
+    "learning_rate": 0.02
+   },
+   "neg_rate": 0.05,
    "groups": [
     "candle",
     "momentum",
@@ -53,7 +55,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
    "label": "y_down_v2(출발점)",
@@ -4777,7 +4779,17 @@
    }
   }
  },
- "versions": [],
+ "versions": [
+  {
+   "name": "y_down_v3",
+   "time": "2026-10-21 17:45",
+   "label": "neg=0.05 & learning_rate=0.02",
+   "hold_gain": 0.0003681885136757046,
+   "hold_t": 1.0000000345947584,
+   "ten_gain": 0.0002501042326912284,
+   "hold_P": 0.010309278033673763
+  }
+ ],
  "validations": [
   {
    "time": "2026-10-20 02:28",
@@ -4800,9 +4812,20 @@
    "ten_gain": -4.173623165115714e-05,
    "ten_t": -0.2356558150662687,
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
+  },
+  {
+   "time": "2026-10-21 17:45",
+   "production": "y_down_v2",
+   "challenger": "neg=0.05 & learning_rate=0.02",
+   "challenger_key": "c1eb20ecbc",
+   "hold_gain": 0.0003681885136757046,
+   "hold_t": 1.0000000345947584,
+   "ten_gain": 0.0002501042326912284,
+   "ten_t": 1.4774620876757731,
+   "result": "승격 → y_down_v3"
   }
  ],
- "last_event": "evolve y_down: try #152 neg=0.05 & learning_rate=0.02 (dP@20=+0.0002, t=+1.37, accepted)",
+ "last_event": "evolve y_down: 10y validation — 승격 → y_down_v3 (holdout dP@20=+0.0004, t=+1.00)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
