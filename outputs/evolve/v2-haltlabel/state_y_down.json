@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 179,
+ "iteration": 180,
  "dev_champion": {
   "key": "c1eb20ecbc",
   "label": "neg=0.05 & learning_rate=0.02",
@@ -54,7 +54,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 22,
+ "queue_pos": 23,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -5428,6 +5428,40 @@
     "train_years": 5,
     "hard_neg": false
    }
+  },
+  "86e40fc07e": {
+   "label": "no_spac",
+   "P@k": 0.006279069930315018,
+   "AP": 0.013237981212127423,
+   "gain": -0.0002906976733356714,
+   "t": -1.5436536314350704,
+   "accepted": false,
+   "time": "10-22 06:39",
+   "base": "c1eb20ecbc",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [
+     "spac"
+    ],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -5476,7 +5510,7 @@
    "result": "승격 → y_down_v3"
   }
  ],
- "last_event": "evolve y_down: try #172 recent5y (dP@20=-0.0004, t=-2.24)",
+ "last_event": "evolve y_down: try #173 no_spac (dP@20=-0.0003, t=-1.54)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
