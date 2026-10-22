@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 232,
+ "iteration": 233,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "learning_rate=0.05 & years=3",
@@ -58,7 +58,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 12,
+ "queue_pos": 13,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -7440,6 +7440,41 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "ae1972e1de": {
+   "label": "colsample0.4",
+   "P@k": 0.07872092723846436,
+   "AP": 0.060768402858976264,
+   "gain": -0.0009302325779572129,
+   "t": -1.1148514582987987,
+   "accepted": false,
+   "time": "10-22 05:51",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "colsample_bytree": 0.4
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -7556,7 +7591,7 @@
    "result": "승격 → y_up_v5"
   }
  ],
- "last_event": "evolve y_up: try #221 minchild800 (dP@10=-0.0015, t=-1.67)",
+ "last_event": "evolve y_up: try #222 colsample0.4 (dP@10=-0.0009, t=-1.11)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
