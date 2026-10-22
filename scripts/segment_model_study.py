@@ -127,9 +127,11 @@ def cmd_run(start: str, quarters: int | None, tuned: bool) -> None:
 
 
 def _fit_weighted(f, feats, params, mask, rate_row, seed):
-    """한 모델, 행마다 다른 음성 추출 비율. model.fit 의 lgbm 경로와 같은 조기종료 규칙."""
+    """한 모델, 행마다 다른 음성 추출 비율. 분할·인내·시드는 model.fit 의 lgbm 경로와 같고, 조기종료는
+    행별 비율로 보정한 확률의 AP 로 한다 (보정이 구간 사이 순서를 바꾸므로 평가와 같은 순위로 학습량을 고른다)."""
     import warnings
     import lightgbm as lgb
+    from sklearn.metrics import average_precision_score
     from krxlimit.model import make_model
     dates = f["date"].to_numpy()
     days = np.unique(dates[mask])
@@ -137,13 +139,18 @@ def _fit_weighted(f, feats, params, mask, rate_row, seed):
     y = f["y_up"].to_numpy()
     keep = (y == 1) | (np.random.default_rng(seed).random(len(y)) < rate_row)
     tr_m, va_m = mask & (dates < cut) & keep, mask & (dates >= cut)
-    model = make_model("lgbm", {**params, "random_state": seed})
+    model = make_model("lgbm", {**params, "random_state": seed, "metric": "None"})
     tr, va = f.loc[tr_m, feats + ["y_up"]], f.loc[va_m, feats + ["y_up"]]
+    r_va = rate_row[va_m]
+
+    def ap_corrected(y_true, p):
+        return "ap_corrected", average_precision_score(y_true, p * r_va / (p * r_va + 1 - p)), True
+
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         if len(va) and va["y_up"].sum() > 0:
             model.fit(tr[feats], tr["y_up"].astype(int), eval_set=[(va[feats], va["y_up"].astype(int))],
-                      eval_metric="average_precision", callbacks=[lgb.early_stopping(150, verbose=False)])
+                      eval_metric=ap_corrected, callbacks=[lgb.early_stopping(150, verbose=False)])
         else:
             model.set_params(n_estimators=300)
             model.fit(tr[feats], tr["y_up"].astype(int))
@@ -159,6 +166,11 @@ def cmd_run_weighted(start: str, quarters: int | None) -> None:
         path = CACHE_W / f"all_{ps:%Y%m%d}.parquet"
         train_q, test_q = _masks(f, base, cfg, ps, pe)
         if test_q is None or path.exists():
+            continue
+        if int(np.nansum(f["y_up"].to_numpy()[train_q])) < 20:
+            out = f.loc[test_q, ["date", "code"]].copy()
+            out["p_s4"] = np.nan
+            out.to_parquet(path, index=False)
             continue
         t = time.time()
         X = f.loc[test_q, feats]
@@ -185,7 +197,8 @@ def _nolimit7() -> pd.DataFrame:
     return pan[["date", "code", "nolimit7"]]
 
 
-def _load_cache(cache: Path, col: str, segs, q_bounds, required: bool) -> pd.DataFrame | None:
+def _load_cache(cache: Path, col: str, segs, q_bounds, required: bool, rows: pd.DataFrame) -> pd.DataFrame | None:
+    """분기 파일을 모으고, 평가할 (date, code) 행이 모두 들어 있는지 확인한다(학습 양성<20 으로 NaN 인 행은 '들어 있음')."""
     missing = [f"{s}_{ps:%Y%m%d}" for ps, _ in q_bounds for s in segs if not (cache / f"{s}_{ps:%Y%m%d}.parquet").exists()]
     if missing:
         if required:
@@ -195,7 +208,16 @@ def _load_cache(cache: Path, col: str, segs, q_bounds, required: bool) -> pd.Dat
     x = pd.concat([pd.read_parquet(cache / f"{s}_{ps:%Y%m%d}.parquet") for ps, _ in q_bounds for s in segs],
                   ignore_index=True)
     x["code"] = x["code"].astype(str)
-    return x.rename(columns={"p_seg": col, "p_s4": col})[["date", "code", col]]
+    x = x.rename(columns={"p_seg": col, "p_s4": col})[["date", "code", col]]
+    lack = len(rows.merge(x[["date", "code"]], on=["date", "code"], how="left", indicator=True)
+               .query("_merge == 'left_only'"))
+    if lack:
+        msg = f"{cache.name}: 평가 행 {lack:,}개가 캐시에 없습니다 (데이터가 바뀐 뒤 남은 옛 파일일 수 있음)."
+        if required:
+            raise SystemExit(msg + " 해당 분기 파일을 지우고 다시 돌리세요.")
+        print(msg + " → 이 방법은 건너뜀")
+        return None
+    return x
 
 
 def _daily_top(d: pd.DataFrame, col: str, k: int = 10, keep: np.ndarray | None = None) -> pd.DataFrame:
@@ -245,7 +267,8 @@ def _clustered_t(diff: pd.Series) -> float:
     n = len(diff)
     resid = diff - diff.mean()
     s = resid.groupby(q).sum()
-    se = np.sqrt((s ** 2).sum()) / n
+    k = len(s)
+    se = np.sqrt(k / (k - 1) * (s ** 2).sum()) / n if k > 1 else 0.0
     return float(diff.mean() / se) if se > 0 else 0.0
 
 
@@ -255,17 +278,26 @@ def cmd_report() -> None:
     g = g[g["y_up"].notna()].rename(columns={"prob": "p_G"})
     g["code"] = g["code"].astype(str)
     v4["code"] = v4["code"].astype(str)
-    feats = pd.read_parquet(config.DATA_DIR / "processed" / "features.parquet", columns=["date", "code", "log_mcap", "is_pref"])
+    feats = pd.read_parquet(config.DATA_DIR / "processed" / "features.parquet",
+                            columns=["date", "code", "tidx", "log_mcap", "is_pref"])
     feats["code"] = feats["code"].astype(str)
     feats["seg"] = segment_of(feats)
-    d_all = g.merge(feats[["date", "code", "seg"]], on=["date", "code"], how="left").merge(v4, on=["date", "code"], how="left")
+    d_all = g.merge(feats[["date", "code", "tidx", "seg"]], on=["date", "code"], how="left") \
+             .merge(v4, on=["date", "code"], how="left")
     assert d_all["seg"].notna().all() and d_all["p_v4"].notna().all(), "G·v4·피처 행이 맞지 않습니다"
-    d_all["tradable"] = ((d_all["y_up"] == 1) & (d_all["next_open_ret"] < 0.29)).astype(float)
+    # 매수 가능 적중: 상한가로 끝났고 다음 날 시가가 그날 상한가보다 낮게 시작(시가에 살 수 있었음)
+    pan = pd.read_parquet(config.DATA_DIR / "processed" / "panel.parquet", columns=["code", "tidx", "open", "upper"])
+    pan["code"] = pan["code"].astype(str)
+    pan["tidx"] = pan["tidx"] - 1
+    d_all = d_all.merge(pan.rename(columns={"open": "n_open", "upper": "n_upper"}), on=["code", "tidx"], how="left")
+    d_all["tradable"] = ((d_all["y_up"] == 1) & (d_all["n_open"] < d_all["n_upper"])).astype(float)
     q_bounds = _quarters(START, d_all["date"].max())
 
-    s1 = _load_cache(CACHE, "p_S1raw", SEGS, q_bounds, required=True)
-    st = _load_cache(CACHE_T, "p_Ht_seg", ("pref", "small"), q_bounds, required=False)
-    s4 = _load_cache(CACHE_W, "p_S4", ("all",), q_bounds, required=False)
+    eval_rows = d_all.loc[d_all["date"] >= START, ["date", "code"]]
+    s1 = _load_cache(CACHE, "p_S1raw", SEGS, q_bounds, required=True, rows=eval_rows)
+    st = _load_cache(CACHE_T, "p_Ht_seg", ("pref", "small"), q_bounds, required=False,
+                     rows=d_all.loc[(d_all["date"] >= START) & d_all["seg"].isin(["pref", "small"]), ["date", "code"]])
+    s4 = _load_cache(CACHE_W, "p_S4", ("all",), q_bounds, required=False, rows=eval_rows)
     d = d_all[d_all["date"] >= START].merge(s1, on=["date", "code"], how="left")
     for extra in (st, s4):
         if extra is not None:
@@ -318,19 +350,17 @@ def cmd_report() -> None:
             if tag == "B" and not any(k in name for k in ("S2", "H ", "W ", "Ht", "B ")):
                 continue
             diff = x["hit"] - ref["hit"]
-            row[f"개발 Δ vs {tag}"] = round(diff[dev].mean(), 4)
-            row[f"개발 군집t vs {tag}"] = round(_clustered_t(diff[dev]), 2)
+            dev_d, dev_t, hold_d = diff[dev].mean(), _clustered_t(diff[dev]), diff[hold].mean()
             yr = diff[dev].groupby(days[dev].year).mean()
+            ok = dev_d >= 0.002 and dev_t >= 2.4 and (yr > 0).sum() >= 4 and hold_d >= 0   # 반올림 전 값으로 판정
+            row[f"개발 Δ vs {tag}"] = round(dev_d, 4)
+            row[f"개발 군집t vs {tag}"] = round(dev_t, 2)
             row[f"개발 양(+)연도 vs {tag}"] = f"{int((yr > 0).sum())}/{len(yr)}"
-            row[f"보류 Δ vs {tag}"] = round(diff[hold].mean(), 4)
+            row[f"보류 Δ vs {tag}"] = round(hold_d, 4)
             if tag == "G":
-                row["판정"] = ("도움 됨" if (row["개발 Δ vs G"] >= 0.002 and row["개발 군집t vs G"] >= 2.4
-                                         and (yr > 0).sum() >= 4 and row["보류 Δ vs G"] >= 0) else
-                              ("기준" if name.startswith("G") else "기준 미달"))
-            else:
-                ok_b = row["개발 Δ vs B"] >= 0.002 and row["개발 군집t vs B"] >= 2.4 and (yr > 0).sum() >= 4
-                if row.get("판정") == "도움 됨" and not ok_b:
-                    row["판정"] = "모델 평균 효과뿐"
+                row["판정"] = "기준" if name.startswith("G") else ("도움 됨" if ok else "기준 미달")
+            elif row.get("판정") == "도움 됨" and not ok:
+                row["판정"] = "모델 평균 효과뿐"
         row["개발 P@10"] = round(x["hit"][dev].mean(), 4)
         row["보류 P@10"] = round(x["hit"][hold].mean(), 4)
         row["개발 매수가능 P@10"] = round(x["trade"][dev].mean(), 4)
