@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 221,
+ "iteration": 222,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "learning_rate=0.05 & years=3",
@@ -58,7 +58,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 0,
+ "queue_pos": 1,
  "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
@@ -7058,6 +7058,41 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "27b2704694": {
+   "label": "+rel_strength",
+   "P@k": 0.07895348966121674,
+   "AP": 0.06219079317197125,
+   "gain": -0.0006976744625717402,
+   "t": -0.9607474547639729,
+   "accepted": false,
+   "time": "10-22 03:58",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "rel_strength"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -7174,7 +7209,7 @@
    "result": "승격 → y_up_v5"
   }
  ],
- "last_event": "evolve y_up: 10y validation — 승격 → y_up_v5 (holdout dP@10=+0.0004, t=+0.27)",
+ "last_event": "evolve y_up: try #211 +rel_strength (dP@10=-0.0007, t=-0.96)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
