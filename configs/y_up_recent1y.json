@@ -1,0 +1,27 @@
+{
+  "name": "y_up_recent1y",
+  "target": "y_up",
+  "kind": "bag3",
+  "params": {
+    "num_leaves": 63
+  },
+  "neg_rate": 0.1,
+  "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar",
+    "pref_link"
+  ],
+  "exclude": [],
+  "train_years": 1,
+  "hard_neg": false,
+  "dev_label": "v4 설정 + 최근 1년만 학습 (사용자 요청 비교용, 승격 아님)",
+  "data_version": "v2-haltlabel"
+}
