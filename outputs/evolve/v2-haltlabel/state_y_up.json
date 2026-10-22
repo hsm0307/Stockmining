@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 220,
+ "iteration": 221,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "learning_rate=0.05 & years=3",
@@ -31,12 +31,13 @@
   "score": 0.07965116202831268
  },
  "production": {
-  "name": "y_up_v4",
-  "key": "fe91875e23",
+  "name": "y_up_v5",
+  "key": "f2e5035c75",
   "cfg": {
    "kind": "bag3",
    "params": {
-    "num_leaves": 63
+    "num_leaves": 63,
+    "learning_rate": 0.05
    },
    "neg_rate": 0.1,
    "groups": [
@@ -53,12 +54,12 @@
     "pref_link"
    ],
    "exclude": [],
-   "train_years": null,
+   "train_years": 3,
    "hard_neg": false
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "3d1ff1d4a5": {
    "label": "y_up_v2(출발점)",
@@ -7077,6 +7078,15 @@
    "hold_t": 1.2654737042250261,
    "ten_gain": -0.00045909854816272855,
    "hold_P": 0.12115384638309479
+  },
+  {
+   "name": "y_up_v5",
+   "time": "2026-10-22 03:49",
+   "label": "learning_rate=0.05 & years=3",
+   "hold_gain": 0.0004411765839904547,
+   "hold_t": 0.2748226136567903,
+   "ten_gain": 0.00033333332976326346,
+   "hold_P": 0.11955882608890533
   }
  ],
  "validations": [
@@ -7151,9 +7161,20 @@
    "ten_gain": -0.0008753646980039775,
    "ten_t": -1.2105372379685262,
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
+  },
+  {
+   "time": "2026-10-22 03:49",
+   "production": "y_up_v4",
+   "challenger": "learning_rate=0.05 & years=3",
+   "challenger_key": "f2e5035c75",
+   "hold_gain": 0.0004411765839904547,
+   "hold_t": 0.2748226136567903,
+   "ten_gain": 0.00033333332976326346,
+   "ten_t": 0.44574813170810584,
+   "result": "승격 → y_up_v5"
   }
  ],
- "last_event": "evolve y_up: try #210 learning_rate=0.05 & years=3 (dP@10=+0.0012, t=+1.41, accepted)",
+ "last_event": "evolve y_up: 10y validation — 승격 → y_up_v5 (holdout dP@10=+0.0004, t=+0.27)",
  "ten_baseline": [
   {
    "기간": "10년 전체",

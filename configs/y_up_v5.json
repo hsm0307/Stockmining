@@ -1,0 +1,33 @@
+{
+  "name": "y_up_v5",
+  "target": "y_up",
+  "kind": "bag3",
+  "params": {
+    "num_leaves": 63,
+    "learning_rate": 0.05
+  },
+  "neg_rate": 0.1,
+  "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar",
+    "pref_link"
+  ],
+  "exclude": [],
+  "train_years": 3,
+  "hard_neg": false,
+  "dev_label": "learning_rate=0.05 & years=3",
+  "holdout_gain_P@10": 0.0004411765839904547,
+  "holdout_t": 0.2748226136567903,
+  "ten_year_gain": 0.00033333332976326346,
+  "ten_year_t": 0.44574813170810584,
+  "data_version": "v2-haltlabel",
+  "created": "2026-10-22 03:49"
+}
