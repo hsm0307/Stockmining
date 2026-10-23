@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 4,
+ "iteration": 5,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "y_up_v5",
@@ -58,7 +58,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 3,
+ "queue_pos": 4,
  "accepted_since_validation": 0,
  "tested": {
   "f2e5035c75": {
@@ -198,11 +198,46 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "1534747c39": {
+   "label": "+peer2",
+   "P@k": 0.07965116202831268,
+   "AP": 0.06211254482984058,
+   "gain": -0.0006976744043640792,
+   "t": -0.9863861113849138,
+   "accepted": false,
+   "time": "10-23 13:23",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "peer2"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_up: try #4 +market2 (dP@10=-0.0006, t=-0.87)",
+ "last_event": "evolve y_up: try #5 +peer2 (dP@10=-0.0007, t=-0.99)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
