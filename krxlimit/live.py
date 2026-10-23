@@ -21,6 +21,11 @@ from .model import KS, TARGETS, load_model, predict_proba, universe
 from .viz import NEUTRAL, UP_COLOR, date_axis, plt, save_fig
 
 LABEL_COL = {"y_up": "up_close", "y_down": "down_close", "y_uptouch": "up_touch"}
+# 목표 지표 (2026-10-23 확정): 고확신 추천 = 상한가 모델 확률이 HC_THRESHOLD 이상인 종목, 목표 적중률 HC_TARGET.
+# 2019~2025 백테스트에서 이 기준의 적중률은 31~32%, 하루 0.6~0.8개 추천. HC_THRESHOLD_STRICT 는 참고용 보조 기준.
+HC_THRESHOLD = {"y_up": 0.15, "y_uptouch": 0.15}
+HC_THRESHOLD_STRICT = 0.20
+HC_TARGET = 0.30
 SHOW_COLS = ["rank", "code", "name", "market", "close", "prob", "ret1", "up_close", "up_jeom", "up_streak",
              "down_close", "down_streak", "vr1_20", "turnover", "peer_n_up", "mkt_n_up"]
 
@@ -117,10 +122,12 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True,
     target = json.loads(meta_path.read_text())["target"] if meta_path.exists() else name
     days = np.sort(panel["date"].unique())
     label = LABEL_COL[target]
-    rows, hit_rows, audit = [], [], []
+    rows, hit_rows, audit, hc_rows = [], [], [], []
+    hc_th = HC_THRESHOLD.get(target)
     prefix = "replay" if include_retrospective else "live"
     scoreboard_name = "replay_scoreboard.csv" if include_retrospective else "scoreboard.csv"
     hits_name = "replay_actual_events_rank.csv" if include_retrospective else "actual_events_rank.csv"
+    hc_name = "replay_highconf_picks.csv" if include_retrospective else "highconf_picks.csv"
     mode_label = "과거 재생 성적 (실전 증빙 아님)" if include_retrospective else "파일 기록 기준 실전 성적"
     for fp in sorted((d / "full").glob("*.csv.gz")):
         try:
@@ -144,10 +151,13 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True,
         if errors and not include_retrospective:
             continue
         # 다음 날 거래정지·무효·상장폐지 종목도 '실패'로 채점 (백테스트 라벨과 같은 기준)
-        act = panel.loc[panel["date"] == nxt, ["code", label]]
+        cols = ["code", label] + [c for c in ("open", "upper") if c in panel.columns]
+        act = panel.loc[panel["date"] == nxt, cols]
         act = act.assign(code=act["code"].astype(str))
         m = pred.merge(act, on="code", how="left")
         m[label] = m[label].fillna(False).astype(bool)
+        # 시가 매수 가능 적중: 상한가로 끝났고 다음 날 시가가 그날 상한가보다 낮게 시작했다(점상이 아님)
+        tradable = (m[label] & (m["open"] < m["upper"])) if {"open", "upper"} <= set(m.columns) else None
         if m.empty:
             continue
         y = m[label].astype(int).to_numpy()
@@ -159,6 +169,22 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True,
             row[f"hit@{k}"] = int(m.loc[m["rank"] <= k, label].sum())
             row[f"P@{k}"] = row[f"hit@{k}"] / k
         row["실제발생 종목의 최고순위"] = int(m.loc[m[label] == 1, "rank"].min()) if y.sum() else np.nan
+        if hc_th is not None:
+            pick = m["prob"] >= hc_th
+            row["고확신수"], row["고확신적중"] = int(pick.sum()), int(m.loc[pick, label].sum())
+            row["고확신매수가능적중"] = int(tradable[pick].sum()) if tradable is not None else np.nan
+            strict = m["prob"] >= HC_THRESHOLD_STRICT
+            row["고확신20수"], row["고확신20적중"] = int(strict.sum()), int(m.loc[strict, label].sum())
+            # 확률 크기는 재학습마다 달라질 수 있어, 순위 기준(매일 1위·2위까지)도 함께 기록한다
+            row["1위적중"] = int(m.loc[m["rank"] == 1, label].sum())
+            row["2위내적중"] = int(m.loc[m["rank"] <= 2, label].sum())
+            for i in np.flatnonzero(pick.to_numpy()):
+                r = m.iloc[i]
+                hc_rows.append({"기준일": ds.date(), "결과일": pd.Timestamp(nxt).date(), "code": r["code"],
+                                "name": r["name"], "예측순위": int(r["rank"]), "예측확률": round(float(r["prob"]), 4),
+                                "적중": bool(r[label]),
+                                "시가매수가능적중": bool(tradable.iloc[i]) if tradable is not None else np.nan,
+                                "기록검증": row["기록검증"]})
         rows.append(row)
         hits = m[m[label] == 1].sort_values("rank")
         for _, h in hits.iterrows():
@@ -166,6 +192,11 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True,
                              "name": h["name"], "예측순위": int(h["rank"]), "예측확률": round(float(h["prob"]), 4)})
     columns = ["기준일", "결과일", "종목수", "실제발생", "AUC", "AP", "기록검증"]
     columns += [col for k in KS for col in (f"hit@{k}", f"P@{k}")] + ["실제발생 종목의 최고순위"]
+    if hc_th is not None:
+        columns += ["고확신수", "고확신적중", "고확신매수가능적중", "고확신20수", "고확신20적중", "1위적중", "2위내적중"]
+        pd.DataFrame(hc_rows, columns=["기준일", "결과일", "code", "name", "예측순위", "예측확률", "적중",
+                                       "시가매수가능적중", "기록검증"]).to_csv(d / hc_name, index=False,
+                                                                       encoding="utf-8-sig")
     sb = pd.DataFrame(rows, columns=columns)
     sb.to_csv(d / scoreboard_name, index=False, encoding="utf-8-sig")
     pd.DataFrame(hit_rows, columns=["기준일", "결과일", "code", "name", "예측순위", "예측확률"]).to_csv(
@@ -184,6 +215,15 @@ def evaluate_live(panel: pd.DataFrame, name: str = "y_up", verbose: bool = True,
     if verbose:
         print(f"\n[{name}: {TARGETS[target]} {mode_label}] {n}거래일, 실제 발생 {int(sb['실제발생'].sum())}건, 기저율 {base:.3%}")
         print("  " + ", ".join(f"{k} {v:.1%} (Lift {v / base:.1f}배)" for k, v in total.items() if base > 0))
+        if hc_th is not None:
+            n_hc, h_hc = int(sb["고확신수"].sum()), int(sb["고확신적중"].sum())
+            rate = f"{h_hc / n_hc:.1%}" if n_hc else "추천 없음"
+            trade = "" if sb["고확신매수가능적중"].isna().all() else \
+                f", 시가 매수 가능 적중 {int(sb['고확신매수가능적중'].sum())}건"
+            print(f"  고확신 추천(확률 {hc_th:.0%} 이상): {n_hc}건 중 {h_hc}건 적중 = {rate} "
+                  f"(목표 {HC_TARGET:.0%}){trade}; {HC_THRESHOLD_STRICT:.0%} 이상: "
+                  f"{int(sb['고확신20수'].sum())}건 중 {int(sb['고확신20적중'].sum())}건; "
+                  f"매일 1위 {int(sb['1위적중'].sum())}/{n}, 2위까지 {int(sb['2위내적중'].sum())}/{2 * n}")
         print(sb.tail(10).to_string(index=False))
 
     fig, ax = plt.subplots(1, 2, figsize=(14, 4.2))

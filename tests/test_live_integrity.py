@@ -95,3 +95,20 @@ def test_replay_never_overwrites_live_outputs(environment):
     assert (folder / "replay_scoreboard.csv").exists()
     assert (folder / "replay_actual_events_rank.csv").exists()
     assert figures == ["live_y_up", "replay_y_up"]
+
+
+def test_high_confidence_picks_are_tracked(environment):
+    """목표 지표: 확률 15% 이상 고확신 추천의 적중·시가 매수 가능 적중을 날마다 기록한다."""
+    folder, panel, pred, _ = environment
+    panel = panel.assign(open=[100, 100, 120, 100], upper=[130, 130, 130, 130])
+    pred = pd.concat([pred, pred.iloc[[1]].assign(rank=3, code="000003", name="c", prob=0.16)], ignore_index=True)
+    panel = pd.concat([panel, pd.DataFrame({"date": pd.to_datetime(["2020-01-02", "2020-01-03"]),
+                                            "code": ["000003"] * 2, "up_close": [False, False],
+                                            "open": [100, 100], "upper": [130, 130]})], ignore_index=True)
+    write_prediction(folder, pred)
+    row = live.evaluate_live(panel, verbose=False).iloc[0]
+    assert (row["고확신수"], row["고확신적중"], row["고확신매수가능적중"]) == (2, 1, 1)
+    assert (row["고확신20수"], row["고확신20적중"]) == (1, 1)
+    assert (row["1위적중"], row["2위내적중"]) == (1, 1)
+    picks = pd.read_csv(folder / "highconf_picks.csv", dtype={"code": str})
+    assert picks["code"].tolist() == ["000001", "000003"] and picks["적중"].tolist() == [True, False]
