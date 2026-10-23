@@ -46,7 +46,7 @@ def predict(panel: pd.DataFrame, name: str = "y_up", date: str | None = None, to
         raise ValueError(f"{last:%Y-%m-%d} 데이터가 패널에 없습니다. collect/build 를 먼저 실행하세요.")
     sub = panel[(panel["date"] >= days[max(0, len(days) - LIVE_LOOKBACK)]) & (panel["date"] <= last)]
     f = build_features(sub, save=False, keep_from=str(last.date()))
-    f = universe(f[f["date"] == last], meta.get("exclude", ()))
+    f = universe(f[f["date"] == last], meta.get("exclude", ()), target)
     f["prob"] = predict_proba(model, f[meta["features"]], meta["neg_rate"])
     f = f.sort_values("prob", ascending=False).reset_index(drop=True)
     f["rank"] = np.arange(1, len(f) + 1)

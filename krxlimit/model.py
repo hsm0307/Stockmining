@@ -122,25 +122,27 @@ def select_features(drop_groups=(), only_groups=None) -> list[str]:
     return [f for g in groups if g not in drop_groups for f in FEATURE_GROUPS[g]]
 
 
-# 운영 규칙: 가격제한 없이 거래 중인 종목(정리매매 등, features.is_nolimit)은 상·하한가가 불가능하므로
-# 학습·백테스트·실전 예측 모두에서 항상 뺀다. (2024~ 보류 구간 상위 10개 중 73자리가 이런 종목이었고 적중 0)
-ALWAYS_EXCLUDE = ("nolimit",)
+# 타깃별 운영 규칙: 최근 가격제한 없이 거래된 종목(정리매매 등, features.is_nolimit)은 상한가 계열 예측에서 항상 뺀다.
+# 상한가: 이런 행의 상한가 비율은 평소와 같은데(0.24%) 모델이 상위에 자주 올려 자리를 낭비했다 → 빼면 P@10 소폭 개선.
+# 하한가: 거래 재개·재상장 뒤 제한이 다시 걸린 상태의 연속 하한가가 많아(사건률 2.6%) 빼면 P@20 이 떨어진다 → 적용 안 함.
+ALWAYS_EXCLUDE = {"y_up": ("nolimit",), "y_uptouch": ("nolimit",)}
 
 
-def universe_mask(df: pd.DataFrame, exclude=()) -> np.ndarray:
-    """예측 대상 종목 필터. exclude 예: ('spac', 'pref', 'reit', 'mgmt'). ALWAYS_EXCLUDE 는 항상 적용
-    (해당 표시 열이 없는 옛 특징 파일이면 건너뛴다)."""
+def universe_mask(df: pd.DataFrame, exclude=(), target: str | None = None) -> np.ndarray:
+    """예측 대상 종목 필터. exclude 예: ('spac', 'pref', 'reit', 'mgmt').
+    target 을 주면 ALWAYS_EXCLUDE[target] 도 함께 적용한다(표시 열이 없는 옛 특징 파일이면 그 규칙만 건너뛴다)."""
+    rule = tuple(x for x in ALWAYS_EXCLUDE.get(target, ()) if x not in exclude)
     m = np.ones(len(df), dtype=bool)
-    for e in tuple(exclude) + tuple(x for x in ALWAYS_EXCLUDE if x not in exclude):
+    for e in tuple(exclude) + rule:
         col = f"is_{e}"
-        if e in ALWAYS_EXCLUDE and col not in df.columns:
+        if e in rule and col not in df.columns:
             continue
         m = m & (df[col] != 1).to_numpy()
     return m
 
 
-def universe(df: pd.DataFrame, exclude=()) -> pd.DataFrame:
-    return df[universe_mask(df, exclude)]
+def universe(df: pd.DataFrame, exclude=(), target: str | None = None) -> pd.DataFrame:
+    return df[universe_mask(df, exclude, target)]
 
 
 def _downsample_mask(y: np.ndarray, neg_rate: float, seed: int) -> np.ndarray:
@@ -355,7 +357,7 @@ def walk_forward(feats_df: pd.DataFrame, target: str = "y_up", start: str = "201
     kind = kind or default_kind()
     features = features or ALL_FEATURES
     df = feats_df
-    base = df[target].notna().to_numpy() & universe_mask(df, exclude)
+    base = df[target].notna().to_numpy() & universe_mask(df, exclude, target)
     dates, tidx = df["date"].to_numpy(), df["tidx"].to_numpy()
     end_ts = pd.Timestamp(end) if end else df["date"].max() + pd.Timedelta(days=1)
     bounds = list(pd.date_range(start, end_ts, freq=freq))
@@ -482,7 +484,7 @@ def train_final(feats_df: pd.DataFrame, target: str = "y_up", kind: str | None =
     kind = kind or default_kind()
     feats = features or select_features(drop_groups)
     df = feats_df
-    m = df[target].notna().to_numpy() & universe_mask(df, exclude)
+    m = df[target].notna().to_numpy() & universe_mask(df, exclude, target)
     if train_years:
         m &= (df["date"] >= df["date"].max() - pd.DateOffset(years=train_years)).to_numpy()
     model = fit(df, target, feats, kind, params, neg_rate, mask=m, hard_neg=hard_neg)

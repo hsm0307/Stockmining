@@ -120,8 +120,12 @@ def test_nolimit_flag_excludes_liquidation_trading():
     assert (a.loc[days[20]:days[20 + NOLIMIT_DAYS - 1]] == 1).all()
     assert a.loc[days[20 + NOLIMIT_DAYS]] == 0
     assert (f.loc[f["code"] == "333330", "is_nolimit"] == 0).all()
-    kept = universe(f)
+    kept = universe(f, target="y_up")
     assert not ((kept["code"] == "444440") & (kept["date"] == days[20])).any()
-    assert universe_mask(f).sum() == len(f) - NOLIMIT_DAYS
+    assert universe_mask(f, target="y_up").sum() == len(f) - NOLIMIT_DAYS
+    # 하한가에는 적용하지 않는다(거래 재개 뒤 연속 하한가가 많음). 타깃을 주지 않아도 적용 안 함
+    assert universe_mask(f, target="y_down").all() and universe_mask(f).all()
+    # 명시적으로 exclude 하면 어느 타깃이든 뺀다
+    assert universe_mask(f, ("nolimit",), target="y_down").sum() == len(f) - NOLIMIT_DAYS
     # 표시 열이 없는 옛 특징 파일에서도 동작해야 한다
-    assert universe_mask(f.drop(columns=["is_nolimit"])).all()
+    assert universe_mask(f.drop(columns=["is_nolimit"]), target="y_up").all()
