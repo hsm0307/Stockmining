@@ -1,25 +1,25 @@
 |--- turnover <= 0.01
 |   |--- turnover <= 0.01
-|   |   |--- weights: [3.31, 129.18] class: 1
+|   |   |--- weights: [3.31, 129.00] class: 1
 |   |--- turnover >  0.01
-|   |   |--- weights: [13.78, 37.68] class: 1
+|   |   |--- weights: [13.78, 37.62] class: 1
 |--- turnover >  0.01
 |   |--- turnover <= 0.10
 |   |   |--- mkt_jeom_ratio <= 0.05
 |   |   |   |--- mkt_n_up5 <= 1.30
 |   |   |   |   |--- weights: [16.54, 0.00] class: 0
 |   |   |   |--- mkt_n_up5 >  1.30
-|   |   |   |   |--- weights: [60.63, 118.41] class: 1
+|   |   |   |   |--- weights: [60.64, 118.25] class: 1
 |   |   |--- mkt_jeom_ratio >  0.05
-|   |   |   |--- weights: [23.70, 0.00] class: 0
+|   |   |   |--- weights: [23.71, 0.00] class: 0
 |   |--- turnover >  0.10
 |   |   |--- log_price <= 7.89
-|   |   |   |--- lo250_pos <= 0.91
-|   |   |   |   |--- weights: [93.15, 0.00] class: 0
-|   |   |   |--- lo250_pos >  0.91
-|   |   |   |   |--- weights: [15.98, 5.38] class: 0
+|   |   |   |--- peer_corr <= 0.31
+|   |   |   |   |--- weights: [15.99, 5.38] class: 0
+|   |   |   |--- peer_corr >  0.31
+|   |   |   |   |--- weights: [92.62, 0.00] class: 0
 |   |   |--- log_price >  7.89
 |   |   |   |--- peer_ret <= -0.03
 |   |   |   |   |--- weights: [44.10, 0.00] class: 0
 |   |   |   |--- peer_ret >  -0.03
-|   |   |   |   |--- weights: [94.81, 75.35] class: 0
+|   |   |   |   |--- weights: [94.82, 75.25] class: 0
