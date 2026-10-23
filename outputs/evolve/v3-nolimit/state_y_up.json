@@ -1,15 +1,14 @@
 {
  "target": "y_up",
- "iteration": 13,
+ "iteration": 14,
  "dev_champion": {
-  "key": "ae1972e1de",
-  "label": "colsample0.4",
+  "key": "f2e5035c75",
+  "label": "y_up_v5",
   "cfg": {
    "kind": "bag3",
    "params": {
     "num_leaves": 63,
-    "learning_rate": 0.05,
-    "colsample_bytree": 0.4
+    "learning_rate": 0.05
    },
    "neg_rate": 0.1,
    "groups": [
@@ -29,7 +28,7 @@
    "train_years": 3,
    "hard_neg": false
   },
-  "score": 0.08122093230485916
+  "score": null
  },
  "production": {
   "name": "y_up_v5",
@@ -60,7 +59,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "f2e5035c75": {
    "label": "y_up_v5(출발점)",
@@ -514,8 +513,20 @@
   }
  },
  "versions": [],
- "validations": [],
- "last_event": "evolve y_up: try #13 colsample0.4 (dP@10=+0.0009, t=+1.13, accepted)",
+ "validations": [
+  {
+   "time": "2026-10-23 16:50",
+   "production": "y_up_v5",
+   "challenger": "colsample0.4",
+   "challenger_key": "ae1972e1de",
+   "hold_gain": -0.0001468429109081626,
+   "hold_t": -0.11242722180531492,
+   "ten_gain": -4.164927304373123e-05,
+   "ten_t": -0.062365283265576464,
+   "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
+  }
+ ],
+ "last_event": "evolve y_up: 10y validation — 기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림 (holdout dP@10=-0.0001, t=-0.11)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
