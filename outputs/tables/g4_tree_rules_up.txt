@@ -1,40 +1,40 @@
 |--- value_rank <= 0.82
 |   |--- hl_range <= 0.02
 |   |   |--- ret20 <= 0.34
-|   |   |   |--- weights: [41.18, 139.10] class: 1
+|   |   |   |--- weights: [41.17, 139.32] class: 1
 |   |   |--- ret20 >  0.34
 |   |   |   |--- mkt_breadth <= 0.57
-|   |   |   |   |--- weights: [43.47, 520.64] class: 1
+|   |   |   |   |--- weights: [43.46, 521.46] class: 1
 |   |   |   |--- mkt_breadth >  0.57
-|   |   |   |   |--- weights: [29.17, 147.05] class: 1
+|   |   |   |   |--- weights: [29.16, 147.28] class: 1
 |   |--- hl_range >  0.02
 |   |   |--- value_rank <= 0.74
 |   |   |   |--- all_n_up_prev <= 6.50
-|   |   |   |   |--- weights: [172.16, 298.07] class: 1
+|   |   |   |   |--- weights: [172.12, 302.53] class: 1
 |   |   |   |--- all_n_up_prev >  6.50
-|   |   |   |   |--- weights: [109.24, 405.38] class: 1
+|   |   |   |   |--- weights: [108.65, 402.04] class: 1
 |   |   |--- value_rank >  0.74
 |   |   |   |--- ma120_gap <= 0.11
-|   |   |   |   |--- weights: [84.08, 35.77] class: 0
+|   |   |   |   |--- weights: [84.06, 35.83] class: 0
 |   |   |   |--- ma120_gap >  0.11
-|   |   |   |   |--- weights: [162.44, 278.20] class: 1
+|   |   |   |   |--- weights: [162.40, 278.64] class: 1
 |--- value_rank >  0.82
 |   |--- oh_price <= 1.94
 |   |   |--- value_rank <= 0.94
 |   |   |   |--- ma60_gap <= 0.32
-|   |   |   |   |--- weights: [561.09, 313.97] class: 0
+|   |   |   |   |--- weights: [565.54, 314.47] class: 0
 |   |   |   |--- ma60_gap >  0.32
-|   |   |   |   |--- weights: [463.28, 596.15] class: 1
+|   |   |   |   |--- weights: [463.75, 597.09] class: 1
 |   |   |--- value_rank >  0.94
 |   |   |   |--- mcap_rank <= 0.06
-|   |   |   |   |--- weights: [40.04, 75.51] class: 1
+|   |   |   |   |--- weights: [40.03, 75.63] class: 1
 |   |   |   |--- mcap_rank >  0.06
-|   |   |   |   |--- weights: [2385.63, 1021.40] class: 0
+|   |   |   |   |--- weights: [2388.52, 1023.02] class: 0
 |   |--- oh_price >  1.94
 |   |   |--- al_halt_next <= 0.50
 |   |   |   |--- body <= 0.25
-|   |   |   |   |--- weights: [151.00, 461.02] class: 1
+|   |   |   |   |--- weights: [150.96, 461.75] class: 1
 |   |   |   |--- body >  0.25
-|   |   |   |   |--- weights: [102.38, 99.36] class: 0
+|   |   |   |   |--- weights: [102.36, 99.52] class: 0
 |   |   |--- al_halt_next >  0.50
-|   |   |   |--- weights: [66.35, 19.87] class: 0
+|   |   |   |--- weights: [66.33, 19.90] class: 0
