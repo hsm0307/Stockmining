@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 7,
+ "iteration": 8,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "y_up_v5",
@@ -58,7 +58,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 6,
+ "queue_pos": 7,
  "accepted_since_validation": 0,
  "tested": {
   "f2e5035c75": {
@@ -303,11 +303,45 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "0dab4fa474": {
+   "label": "hardneg",
+   "P@k": 0.07569767534732819,
+   "AP": 0.05728095481704275,
+   "gain": -0.004651162773370743,
+   "t": -4.145046326866896,
+   "accepted": false,
+   "time": "10-23 14:28",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": true
+   }
   }
  },
  "versions": [],
  "validations": [],
- "last_event": "evolve y_up: try #7 +overheat (dP@10=-0.0009, t=-1.20)",
+ "last_event": "evolve y_up: try #8 hardneg (dP@10=-0.0047, t=-4.15)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
