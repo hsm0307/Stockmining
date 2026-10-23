@@ -7,6 +7,8 @@
 
 모든 run 은 분기별로 저장해 끊겨도 이어서 돈다. 기준(G)은 운영 v5 의 분기별 워크포워드 예측
 (outputs/evolve/v2-haltlabel/ten_y_up_f2e5035c75.parquet)이고, 모든 방법은 예측일 D 장 마감까지 아는 정보만 쓴다.
+이 연구는 정리매매 제외 규칙(데이터 버전 v3-nolimit) 이전에 끝났다. 기준선과 맞추려고 예측 대상도 규칙 적용 전
+(universe_mask 에 타깃을 주지 않음)으로 고정했다. 새 데이터로 다시 하려면 기준선·캐시를 모두 새로 만들어야 한다.
 
 방법
   S1  구간 전용 모델(v5 설정)을 따로 학습해 확률을 합침        H   우선주·소형만 S1, 나머지는 G
@@ -79,7 +81,7 @@ def _setup():
     feats = select_features(only_groups=cfg["groups"])
     f = _features()
     seg = segment_of(f)
-    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]), "y_up")
+    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]))   # v2 기준선과 같은 대상(규칙 전)
     return cfg, feats, f, seg, base
 
 

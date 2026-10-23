@@ -100,7 +100,8 @@ def test_peak_analysis_censoring():
 
 def test_nolimit_flag_excludes_liquidation_trading():
     """가격제한 없이 거래된 날(정리매매 등)이 최근 7거래일 안에 있으면 is_nolimit=1 → 예측 대상에서 빠진다."""
-    from krxlimit.features import NOLIMIT_DAYS, build_features
+    from krxlimit.features import build_features
+    from krxlimit.panel import LIQ_DAYS as NOLIMIT_DAYS
     from krxlimit.model import universe, universe_mask
     days = pd.bdate_range("2024-01-02", periods=40)
     rows = []
@@ -160,9 +161,9 @@ def test_intraday_out_of_range_day_is_not_a_limit_event():
     assert not m.loc[("555550", days[8])] and m.loc[("666660", days[8])]
 
 
-def test_liquidation_window_before_delisting_has_no_limit_events():
-    """정리매매: 가격제한 없는 첫날 뒤 7거래일 안에 상장폐지되면, 그 사이 범위 안에서 계산상 하한가로 끝난 날도 하한가가 아니다.
-    상장폐지되지 않고 계속 거래되는 종목(거래 재개 등)은 그대로 둔다."""
+def test_liquidation_window_has_no_limit_events():
+    """정리매매: 가격제한 없는 날부터 그 종목의 거래일로 7일 동안은 범위 안에서 계산상 하한가로 끝나도 하한가가 아니다.
+    미래(상장폐지 여부)를 보지 않으므로 상장폐지된 종목과 계속 거래되는 종목의 판정이 같고, 기간이 지나면 다시 판정한다."""
     days = pd.bdate_range("2024-01-02", periods=20)
     rows = []
     for k, d in enumerate(days):
@@ -183,5 +184,34 @@ def test_liquidation_window_before_delisting_has_no_limit_events():
     assert not p.loc[("777770", days[5]), "limit_valid"]
     assert not p.loc[("777770", days[6]), "down_close"] and not p.loc["777770", "limit_valid"].iloc[5:].any()
     assert p.loc[("777770", days[4]), "limit_valid"]
-    assert p.loc[("999990", days[6]), "down_close"]          # 계속 거래되는 종목은 하한가 유지
+    assert not p.loc[("999990", days[6]), "down_close"]      # 판정은 그날까지의 자료로만: 계속 거래되는 종목도 같다
+    assert not p.loc["999990", "limit_valid"].iloc[5:12].any() and p.loc["999990", "limit_valid"].iloc[12:].all()
+
+
+def test_liquidation_split_by_halt_counts_traded_days():
+    """가처분 등으로 정리매매가 중간에 멈췄다가 재개되면 거래일로 세어 7일을 채운다(거래정지일은 세지 않음)."""
+    from krxlimit.features import build_features
+    days = pd.bdate_range("2024-01-02", periods=40)
+    rows = []
+    traded_after = []
+    for k, d in enumerate(days):
+        ds = d.strftime("%Y%m%d")
+        rows.append(_row(ds, "888880", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="보통"))
+        if k < 5:
+            rows.append(_row(ds, "121210", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="정리"))
+        elif k == 5:     # 정리매매 첫날 -80%
+            rows.append(_row(ds, "121210", 2_000, -8_000, 2_500, 2_500, 1_900, 900, name="정리"))
+        elif k in (6, 7) or 20 <= k:      # 3거래일 뒤 멈췄다가 k=20 부터 재개
+            rows.append(_row(ds, "121210", 2_000, 0, 2_000, 2_010, 1_990, 300, name="정리"))
+            traded_after.append(k)
+        else:            # 거래정지
+            rows.append(_row(ds, "121210", 2_000, 0, 0, 0, 0, 0, name="정리"))
+    p = build_panel(pd.DataFrame(rows), save=False).set_index(["code", "date"])
+    a = p.loc["121210"]
+    window = [5, 6, 7, 20, 21, 22, 23]                       # 거래일로 7일
+    assert a["nolimit_window"].iloc[window].all() and a["nolimit_window"].iloc[8:20].all()
+    assert not a["nolimit_window"].iloc[24:].any() and a["limit_valid"].iloc[24:].all()
+    f = build_features(p.reset_index(), save=False, peer=False).set_index(["code", "date"]).loc["121210"]
+    assert (f["is_nolimit"].reindex(days[[6, 7, 20, 23]]) == 1).all()
+    assert (f.loc[f.index >= days[24], "is_nolimit"] == 0).all()
 

@@ -3,7 +3,7 @@
     python scripts/recent_window_study.py train --months 6      # 최근 6개월만 학습한 y_up_recent6m 저장
     python scripts/recent_window_study.py backtest              # 2025-01~ 분기별 워크포워드 비교표
 
-backtest 의 '전체 누적'은 evolve 가 만든 v4 10년 기준선(같은 분기 재학습)을 그대로 쓰고,
+backtest 의 '전체 누적'은 현재 데이터 버전에서 evolve 가 만든 운영 버전 10년 기준선(같은 분기 재학습)을 쓰고,
 12개월·6개월 창만 새로 학습한다. 분기별 예측은 outputs/experiments/recent_window/ 에 저장해
 중간에 끊겨도 이어서 돌린다. 데이터가 바뀌면 그 폴더를 지우고 다시 돌린다.
 비교용 실험이며 운영 버전 승격과는 무관하다.
@@ -46,12 +46,18 @@ def cmd_train(months: int) -> None:
                 train_years=None, hard_neg=cfg.get("hard_neg", False))
 
 
-def _baseline() -> pd.DataFrame:
-    files = sorted((config.OUTPUT_DIR / "evolve").glob("*/ten_y_up_*.parquet"), key=lambda p: p.stat().st_mtime)
-    if not files:
-        raise SystemExit("v4 10년 기준선이 없습니다. evolve 를 먼저 돌리세요.")
-    print(f"전체 누적 기준선: {files[-1].relative_to(ROOT)}")
-    return pd.read_parquet(files[-1], columns=["date", "code", "y_up", "prob"])
+def _baseline(f: pd.DataFrame, base: np.ndarray) -> pd.DataFrame:
+    """현재 데이터 버전의 운영 버전 10년 기준선. 12·6개월 창과 같은 예측 대상(universe)만 남긴다."""
+    from krxlimit.evolve import STATE_DIR
+    state = STATE_DIR / "state_y_up.json"
+    prod = json.loads(state.read_text(encoding="utf-8"))["production"] if state.exists() else None
+    path = STATE_DIR / f"ten_y_up_{prod['key']}.parquet" if prod else None
+    if path is None or not path.exists():
+        raise SystemExit(f"{STATE_DIR} 에 운영 버전 10년 기준선이 없습니다. evolve 를 먼저 돌리세요.")
+    print(f"전체 누적 기준선: {path.relative_to(ROOT)} ({prod['name']})")
+    keep = f.loc[base, ["date", "code"]].assign(code=lambda x: x["code"].astype(str))
+    b = pd.read_parquet(path, columns=["date", "code", "y_up", "prob"]).assign(code=lambda x: x["code"].astype(str))
+    return b.merge(keep, on=["date", "code"])
 
 
 def cmd_backtest(start: str) -> None:
@@ -81,7 +87,7 @@ def cmd_backtest(start: str) -> None:
             parts.append(pr)
             print(f"{months}개월 창 {ps:%Y-%m}: 학습 {int(train_m.sum()):,}행 → 예측 {len(pr):,}행, {time.time() - t:.0f}초",
                   flush=True)
-    allh = _baseline()
+    allh = _baseline(f, base)
     allh = allh[(allh["date"] >= start) & allh["y_up"].notna()].assign(window="all")
     d = pd.concat([allh, *parts], ignore_index=True)
     daily = (d.sort_values("prob", ascending=False).groupby(["window", "date"]).head(10)

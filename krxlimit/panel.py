@@ -30,7 +30,7 @@ NUM_COLS = ["close", "chg", "fluc", "open", "high", "low", "volume", "value", "m
 # "exact": 계산한 상한가와 종가가 정확히 일치할 때만 인정 (기본)
 # "loose": exact 또는 (등락률 ≥ 29.5% & 종가 = 고가) 도 인정 → 규정 계산이 어긋날 때 비교용
 LIMIT_RULE = os.environ.get("KRX_LIMIT_RULE", "exact")
-LIQ_DAYS = 7    # 정리매매 기간(거래일). features.NOLIMIT_DAYS 가 이 값을 쓴다
+LIQ_DAYS = 7    # 정리매매 기간(그 종목의 거래일 수)
 
 _PREF_NAME = re.compile(r"(?:\d?우[A-Z]?|우\(전환\))$")
 
@@ -95,18 +95,15 @@ def build_panel(raw: pd.DataFrame | None = None, save: bool = True) -> pd.DataFr
     # 그날은 가격제한 없이 거래된 것이다(제한이 있으면 그 범위 밖 체결은 불가능) → 우연히 종가가 계산상 상·하한가와
     # 같아도 상·하한가로 세지 않는다.
     in_range = (df["high"] <= df["upper"]) & (df["low"] >= df["lower"])
-    df["limit_valid"] = (df["traded"] & ok_base & (df["ret"].abs() <= 0.305) & (df["upper"] > df["base"])
-                         & in_range)
-    # 정리매매(7거래일) 중 우연히 범위 안에서 움직인 날도 가격제한이 없다. 가격제한 없는 날부터 LIQ_DAYS 거래일 안에
-    # 마지막으로 거래되고 사라진(상장폐지) 종목은 그 사이 날을 모두 제외한다. 미래(상장폐지)를 보지만 이 기간의 행은
-    # features.is_nolimit(최근 7거래일 안에 가격제한 없는 날)로 예측 대상에서 이미 빠지므로 남는 행의 특징에는 새지 않는다.
-    days = np.sort(df["date"].unique())
-    ti = pd.Series(np.searchsorted(days, df["date"].to_numpy()), index=df.index)
-    nolim_ti = ti.where(df["traded"] & ok_base & ~df["limit_valid"])
-    start = nolim_ti.groupby(df["code"], sort=False).ffill()
-    last = ti.where(df["traded"]).groupby(df["code"], sort=False).transform("max")
-    liquidation = (last < len(days) - 1) & (last - start <= LIQ_DAYS - 1) & (ti <= last)
-    df["limit_valid"] &= ~liquidation
+    point_valid = (df["traded"] & ok_base & (df["ret"].abs() <= 0.305) & (df["upper"] > df["base"]) & in_range)
+    # 정리매매(7거래일) 중 우연히 범위 안에서 움직인 날도 가격제한이 없다. 가격제한 없이 거래된 날부터 그 종목의
+    # 거래일로 LIQ_DAYS 일(그날 포함, 사이의 거래정지일도 포함)을 '가격제한 없는 기간'(nolimit_window)으로 보고 뺀다.
+    # 그날까지의 정보만 쓰므로 학습과 실전의 판정이 같고, 가처분으로 멈췄다가 재개된 정리매매도 잡는다.
+    # 10년 자료에서 이 기간에 빠지는 상·하한가는 모두 정리매매 중 종가가 우연히 계산상 한가와 같았던 기록이었다.
+    traded_n = df["traded"].astype(np.int32).groupby(df["code"], sort=False).cumsum()
+    start = traded_n.where(df["traded"] & ok_base & ~point_valid).groupby(df["code"], sort=False).ffill()
+    df["nolimit_window"] = (traded_n - start) <= LIQ_DAYS - 1     # 가격제한 없는 날이 없었으면 NaN → False
+    df["limit_valid"] = point_valid & ~df["nolimit_window"]
     v = df["limit_valid"]
     df["up_close"] = v & (df["close"] == df["upper"])
     df["down_close"] = v & (df["close"] == df["lower"])
