@@ -96,3 +96,32 @@ def test_peak_analysis_censoring():
         assert df.loc[~pre_observed, col].isna().all()
         assert df.loc[pre_observed & df["1년수익률관측"], col].notna().all()
 
+
+
+def test_nolimit_flag_excludes_liquidation_trading():
+    """가격제한 없이 거래된 날(정리매매 등)이 최근 7거래일 안에 있으면 is_nolimit=1 → 예측 대상에서 빠진다."""
+    from krxlimit.features import NOLIMIT_DAYS, build_features
+    from krxlimit.model import universe, universe_mask
+    days = pd.bdate_range("2024-01-02", periods=40)
+    rows = []
+    for k, d in enumerate(days):
+        ds = d.strftime("%Y%m%d")
+        rows.append(_row(ds, "333330", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="보통"))
+        if k == 20:     # 정리매매 첫날: 기준가 10,000 → 5,000 (-50%, 가격제한 밖)
+            rows.append(_row(ds, "444440", 5_000, -5_000, 6_000, 6_000, 4_800, 900, name="정리"))
+        elif k > 20:    # 이후 거래는 제한폭 안에서 보합
+            rows.append(_row(ds, "444440", 5_000, 0, 5_000, 5_050, 4_950, 300, name="정리"))
+        else:
+            rows.append(_row(ds, "444440", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="정리"))
+    p = build_panel(pd.DataFrame(rows), save=False)
+    f = build_features(p, save=False, peer=False)
+    a = f[f["code"] == "444440"].set_index("date")["is_nolimit"]
+    assert a.loc[days[19]] == 0
+    assert (a.loc[days[20]:days[20 + NOLIMIT_DAYS - 1]] == 1).all()
+    assert a.loc[days[20 + NOLIMIT_DAYS]] == 0
+    assert (f.loc[f["code"] == "333330", "is_nolimit"] == 0).all()
+    kept = universe(f)
+    assert not ((kept["code"] == "444440") & (kept["date"] == days[20])).any()
+    assert universe_mask(f).sum() == len(f) - NOLIMIT_DAYS
+    # 표시 열이 없는 옛 특징 파일에서도 동작해야 한다
+    assert universe_mask(f.drop(columns=["is_nolimit"])).all()

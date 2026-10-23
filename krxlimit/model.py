@@ -122,16 +122,25 @@ def select_features(drop_groups=(), only_groups=None) -> list[str]:
     return [f for g in groups if g not in drop_groups for f in FEATURE_GROUPS[g]]
 
 
+# 운영 규칙: 가격제한 없이 거래 중인 종목(정리매매 등, features.is_nolimit)은 상·하한가가 불가능하므로
+# 학습·백테스트·실전 예측 모두에서 항상 뺀다. (2024~ 보류 구간 상위 10개 중 73자리가 이런 종목이었고 적중 0)
+ALWAYS_EXCLUDE = ("nolimit",)
+
+
 def universe_mask(df: pd.DataFrame, exclude=()) -> np.ndarray:
-    """예측 대상 종목 필터. exclude 예: ('spac', 'pref', 'reit', 'mgmt')."""
+    """예측 대상 종목 필터. exclude 예: ('spac', 'pref', 'reit', 'mgmt'). ALWAYS_EXCLUDE 는 항상 적용
+    (해당 표시 열이 없는 옛 특징 파일이면 건너뛴다)."""
     m = np.ones(len(df), dtype=bool)
-    for e in exclude:
-        m = m & (df[f"is_{e}"] != 1).to_numpy()
+    for e in tuple(exclude) + tuple(x for x in ALWAYS_EXCLUDE if x not in exclude):
+        col = f"is_{e}"
+        if e in ALWAYS_EXCLUDE and col not in df.columns:
+            continue
+        m = m & (df[col] != 1).to_numpy()
     return m
 
 
 def universe(df: pd.DataFrame, exclude=()) -> pd.DataFrame:
-    return df[universe_mask(df, exclude)] if exclude else df
+    return df[universe_mask(df, exclude)]
 
 
 def _downsample_mask(y: np.ndarray, neg_rate: float, seed: int) -> np.ndarray:
