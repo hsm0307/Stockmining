@@ -17,7 +17,7 @@ import pandas as pd
 from . import config
 from .features import V1_GROUPS
 from .improve import PRIMARY_K, paired
-from .model import TARGETS, evaluate, fit, predict_proba, rule_score, select_features, walk_forward
+from .model import TARGETS, evaluate, fit, predict_proba, rule_score, select_features, universe_mask, walk_forward
 from .viz import NEUTRAL, plt, save_fig, save_table
 
 STRATEGIES = {"전체 누적": None, "최근 1년": 1, "최근 3년": 3}
@@ -93,7 +93,7 @@ def cross_period(feats: pd.DataFrame, target: str, verbose: bool = True) -> pd.D
     k = PRIMARY_K.get(target, 10)
     features = select_features(only_groups=V1_GROUPS)
     dates = feats["date"].to_numpy()
-    base = feats[target].notna().to_numpy()
+    base = feats[target].notna().to_numpy() & universe_mask(feats, (), target)
     last_year = int(pd.Timestamp(dates.max()).year)
     blocks = {str(y): (f"{y}-01-01", f"{y + 1}-01-01") for y in range(2016, last_year)}
     blocks.update({f"{y}~{y + 2}": (f"{y}-01-01", f"{y + 3}-01-01") for y in (2016, 2019, 2022)})

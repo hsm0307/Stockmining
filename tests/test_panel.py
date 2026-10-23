@@ -123,9 +123,65 @@ def test_nolimit_flag_excludes_liquidation_trading():
     kept = universe(f, target="y_up")
     assert not ((kept["code"] == "444440") & (kept["date"] == days[20])).any()
     assert universe_mask(f, target="y_up").sum() == len(f) - NOLIMIT_DAYS
-    # 하한가에는 적용하지 않는다(거래 재개 뒤 연속 하한가가 많음). 타깃을 주지 않아도 적용 안 함
-    assert universe_mask(f, target="y_down").all() and universe_mask(f).all()
-    # 명시적으로 exclude 하면 어느 타깃이든 뺀다
+    # 하한가 예측에도 적용한다. 타깃을 주지 않으면(분석용) 적용 안 함
+    assert universe_mask(f, target="y_down").sum() == len(f) - NOLIMIT_DAYS
+    assert universe_mask(f).all()
+    # 명시적으로 exclude 해도 두 번 빼지 않는다
     assert universe_mask(f, ("nolimit",), target="y_down").sum() == len(f) - NOLIMIT_DAYS
     # 표시 열이 없는 옛 특징 파일에서도 동작해야 한다
     assert universe_mask(f.drop(columns=["is_nolimit"]), target="y_up").all()
+
+
+def test_intraday_out_of_range_day_is_not_a_limit_event():
+    """종가가 우연히 계산상 하한가와 같아도 장중 저가가 가격제한 밖이면(정리매매) 하한가가 아니다.
+    장중 범위 안에서 하한가로 마감한 날은 그대로 하한가."""
+    from krxlimit.features import build_features
+    from krxlimit.model import universe_mask
+    days = pd.bdate_range("2024-01-02", periods=12)
+    rows = []
+    for k, d in enumerate(days):
+        ds = d.strftime("%Y%m%d")
+        if k == 8:   # 기준가 10,000, 하한가 7,000. 555550 은 장중 4,000 까지(제한 밖), 666660 은 범위 안
+            rows.append(_row(ds, "555550", 7_000, -3_000, 9_000, 9_500, 4_000, 900, name="정리"))
+            rows.append(_row(ds, "666660", 7_000, -3_000, 9_000, 9_500, 7_000, 900, name="보통"))
+        elif k > 8:
+            rows.append(_row(ds, "555550", 7_000, 0, 7_000, 7_050, 6_950, 300, name="정리"))
+            rows.append(_row(ds, "666660", 7_000, 0, 7_000, 7_050, 6_950, 300, name="보통"))
+        else:
+            rows.append(_row(ds, "555550", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="정리"))
+            rows.append(_row(ds, "666660", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="보통"))
+    p = build_panel(pd.DataFrame(rows), save=False).set_index(["code", "date"])
+    assert not p.loc[("555550", days[8]), "limit_valid"] and not p.loc[("555550", days[8]), "down_close"]
+    assert p.loc[("666660", days[8]), "limit_valid"] and p.loc[("666660", days[8]), "down_close"]
+    f = build_features(p.reset_index(), save=False, peer=False).set_index(["code", "date"])
+    assert f.loc[("555550", days[7]), "y_down"] == 0 and f.loc[("666660", days[7]), "y_down"] == 1
+    assert f.loc[("555550", days[8]), "is_nolimit"] == 1 and f.loc[("666660", days[8]), "is_nolimit"] == 0
+    m = pd.Series(universe_mask(f.reset_index(), target="y_down"), index=f.index)
+    assert not m.loc[("555550", days[8])] and m.loc[("666660", days[8])]
+
+
+def test_liquidation_window_before_delisting_has_no_limit_events():
+    """정리매매: 가격제한 없는 첫날 뒤 7거래일 안에 상장폐지되면, 그 사이 범위 안에서 계산상 하한가로 끝난 날도 하한가가 아니다.
+    상장폐지되지 않고 계속 거래되는 종목(거래 재개 등)은 그대로 둔다."""
+    days = pd.bdate_range("2024-01-02", periods=20)
+    rows = []
+    for k, d in enumerate(days):
+        ds = d.strftime("%Y%m%d")
+        rows.append(_row(ds, "888880", 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name="보통"))
+        for code in ("777770", "999990"):
+            if code == "777770" and k > 11:      # 777770 은 정리매매 마지막 날(k=11) 뒤 상장폐지
+                continue
+            if k < 5:
+                rows.append(_row(ds, code, 10_000, 0, 10_000, 10_100, 9_900, 100 + k, name=code))
+            elif k == 5:                         # 정리매매 첫날 -80%
+                rows.append(_row(ds, code, 2_000, -8_000, 2_500, 2_500, 1_900, 900, name=code))
+            elif k == 6:                         # 범위 안에서 계산상 하한가(2,000 → 1,400)로 마감
+                rows.append(_row(ds, code, 1_400, -600, 1_900, 1_950, 1_400, 900, name=code))
+            else:
+                rows.append(_row(ds, code, 1_400, 0, 1_400, 1_420, 1_390, 300, name=code))
+    p = build_panel(pd.DataFrame(rows), save=False).set_index(["code", "date"])
+    assert not p.loc[("777770", days[5]), "limit_valid"]
+    assert not p.loc[("777770", days[6]), "down_close"] and not p.loc["777770", "limit_valid"].iloc[5:].any()
+    assert p.loc[("777770", days[4]), "limit_valid"]
+    assert p.loc[("999990", days[6]), "down_close"]          # 계속 거래되는 종목은 하한가 유지
+

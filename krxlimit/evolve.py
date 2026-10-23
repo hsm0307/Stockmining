@@ -35,7 +35,8 @@ from .viz import NEUTRAL, UP_COLOR, plt, save_fig, save_table
 # 라벨·특징 정의가 바뀌면 올린다 → 이전 세대의 상태·캐시와 섞이지 않는다.
 #   v1: 최초 (다음 날 거래정지 종목을 후보에서 제외하던 라벨)
 #   v2-haltlabel: 다음 날 거래정지·무효·상폐도 '실패'로 세는 라벨 + 시장경보·단기과열 특징 + 동조종목·리츠 수정
-DATA_VERSION = "v2-haltlabel"
+#   v3-nolimit: 장중 고가·저가가 가격제한 밖인 날을 '가격제한 없음'으로 보는 라벨 + 정리매매 등 예측 대상 제외 규칙
+DATA_VERSION = "v3-nolimit"
 STATE_DIR = config.OUTPUT_DIR / "evolve" / DATA_VERSION
 DEV_STAGE, TEN_STAGE = f"evo-{DATA_VERSION}", f"10y-{DATA_VERSION}"
 PROTECTED_GROUPS = {"candle", "limit_hist"}  # hard_neg 규칙과 핵심 신호에 필요한 그룹은 빼지 않음

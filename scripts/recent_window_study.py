@@ -57,7 +57,7 @@ def _baseline() -> pd.DataFrame:
 def cmd_backtest(start: str) -> None:
     f = _features()
     cfg, feats = _cfg()
-    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]))
+    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]), "y_up")
     dates, tidx = f["date"].to_numpy(), f["tidx"].to_numpy()
     bounds = list(pd.date_range(start, f["date"].max(), freq="QS")) + [f["date"].max() + pd.Timedelta(days=1)]
     CACHE.mkdir(parents=True, exist_ok=True)

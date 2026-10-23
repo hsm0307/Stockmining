@@ -79,7 +79,7 @@ def _setup():
     feats = select_features(only_groups=cfg["groups"])
     f = _features()
     seg = segment_of(f)
-    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]))
+    base = f["y_up"].notna().to_numpy() & universe_mask(f, tuple(cfg["exclude"]), "y_up")
     return cfg, feats, f, seg, base
 
 

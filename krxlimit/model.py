@@ -122,10 +122,11 @@ def select_features(drop_groups=(), only_groups=None) -> list[str]:
     return [f for g in groups if g not in drop_groups for f in FEATURE_GROUPS[g]]
 
 
-# 타깃별 운영 규칙: 최근 가격제한 없이 거래된 종목(정리매매 등, features.is_nolimit)은 상한가 계열 예측에서 항상 뺀다.
-# 상한가: 이런 행의 상한가 비율은 평소와 같은데(0.24%) 모델이 상위에 자주 올려 자리를 낭비했다 → 빼면 P@10 소폭 개선.
-# 하한가: 거래 재개·재상장 뒤 제한이 다시 걸린 상태의 연속 하한가가 많아(사건률 2.6%) 빼면 P@20 이 떨어진다 → 적용 안 함.
-ALWAYS_EXCLUDE = {"y_up": ("nolimit",), "y_uptouch": ("nolimit",)}
+# 운영 규칙: 최근 가격제한 없이 거래된 종목(정리매매 등, features.is_nolimit)은 상·하한가 예측에서 항상 뺀다.
+# 가격제한이 없으면 상·하한가가 정의상 불가능하다. 상한가 모델은 이런 종목을 상위에 자주 올려 자리를 낭비했다.
+# (한때 하한가에서 이런 행의 '하한가'가 많아 보였으나, 제한 없는 날 종가가 우연히 계산상 하한가와 같았던 가짜 라벨이었다
+#  → panel.limit_valid 가 장중 고가·저가도 확인하도록 고친 뒤 두 타깃 모두에 적용.)
+ALWAYS_EXCLUDE = {"y_up": ("nolimit",), "y_uptouch": ("nolimit",), "y_down": ("nolimit",)}
 
 
 def universe_mask(df: pd.DataFrame, exclude=(), target: str | None = None) -> np.ndarray:
@@ -336,6 +337,7 @@ def walk_forward_cache_signature(df: pd.DataFrame, target: str, start: str, end:
     end_ts = pd.Timestamp(end) if end else df["date"].max() + pd.Timedelta(days=1)
     input_columns = _walk_forward_columns(target) + features + ["tidx", "next_tidx"]
     input_columns += [f"is_{e}" for e in exclude]
+    input_columns += [f"is_{e}" for e in ALWAYS_EXCLUDE.get(target, ()) if e not in exclude]  # 운영 규칙 열도 서명에
     if hard_neg:
         input_columns += HARD_COLS
     return json.dumps({"schema": 2, "rows": int(len(df)), "last": str(df["date"].max().date()),

@@ -18,9 +18,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from krxlimit import config  # noqa: E402
+from krxlimit.evolve import STATE_DIR as STATE  # noqa: E402
 from krxlimit.live import HC_THRESHOLD, HC_THRESHOLD_STRICT, HC_TARGET  # noqa: E402
-
-STATE = config.OUTPUT_DIR / "evolve" / "v2-haltlabel"
 
 
 def load(target: str = "y_up") -> tuple[pd.DataFrame, str]:

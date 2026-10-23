@@ -30,6 +30,7 @@ NUM_COLS = ["close", "chg", "fluc", "open", "high", "low", "volume", "value", "m
 # "exact": 계산한 상한가와 종가가 정확히 일치할 때만 인정 (기본)
 # "loose": exact 또는 (등락률 ≥ 29.5% & 종가 = 고가) 도 인정 → 규정 계산이 어긋날 때 비교용
 LIMIT_RULE = os.environ.get("KRX_LIMIT_RULE", "exact")
+LIQ_DAYS = 7    # 정리매매 기간(거래일). features.NOLIMIT_DAYS 가 이 값을 쓴다
 
 _PREF_NAME = re.compile(r"(?:\d?우[A-Z]?|우\(전환\))$")
 
@@ -90,8 +91,22 @@ def build_panel(raw: pd.DataFrame | None = None, save: bool = True) -> pd.DataFr
     upper[m], lower[m] = up, lo
     df["upper"], df["lower"] = upper, lower
 
-    # 정리매매·재상장 등 가격제한이 없는 날은 제외
-    df["limit_valid"] = df["traded"] & ok_base & (df["ret"].abs() <= 0.305) & (df["upper"] > df["base"])
+    # 정리매매·재상장 등 가격제한이 없는 날은 제외. 종가가 ±30% 안이어도 장중 고가·저가가 계산된 가격제한 밖이면
+    # 그날은 가격제한 없이 거래된 것이다(제한이 있으면 그 범위 밖 체결은 불가능) → 우연히 종가가 계산상 상·하한가와
+    # 같아도 상·하한가로 세지 않는다.
+    in_range = (df["high"] <= df["upper"]) & (df["low"] >= df["lower"])
+    df["limit_valid"] = (df["traded"] & ok_base & (df["ret"].abs() <= 0.305) & (df["upper"] > df["base"])
+                         & in_range)
+    # 정리매매(7거래일) 중 우연히 범위 안에서 움직인 날도 가격제한이 없다. 가격제한 없는 날부터 LIQ_DAYS 거래일 안에
+    # 마지막으로 거래되고 사라진(상장폐지) 종목은 그 사이 날을 모두 제외한다. 미래(상장폐지)를 보지만 이 기간의 행은
+    # features.is_nolimit(최근 7거래일 안에 가격제한 없는 날)로 예측 대상에서 이미 빠지므로 남는 행의 특징에는 새지 않는다.
+    days = np.sort(df["date"].unique())
+    ti = pd.Series(np.searchsorted(days, df["date"].to_numpy()), index=df.index)
+    nolim_ti = ti.where(df["traded"] & ok_base & ~df["limit_valid"])
+    start = nolim_ti.groupby(df["code"], sort=False).ffill()
+    last = ti.where(df["traded"]).groupby(df["code"], sort=False).transform("max")
+    liquidation = (last < len(days) - 1) & (last - start <= LIQ_DAYS - 1) & (ti <= last)
+    df["limit_valid"] &= ~liquidation
     v = df["limit_valid"]
     df["up_close"] = v & (df["close"] == df["upper"])
     df["down_close"] = v & (df["close"] == df["lower"])

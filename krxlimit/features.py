@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 from . import config
+from .panel import LIQ_DAYS
 
 # 모델에 들어가는 특징 그룹 (ablation 실험 시 그룹 단위로 끄고 켤 수 있음)
 FEATURE_GROUPS: dict[str, list[str]] = {
@@ -44,7 +45,7 @@ V1_GROUPS = ["candle", "momentum", "limit_hist", "volume", "volatility", "accumu
 ALL_FEATURES = [f for g in FEATURE_GROUPS.values() for f in g]
 AGE_CAP = 400       # 상장 경과 거래일 상한
 LIVE_LOOKBACK = 560  # 실시간 예측 시 사용하는 최근 거래일 수 (가장 긴 창 500일 + 여유)
-NOLIMIT_DAYS = 7    # 최근 이만큼 거래일 안에 '가격제한 없는 거래일'이 있으면 정리매매 등으로 보고 예측 대상에서 뺀다
+NOLIMIT_DAYS = LIQ_DAYS    # 최근 이만큼 거래일 안에 '가격제한 없는 거래일'이 있으면 정리매매 등으로 보고 예측 대상에서 뺀다
 UNIVERSE_COLS = ["is_nolimit"]  # 모델 특징이 아니라 예측 대상 필터(model.universe_mask)용 표시
 LABELS = ["y_up", "y_down", "y_uptouch", "next_ret", "next_open_ret", "next_tidx"]
 ID_COLS = ["date", "code", "name", "market", "close", "upper", "tidx"]
@@ -270,7 +271,8 @@ def build_features(panel: pd.DataFrame, save: bool = True, peer: bool = True,
     # 정리매매·재상장 등 가격제한(±30%) 없이 거래되는 종목은 상·하한가가 정의상 불가능하다.
     # 상장 첫날이 아닌데 가격제한이 적용되지 않은 거래일이 최근 NOLIMIT_DAYS 거래일(당일 포함) 안에 있으면 1.
     # 당일 종가로 판정하므로 예측 시점(D 장 마감)에 알 수 있는 정보다.
-    nolim = W.wide((panel["traded"] & ~panel["limit_valid"] & ~panel["is_first_day"]).to_numpy(),
+    # 기준가를 모르는 날(base<=0)은 판단할 수 없으므로 표시하지 않는다.
+    nolim = W.wide((panel["traded"] & ~panel["limit_valid"] & ~panel["is_first_day"] & (panel["base"] > 0)).to_numpy(),
                    fill=0, dtype=np.float32)
     f["is_nolimit"] = np.where(exists, (_roll(nolim, NOLIMIT_DAYS, "max", 1) > 0).astype(np.float32), np.nan)
     age = np.minimum(np.cumsum(exists, axis=0), AGE_CAP)  # 상한을 둬야 실시간 예측(최근 구간만 계산)과 값이 같다
