@@ -1,0 +1,157 @@
+{
+ "target": "y_down",
+ "iteration": 1,
+ "dev_champion": {
+  "key": "c1eb20ecbc",
+  "label": "y_down_v3",
+  "cfg": {
+   "kind": "bag3",
+   "params": {
+    "learning_rate": 0.02
+   },
+   "neg_rate": 0.05,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  },
+  "score": 0.005784883629530668
+ },
+ "production": {
+  "name": "y_down_v3",
+  "key": "c1eb20ecbc",
+  "cfg": {
+   "kind": "bag3",
+   "params": {
+    "learning_rate": 0.02
+   },
+   "neg_rate": 0.05,
+   "groups": [
+    "candle",
+    "momentum",
+    "limit_hist",
+    "volume",
+    "volatility",
+    "accumulation",
+    "size_type",
+    "market",
+    "peer",
+    "calendar"
+   ],
+   "exclude": [],
+   "train_years": null,
+   "hard_neg": false
+  }
+ },
+ "queue_pos": 0,
+ "accepted_since_validation": 0,
+ "tested": {
+  "c1eb20ecbc": {
+   "label": "y_down_v3(출발점)",
+   "P@k": 0.005784883629530668,
+   "AP": 0.016343373447103567,
+   "gain": 0.0,
+   "t": 0.0,
+   "accepted": true,
+   "time": "10-23 13:29",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
+  }
+ },
+ "versions": [],
+ "validations": [],
+ "last_event": "evolve y_down: 10y baseline of y_down_v3 P@20=0.0066",
+ "ten_baseline": [
+  {
+   "기간": "10년 전체",
+   "모델": "규칙",
+   "일수": 2401,
+   "기저율": 0.000162,
+   "P@5": 0.0114120002835989,
+   "P@10": 0.006914000026881695,
+   "P@20": 0.004226999823004007,
+   "Lift@20": 26.06515
+  },
+  {
+   "기간": "10년 전체",
+   "모델": "y_down_v3",
+   "일수": 2401,
+   "기저율": 0.000162,
+   "P@5": 0.01457700040191412,
+   "P@10": 0.009913000278174877,
+   "P@20": 0.00660100020468235,
+   "Lift@20": 40.70272
+  },
+  {
+   "기간": "개발 2017~2023",
+   "모델": "규칙",
+   "일수": 1720,
+   "기저율": 0.000155,
+   "P@5": 0.009418999776244164,
+   "P@10": 0.005698000080883503,
+   "P@20": 0.0035170000046491623,
+   "Lift@20": 22.626855
+  },
+  {
+   "기간": "개발 2017~2023",
+   "모델": "y_down_v3",
+   "일수": 1720,
+   "기저율": 0.000155,
+   "P@5": 0.011628000065684319,
+   "P@10": 0.008662999607622623,
+   "P@20": 0.005814000032842159,
+   "Lift@20": 37.399759
+  },
+  {
+   "기간": "보류 2024~",
+   "모델": "규칙",
+   "일수": 681,
+   "기저율": 0.000177,
+   "P@5": 0.016445999965071678,
+   "P@10": 0.009984999895095825,
+   "P@20": 0.006020999979227781,
+   "Lift@20": 34.033056
+  },
+  {
+   "기간": "보류 2024~",
+   "모델": "y_down_v3",
+   "일수": 681,
+   "기저율": 0.000177,
+   "P@5": 0.022026000544428825,
+   "P@10": 0.013069000095129013,
+   "P@20": 0.008589999750256538,
+   "Lift@20": 48.559358
+  }
+ ]
+}
