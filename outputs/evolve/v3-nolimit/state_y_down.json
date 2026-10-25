@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 137,
+ "iteration": 138,
  "dev_champion": {
   "key": "74ab0ace72",
   "label": "+pref_link",
@@ -4608,6 +4608,40 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "692ca0ada8": {
+   "label": "+rel_strength & kind=lgbm",
+   "P@k": 0.005784883629530668,
+   "AP": 0.015561270189912029,
+   "gain": -0.00031976745231077075,
+   "t": -2.119098045330997,
+   "accepted": false,
+   "time": "10-25 22:48",
+   "base": "74ab0ace72",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {
+     "learning_rate": 0.02
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "rel_strength"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -4634,7 +4668,7 @@
    "result": "승격 → y_down_v4"
   }
  ],
- "last_event": "evolve y_down: try #136 spac 제외 & colsample_bytree=0.85 (dP@20=-0.0003, t=-1.96)",
+ "last_event": "evolve y_down: try #137 +rel_strength & kind=lgbm (dP@20=-0.0003, t=-2.12)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
