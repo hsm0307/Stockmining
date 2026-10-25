@@ -1,0 +1,3 @@
+﻿기준일,결과일,code,name,예측순위,예측확률,적중,시가매수가능적중,기록검증
+2026-10-22,2026-10-23,060900,에이전트AI,1,0.205,True,True,timing_records_passed
+2026-10-22,2026-10-23,335870,윙스풋,2,0.1918,True,True,timing_records_passed
