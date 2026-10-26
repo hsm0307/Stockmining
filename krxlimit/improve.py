@@ -64,7 +64,7 @@ def _merge(cfg: dict, change: dict) -> dict:
     from .model import LGBM_PARAMS
     out = json.loads(json.dumps(cfg))
     for k, v in change.items():
-        out[k] = {**out.get(k, {}), **v} if k == "params" and v else v
+        out[k] = {**(out.get(k) or {}), **v} if k == "params" and v else v  # 기본값만 남아 None 이 된 params 도 처리
     if out.get("params"):
         out["params"] = {k: v for k, v in out["params"].items() if LGBM_PARAMS.get(k) != v} or None
     return out

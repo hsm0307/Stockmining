@@ -3,6 +3,7 @@
 한 반복(iteration)
   1) 현재 '개발 챔피언' 설정을 조금 바꾼 후보를 만든다.
      처음에는 정해진 후보(특징 그룹, 파라미터, 모델 종류, 학습기간)를 차례로, 그 뒤에는 무작위 변이.
+     무작위 변이에서는 현 챔피언 대비 여러 번 시도해 매번 확실히 나빴던 변경(예: hard_neg)을 대체로 건너뛴다.
   2) 개발 구간(2017~2023, 연 1회 재학습 워크포워드)에서 챔피언과 같은 날끼리 짝지어 비교.
      ΔP@k > 0, t ≥ 1 이면 새 개발 챔피언.
   3) 개발 챔피언이 운영 버전(v1, v2, …)과 달라졌으면 10년(2017~현재, 분기 재학습) 백테스트로 검증.
@@ -51,6 +52,9 @@ SPACE = {
 NEG_RATES = [0.03, 0.05, 0.1, 0.2, 0.3]
 KINDS = ["lgbm", "bag3", "rank", "ens"]
 TRAIN_YEARS = [None, 3, 5]
+MUTATION_OPS = ["group", "param", "param", "neg", "hard", "kind", "years", "spac"]
+# 같은 챔피언 대비 BAD_MIN_N 번 이상 매번 t ≤ BAD_T 였던 변경은 BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄)
+BAD_T, BAD_MIN_N, BAD_SKIP = -2.0, 3, 0.85
 EST_DEV_MIN = {"lgbm": 6, "rank": 8, "bag3": 18, "ens": 15}  # 개발 평가 1회 예상 소요(분, 여유 포함)
 EST_TEN_MIN = {"lgbm": 30, "rank": 40, "bag3": 90, "ens": 70}  # 10년 분기 워크포워드 1회 예상 소요(분)
 
@@ -103,19 +107,34 @@ def systematic(cfg: dict) -> list[tuple[str, dict]]:
     return out
 
 
+def bad_moves(st: dict) -> set[str]:
+    """현 개발 챔피언 대비 BAD_MIN_N 번 이상 섞여 시도됐고 매번 t ≤ BAD_T 였던 변경 (예: hard_neg=True).
+
+    후보 이름의 ' & ' 조각 단위로 센다. 하나라도 BAD_T 보다 나았던 변경은 남긴다.
+    """
+    base, seen = st["dev_champion"]["key"], {}
+    for r in st["tested"].values():
+        if r.get("base") == base:
+            for m in r["label"].split(" & "):
+                seen.setdefault(m, []).append(r["t"])
+    return {m for m, ts in seen.items() if len(ts) >= BAD_MIN_N and max(ts) <= BAD_T}
+
+
 def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
-    """설정 하나(가끔 둘)를 바꾼 변이 후보."""
-    changes, names = {}, []
+    """설정 하나(가끔 둘)를 바꾼 변이 후보. 두 번 바꿀 때 같은 변경(같은 그룹·파라미터·종류 등)은 다시 고르지 않는다."""
+    changes, names, used_ops, used_groups = {}, [], set(), set()
     for _ in range(1 if rng.random() < 0.7 else 2):
-        op = rng.choice(["group", "param", "param", "neg", "hard", "kind", "years", "spac"])
+        op = rng.choice([o for o in MUTATION_OPS if o in ("group", "param") or o not in used_ops])
+        used_ops.add(op)
         if op == "group":
-            g = rng.choice([g for g in FEATURE_GROUPS if g not in PROTECTED_GROUPS])
+            g = rng.choice([g for g in FEATURE_GROUPS if g not in PROTECTED_GROUPS and g not in used_groups])
+            used_groups.add(g)
             groups = list(changes.get("groups", cfg["groups"]))
             groups = [x for x in groups if x != g] if g in groups else groups + [g]
             changes["groups"] = groups
             names.append(("-" if g in cfg["groups"] else "+") + g)
         elif op == "param":
-            p = rng.choice(list(SPACE))
+            p = rng.choice([p for p in SPACE if p not in changes.get("params", {})])
             v = rng.choice(SPACE[p])
             changes.setdefault("params", {})[p] = v
             names.append(f"{p}={v}")
@@ -182,8 +201,11 @@ class Evolver:
             cfg = _merge(champ, change)
             if cfg_key(cfg) not in st["tested"]:
                 return name, cfg
+        bad = bad_moves(st)
         for _ in range(200):
             name, change = mutate(champ, self.rng)
+            if bad & set(name.split(" & ")) and self.rng.random() < BAD_SKIP:
+                continue
             cfg = _merge(champ, change)
             if cfg.get("hard_neg") and not {"candle", "limit_hist"} <= set(cfg["groups"]):
                 continue
