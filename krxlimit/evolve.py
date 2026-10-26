@@ -30,7 +30,8 @@ from . import config
 from .features import FEATURE_GROUPS, load_features
 from .improve import (BASE_CFG, DEV, HOLD_START, MIN_T, MODEL_CANDIDATES, NEW_GROUPS, PARAM_CANDIDATES, PRIMARY_K,
                       WINDOW_CANDIDATES, _exp_dir, _merge, _next_version, paired, run_cfg, ten_year_tables)
-from .model import TARGETS, evaluate, select_features, train_final, walk_forward_cache_signature
+from .model import (LGBM_PARAMS, RANK_PARAMS, TARGETS, evaluate, select_features, train_final,
+                    walk_forward_cache_signature)
 from .viz import NEUTRAL, UP_COLOR, plt, save_fig, save_table
 
 # 라벨·특징 정의가 바뀌면 올린다 → 이전 세대의 상태·캐시와 섞이지 않는다.
@@ -53,8 +54,9 @@ NEG_RATES = [0.03, 0.05, 0.1, 0.2, 0.3]
 KINDS = ["lgbm", "bag3", "rank", "ens"]
 TRAIN_YEARS = [None, 3, 5]
 MUTATION_OPS = ["group", "param", "param", "neg", "hard", "kind", "years", "spac"]
-# 같은 챔피언 대비 BAD_MIN_N 번 이상 매번 t ≤ BAD_T 였던 변경은 BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄)
-BAD_T, BAD_MIN_N, BAD_SKIP = -2.0, 3, 0.85
+# 같은 챔피언 대비 BAD_MIN_N 번(섞여서만 시도됐으면 BAD_MIN_N_COMBO 번) 이상 매번 t ≤ BAD_T 였던 변경은
+# BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄)
+BAD_T, BAD_MIN_N, BAD_MIN_N_COMBO, BAD_SKIP = -2.0, 3, 5, 0.85
 EST_DEV_MIN = {"lgbm": 6, "rank": 8, "bag3": 18, "ens": 15}  # 개발 평가 1회 예상 소요(분, 여유 포함)
 EST_TEN_MIN = {"lgbm": 30, "rank": 40, "bag3": 90, "ens": 70}  # 10년 분기 워크포워드 1회 예상 소요(분)
 
@@ -107,17 +109,43 @@ def systematic(cfg: dict) -> list[tuple[str, dict]]:
     return out
 
 
-def bad_moves(st: dict) -> set[str]:
-    """현 개발 챔피언 대비 BAD_MIN_N 번 이상 섞여 시도됐고 매번 t ≤ BAD_T 였던 변경 (예: hard_neg=True).
+def cfg_moves(base: dict, cfg: dict) -> set[str]:
+    """base → cfg 로 바뀐 점을 mutate() 이름 조각('+peer', 'num_leaves=127', 'hard_neg=True' …)으로.
 
-    후보 이름의 ' & ' 조각 단위로 센다. 하나라도 BAD_T 보다 나았던 변경은 남긴다.
+    후보 이름이 아니라 설정 자체를 비교한다 (체계적 후보는 'minchild50'·'rank' 처럼 이름이 달라서).
+    rank 로/에서 바뀌면 파라미터 기본값이 달라 파라미터 차이는 따로 세지 않는다.
     """
-    base, seen = st["dev_champion"]["key"], {}
+    out = {("+" if g in cfg["groups"] else "-") + g for g in set(base["groups"]) ^ set(cfg["groups"])}
+    out |= {e + (" 제외" if e in cfg["exclude"] else " 포함") for e in set(base["exclude"]) ^ set(cfg["exclude"])}
+    if base["kind"] != cfg["kind"]:
+        out.add(f"kind={cfg['kind']}")
+    if base["kind"] == cfg["kind"] or "rank" not in (base["kind"], cfg["kind"]):
+        d = RANK_PARAMS if cfg["kind"] == "rank" else LGBM_PARAMS
+        bp, cp = {**d, **(base.get("params") or {})}, {**d, **(cfg.get("params") or {})}
+        out |= {f"{p}={cp[p]}" for p in SPACE if bp[p] != cp[p]}
+    for key, name, default in (("neg_rate", "neg", None), ("hard_neg", "hard_neg", False),
+                               ("train_years", "years", None)):
+        if base.get(key, default) != cfg.get(key, default):
+            out.add(f"{name}={cfg.get(key, default)}")
+    return out
+
+
+def bad_moves(st: dict) -> set[str]:
+    """현 개발 챔피언 대비 시도마다 t ≤ BAD_T 였던 변경 (예: hard_neg=True).
+
+    단독으로 시도된 적이 있으면 BAD_MIN_N 번, 다른 변경과 섞여서만 시도됐으면 짝의 탓일 수 있어 BAD_MIN_N_COMBO 번 이상.
+    하나라도 BAD_T 보다 나았던 변경은 남긴다.
+    """
+    champ, seen, solo = st["dev_champion"], {}, set()
     for r in st["tested"].values():
-        if r.get("base") == base:
-            for m in r["label"].split(" & "):
+        if r.get("base") == champ["key"] and r.get("cfg"):
+            ms = cfg_moves(champ["cfg"], r["cfg"])
+            for m in ms:
                 seen.setdefault(m, []).append(r["t"])
-    return {m for m, ts in seen.items() if len(ts) >= BAD_MIN_N and max(ts) <= BAD_T}
+            if len(ms) == 1:
+                solo |= ms
+    return {m for m, ts in seen.items()
+            if max(ts) <= BAD_T and len(ts) >= (BAD_MIN_N if m in solo else BAD_MIN_N_COMBO)}
 
 
 def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
@@ -204,9 +232,9 @@ class Evolver:
         bad = bad_moves(st)
         for _ in range(200):
             name, change = mutate(champ, self.rng)
-            if bad & set(name.split(" & ")) and self.rng.random() < BAD_SKIP:
-                continue
             cfg = _merge(champ, change)
+            if bad & cfg_moves(champ, cfg) and self.rng.random() < BAD_SKIP:
+                continue
             if cfg.get("hard_neg") and not {"candle", "limit_hist"} <= set(cfg["groups"]):
                 continue
             if cfg_key(cfg) not in st["tested"]:
