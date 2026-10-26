@@ -1,3 +1,8 @@
 ﻿기준일,결과일,code,name,예측순위,예측확률,적중,시가매수가능적중,기록검증
 2026-10-22,2026-10-23,060900,에이전트AI,1,0.205,True,True,timing_records_passed
 2026-10-22,2026-10-23,335870,윙스풋,2,0.1918,True,True,timing_records_passed
+2026-10-23,2026-10-26,900100,파이온엑스,1,0.3243,False,False,timing_records_passed
+2026-10-23,2026-10-26,376930,노을,2,0.2726,True,False,timing_records_passed
+2026-10-23,2026-10-26,060900,에이전트AI,3,0.2376,False,False,timing_records_passed
+2026-10-23,2026-10-26,335870,윙스풋,4,0.1935,False,False,timing_records_passed
+2026-10-23,2026-10-26,015260,에이엔피,5,0.1586,False,False,timing_records_passed
