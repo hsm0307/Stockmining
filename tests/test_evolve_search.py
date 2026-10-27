@@ -64,6 +64,24 @@ def test_bad_moves_needs_more_evidence_when_only_seen_in_combos():
     assert "subsample=0.6" in evo.bad_moves(st)
 
 
+def test_bad_moves_flags_frequent_losers_relative_to_typical_try():
+    # 대부분의 시도가 t≈-2 로 지는 상황: 절대 기준(매번 ≤ -2)에는 한 번(-1.7) 때문에 안 걸리지만
+    # 10번 넘게 한 번도 못 이겼고 중앙값이 전형적인 시도보다 0.75 이상 낮으면 거른다
+    other = [({"params": {"subsample": v, "colsample_bytree": c}, "neg_rate": n}, -1.9)
+             for v in (0.6, 1.0) for c in (0.55, 0.85) for n in (0.03, 0.05, 0.2, 0.3)]
+    spac = [({"exclude": ["spac"], "neg_rate": n, "params": {"num_leaves": nl}}, t)
+            for (n, nl), t in zip([(0.03, 15), (0.05, 15), (0.2, 15), (0.3, 15), (0.03, 31), (0.05, 31), (0.2, 31),
+                                   (0.3, 31), (0.03, 127), (0.05, 127)],
+                                  [-3.5, -3.2, -3.0, -3.1, -2.9, -3.3, -1.7, -3.6, -3.0, -3.4])]
+    st = _state([(f"r{i}", ch, t) for i, (ch, t) in enumerate(other + spac)])
+    assert "spac 제외" in evo.bad_moves(st)
+    assert "subsample=0.6" not in evo.bad_moves(st)  # 전형적인 수준(-2)으로 진 변경은 남김
+    # 한 번이라도 챔피언을 넘었으면(t > 0) 남김
+    spac[6] = (spac[6][0], 0.4)
+    st = _state([(f"r{i}", ch, t) for i, (ch, t) in enumerate(other + spac)])
+    assert "spac 제외" not in evo.bad_moves(st)
+
+
 def test_next_candidate_mostly_skips_bad_moves():
     st = _state([("hardneg", {"hard_neg": True}, -4.0),
                  ("hard_neg=True & -peer", {"hard_neg": True, "groups": CHAMP["groups"][:-1]}, -4.0),

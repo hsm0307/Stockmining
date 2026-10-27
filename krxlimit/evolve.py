@@ -3,7 +3,7 @@
 한 반복(iteration)
   1) 현재 '개발 챔피언' 설정을 조금 바꾼 후보를 만든다.
      처음에는 정해진 후보(특징 그룹, 파라미터, 모델 종류, 학습기간)를 차례로, 그 뒤에는 무작위 변이.
-     무작위 변이에서는 현 챔피언 대비 여러 번 시도해 매번 확실히 나빴던 변경(예: hard_neg)을 대체로 건너뛴다.
+     무작위 변이에서는 현 챔피언 대비 여러 번 시도해 번번이 나빴던 변경(예: hard_neg)을 대체로 건너뛴다.
   2) 개발 구간(2017~2023, 연 1회 재학습 워크포워드)에서 챔피언과 같은 날끼리 짝지어 비교.
      ΔP@k > 0, t ≥ 1 이면 새 개발 챔피언.
   3) 개발 챔피언이 운영 버전(v1, v2, …)과 달라졌으면 10년(2017~현재, 분기 재학습) 백테스트로 검증.
@@ -54,9 +54,11 @@ NEG_RATES = [0.03, 0.05, 0.1, 0.2, 0.3]
 KINDS = ["lgbm", "bag3", "rank", "ens"]
 TRAIN_YEARS = [None, 3, 5]
 MUTATION_OPS = ["group", "param", "param", "neg", "hard", "kind", "years", "spac"]
-# 같은 챔피언 대비 BAD_MIN_N 번(섞여서만 시도됐으면 BAD_MIN_N_COMBO 번) 이상 매번 t ≤ BAD_T 였던 변경은
+# 같은 챔피언 대비 BAD_MIN_N 번(섞여서만 시도됐으면 BAD_MIN_N_COMBO 번) 이상 매번 t ≤ BAD_T 였던 변경,
+# 또는 BAD_MANY_N 번 이상 한 번도 챔피언을 못 넘었고 t 중앙값이 전체 시도 중앙값보다 BAD_MARGIN 이상 낮은 변경은
 # BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄)
 BAD_T, BAD_MIN_N, BAD_MIN_N_COMBO, BAD_SKIP = -2.0, 3, 5, 0.85
+BAD_MANY_N, BAD_MARGIN = 10, 0.75
 EST_DEV_MIN = {"lgbm": 6, "rank": 8, "bag3": 18, "ens": 15}  # 개발 평가 1회 예상 소요(분, 여유 포함)
 EST_TEN_MIN = {"lgbm": 30, "rank": 40, "bag3": 90, "ens": 70}  # 10년 분기 워크포워드 1회 예상 소요(분)
 
@@ -131,21 +133,26 @@ def cfg_moves(base: dict, cfg: dict) -> set[str]:
 
 
 def bad_moves(st: dict) -> set[str]:
-    """현 개발 챔피언 대비 시도마다 t ≤ BAD_T 였던 변경 (예: hard_neg=True).
+    """현 개발 챔피언 대비 번번이 진 변경 (예: hard_neg=True). 두 기준 중 하나라도 맞으면.
 
-    단독으로 시도된 적이 있으면 BAD_MIN_N 번, 다른 변경과 섞여서만 시도됐으면 짝의 탓일 수 있어 BAD_MIN_N_COMBO 번 이상.
-    하나라도 BAD_T 보다 나았던 변경은 남긴다.
+    1) 시도마다 t ≤ BAD_T: 단독으로 시도된 적이 있으면 BAD_MIN_N 번, 섞여서만 시도됐으면 짝의 탓일 수 있어
+       BAD_MIN_N_COMBO 번 이상. 하나라도 BAD_T 보다 나았으면 남긴다.
+    2) BAD_MANY_N 번 이상 시도돼 한 번도 t > 0 이 없었고, t 중앙값이 전체 시도 중앙값보다 BAD_MARGIN 이상 낮음.
+       (거의 모든 시도가 챔피언보다 나쁜 때라 절대 기준만으로는 자주 섞이는 나쁜 변경을 못 거른다.)
     """
-    champ, seen, solo = st["dev_champion"], {}, set()
+    champ, seen, solo, all_t = st["dev_champion"], {}, set(), []
     for r in st["tested"].values():
         if r.get("base") == champ["key"] and r.get("cfg"):
             ms = cfg_moves(champ["cfg"], r["cfg"])
+            all_t.append(r["t"])
             for m in ms:
                 seen.setdefault(m, []).append(r["t"])
             if len(ms) == 1:
                 solo |= ms
+    typical = float(np.median(all_t)) if all_t else 0.0
     return {m for m, ts in seen.items()
-            if max(ts) <= BAD_T and len(ts) >= (BAD_MIN_N if m in solo else BAD_MIN_N_COMBO)}
+            if (max(ts) <= BAD_T and len(ts) >= (BAD_MIN_N if m in solo else BAD_MIN_N_COMBO))
+            or (len(ts) >= BAD_MANY_N and max(ts) <= 0 and float(np.median(ts)) <= typical - BAD_MARGIN)}
 
 
 def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
