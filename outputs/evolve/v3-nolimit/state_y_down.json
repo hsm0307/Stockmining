@@ -1,9 +1,9 @@
 {
  "target": "y_down",
- "iteration": 276,
+ "iteration": 277,
  "dev_champion": {
-  "key": "74ab0ace72",
-  "label": "+pref_link",
+  "key": "a204c8dea7",
+  "label": "-volatility & +overheat",
   "cfg": {
    "kind": "bag3",
    "params": {
@@ -15,19 +15,19 @@
     "momentum",
     "limit_hist",
     "volume",
-    "volatility",
     "accumulation",
     "size_type",
     "market",
     "peer",
     "calendar",
-    "pref_link"
+    "pref_link",
+    "overheat"
    ],
    "exclude": [],
    "train_years": null,
    "hard_neg": false
   },
-  "score": 0.006104651372879744
+  "score": 0.006308139767497778
  },
  "production": {
   "name": "y_down_v4",
@@ -56,8 +56,8 @@
    "hard_neg": false
   }
  },
- "queue_pos": 22,
- "accepted_since_validation": 0,
+ "queue_pos": 0,
+ "accepted_since_validation": 1,
  "tested": {
   "c1eb20ecbc": {
    "label": "y_down_v3(출발점)",
@@ -9175,6 +9175,39 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "a204c8dea7": {
+   "label": "-volatility & +overheat",
+   "P@k": 0.006308139767497778,
+   "AP": 0.019787645769296563,
+   "gain": 0.00020348838006611913,
+   "t": 1.3001282521543702,
+   "accepted": true,
+   "time": "10-27 19:43",
+   "base": "74ab0ace72",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -9201,7 +9234,7 @@
    "result": "승격 → y_down_v4"
   }
  ],
- "last_event": "evolve y_down: try #272 kind=ens & colsample_bytree=1.0 (dP@20=-0.0001, t=-0.60)",
+ "last_event": "evolve y_down: try #273 -volatility & +overheat (dP@20=+0.0002, t=+1.30, accepted)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
