@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 275,
+ "iteration": 276,
  "dev_champion": {
   "key": "f2e5035c75",
   "label": "y_up_v5",
@@ -9332,6 +9332,41 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "9f40b9d5ef": {
+   "label": "hard_neg=True & +overheat",
+   "P@k": 0.07523255795240402,
+   "AP": 0.057829425166044016,
+   "gain": -0.005116279236972332,
+   "t": -4.665927778181906,
+   "accepted": false,
+   "time": "10-27 10:12",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05
+    },
+    "neg_rate": 0.1,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": true
+   }
   }
  },
  "versions": [],
@@ -9348,7 +9383,7 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_up: try #270 learning_rate=0.02 & neg=0.3 (dP@10=+0.0002, t=+0.29)",
+ "last_event": "evolve y_up: try #271 hard_neg=True & +overheat (dP@10=-0.0051, t=-4.67)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
