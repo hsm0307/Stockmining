@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 288,
+ "iteration": 289,
  "dev_champion": {
   "key": "a204c8dea7",
   "label": "-volatility & +overheat",
@@ -56,7 +56,7 @@
    "hard_neg": false
   }
  },
- "queue_pos": 10,
+ "queue_pos": 11,
  "accepted_since_validation": 0,
  "tested": {
   "c1eb20ecbc": {
@@ -9546,6 +9546,40 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "1d27d7e915": {
+   "label": "minchild800",
+   "P@k": 0.005872093141078949,
+   "AP": 0.013965343033702256,
+   "gain": -0.00043604651000350714,
+   "t": -2.024420529312105,
+   "accepted": false,
+   "time": "10-27 22:47",
+   "base": "a204c8dea7",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02,
+     "min_child_samples": 800
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -9592,7 +9626,7 @@
    "result": "승격 → y_down_v5"
   }
  ],
- "last_event": "evolve y_down: try #283 minchild50 (dP@20=-0.0001, t=-0.58)",
+ "last_event": "evolve y_down: try #284 minchild800 (dP@20=-0.0004, t=-2.02)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
