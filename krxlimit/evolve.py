@@ -56,8 +56,8 @@ TRAIN_YEARS = [None, 3, 5]
 MUTATION_OPS = ["group", "param", "param", "neg", "hard", "kind", "years", "spac"]
 # 같은 챔피언 대비 BAD_MIN_N 번(섞여서만 시도됐으면 BAD_MIN_N_COMBO 번) 이상 매번 t ≤ BAD_T 였던 변경,
 # 또는 BAD_MANY_N 번 이상 한 번도 챔피언을 못 넘었고 t 중앙값이 전체 시도 중앙값보다 BAD_MARGIN 이상 낮은 변경은
-# BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄)
-BAD_T, BAD_MIN_N, BAD_MIN_N_COMBO, BAD_SKIP = -2.0, 3, 5, 0.85
+# BAD_SKIP 확률로 건너뜀 (가끔은 다시 시도해 봄 — 0.85 로는 평가 후보의 약 18%가 이런 변경을 포함해 0.95 로 올림)
+BAD_T, BAD_MIN_N, BAD_MIN_N_COMBO, BAD_SKIP = -2.0, 3, 5, 0.95
 BAD_MANY_N, BAD_MARGIN = 10, 0.75
 EST_DEV_MIN = {"lgbm": 6, "rank": 8, "bag3": 18, "ens": 15}  # 개발 평가 1회 예상 소요(분, 여유 포함)
 EST_TEN_MIN = {"lgbm": 30, "rank": 40, "bag3": 90, "ens": 70}  # 10년 분기 워크포워드 1회 예상 소요(분)

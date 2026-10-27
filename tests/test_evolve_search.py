@@ -90,7 +90,7 @@ def test_next_candidate_mostly_skips_bad_moves():
     ev.rng = random.Random(1)
     cands = [ev.next_candidate(st) for _ in range(2000)]
     share = sum(cfg.get("hard_neg", False) for _, cfg in cands) / len(cands)
-    # 건너뛰지 않으면 약 15%, 85% 건너뛰면 약 3% — 완전히 막지는 않음
+    # 건너뛰지 않으면 약 15%, BAD_SKIP(95%)만큼 건너뛰면 약 1% — 완전히 막지는 않음
     assert 0 < share < 0.08
 
 
