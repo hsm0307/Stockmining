@@ -1,16 +1,17 @@
 {
  "target": "y_up",
- "iteration": 365,
+ "iteration": 366,
  "dev_champion": {
-  "key": "f2e5035c75",
-  "label": "y_up_v5",
+  "key": "b67dcd43d2",
+  "label": "min_child_samples=400 & neg=0.2",
   "cfg": {
    "kind": "bag3",
    "params": {
     "num_leaves": 63,
-    "learning_rate": 0.05
+    "learning_rate": 0.05,
+    "min_child_samples": 400
    },
-   "neg_rate": 0.1,
+   "neg_rate": 0.2,
    "groups": [
     "candle",
     "momentum",
@@ -28,7 +29,7 @@
    "train_years": 3,
    "hard_neg": false
   },
-  "score": null
+  "score": 0.08116278797388077
  },
  "production": {
   "name": "y_up_v5",
@@ -58,8 +59,8 @@
    "hard_neg": false
   }
  },
- "queue_pos": 22,
- "accepted_since_validation": 0,
+ "queue_pos": 0,
+ "accepted_since_validation": 1,
  "tested": {
   "f2e5035c75": {
    "label": "y_up_v5(출발점)",
@@ -12400,6 +12401,41 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "b67dcd43d2": {
+   "label": "min_child_samples=400 & neg=0.2",
+   "P@k": 0.08116278797388077,
+   "AP": 0.06405787072883934,
+   "gain": 0.0008139534620568156,
+   "t": 1.0377722075958353,
+   "accepted": true,
+   "time": "10-28 04:25",
+   "base": "f2e5035c75",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "min_child_samples": 400
+    },
+    "neg_rate": 0.2,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [],
@@ -12416,7 +12452,7 @@
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
   }
  ],
- "last_event": "evolve y_up: try #359 -pref_link & neg=0.3 (dP@10=-0.0015, t=-1.72)",
+ "last_event": "evolve y_up: try #360 min_child_samples=400 & neg=0.2 (dP@10=+0.0008, t=+1.04, accepted)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
