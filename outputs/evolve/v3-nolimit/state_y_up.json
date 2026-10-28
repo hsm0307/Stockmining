@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 366,
+ "iteration": 367,
  "dev_champion": {
   "key": "b67dcd43d2",
   "label": "min_child_samples=400 & neg=0.2",
@@ -32,15 +32,16 @@
   "score": 0.08116278797388077
  },
  "production": {
-  "name": "y_up_v5",
-  "key": "f2e5035c75",
+  "name": "y_up_v6",
+  "key": "b67dcd43d2",
   "cfg": {
    "kind": "bag3",
    "params": {
     "num_leaves": 63,
-    "learning_rate": 0.05
+    "learning_rate": 0.05,
+    "min_child_samples": 400
    },
-   "neg_rate": 0.1,
+   "neg_rate": 0.2,
    "groups": [
     "candle",
     "momentum",
@@ -60,7 +61,7 @@
   }
  },
  "queue_pos": 0,
- "accepted_since_validation": 1,
+ "accepted_since_validation": 0,
  "tested": {
   "f2e5035c75": {
    "label": "y_up_v5(출발점)",
@@ -12438,7 +12439,17 @@
    }
   }
  },
- "versions": [],
+ "versions": [
+  {
+   "name": "y_up_v6",
+   "time": "2026-10-28 05:10",
+   "label": "min_child_samples=400 & neg=0.2",
+   "hold_gain": 0.0004385965003166348,
+   "hold_t": 0.3290780902831112,
+   "ten_gain": 0.0008319467306137085,
+   "hold_P": 0.12002924084663391
+  }
+ ],
  "validations": [
   {
    "time": "2026-10-23 16:50",
@@ -12450,9 +12461,20 @@
    "ten_gain": -4.164927304373123e-05,
    "ten_t": -0.062365283265576464,
    "result": "기각 (보류 구간에서 나쁨) → 개발 챔피언을 운영 버전으로 되돌림"
+  },
+  {
+   "time": "2026-10-28 05:10",
+   "production": "y_up_v5",
+   "challenger": "min_child_samples=400 & neg=0.2",
+   "challenger_key": "b67dcd43d2",
+   "hold_gain": 0.0004385965003166348,
+   "hold_t": 0.3290780902831112,
+   "ten_gain": 0.0008319467306137085,
+   "ten_t": 1.1111652651723654,
+   "result": "승격 → y_up_v6"
   }
  ],
- "last_event": "evolve y_up: try #360 min_child_samples=400 & neg=0.2 (dP@10=+0.0008, t=+1.04, accepted)",
+ "last_event": "evolve y_up: 10y validation — 승격 → y_up_v6 (holdout dP@10=+0.0004, t=+0.33)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
