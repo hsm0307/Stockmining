@@ -27,6 +27,37 @@ def test_mutate_never_repeats_a_single_choice_change():
         assert len(keys) == len(set(keys)), name  # kind=rank & kind=lgbm, num_leaves 두 번 등 금지
 
 
+def test_mutate_names_only_real_changes():
+    # 이름의 각 변경이 실제 설정 차이와 일치해야 함 — 예전에는 챔피언 값과 같은 num_leaves=63 이나 neg=0.1 을 골라
+    # 아무것도 안 바뀐 변경이 이름에만 남았고, 파라미터를 고른 뒤 rank 로 바꾸면 그 파라미터가 지워졌음
+    tuned = {**CHAMP, "params": {"num_leaves": 63, "learning_rate": 0.02, "min_child_samples": 50, "subsample": 0.6}}
+    champs = (CHAMP, {**CHAMP, "params": None, "neg_rate": 0.2}, tuned,  # tuned: rank 기본값과 다른 값이 많아야
+              _merge(CHAMP, {"kind": "rank", "params": {}}))              # rank 기본값을 고르는 실수가 드러남
+    for champ in champs:
+        rng = random.Random(1)
+        rank_combos = 0
+        for _ in range(4000):
+            name, change = evo.mutate(champ, rng)
+            cfg = _merge(champ, change)
+            parts = set(name.split(" & "))
+            params = {p for p in parts if p.split("=")[0] in evo.SPACE}
+            got = {f"{k}={v}" for k, v in (cfg["params"] or {}).items()}
+            if cfg["kind"] == "rank" != champ["kind"]:  # cfg_moves 는 rank 전환 때 파라미터 차이를 세지 않음 → 직접 확인
+                assert evo.cfg_moves(champ, cfg) == parts - params, name
+                assert got == params, (name, cfg["params"])  # rank 기본값에서 출발, 고른 파라미터만 남음
+                rank_combos += bool(params)
+            elif cfg["kind"] != champ["kind"] == "rank":
+                assert evo.cfg_moves(champ, cfg) == parts - params and params <= got, (name, cfg["params"])
+            else:
+                assert evo.cfg_moves(champ, cfg) == parts, name
+        assert champ["kind"] == "rank" or rank_combos >= 5
+    # 파라미터 없이 rank 로만 바꾼 후보는 예전과 같은 설정(같은 키) → 이미 평가한 결과를 다시 돌리지 않음
+    rank_only = _merge(CHAMP, {"kind": "rank", "params": {}})
+    rng = random.Random(0)
+    found = [c for n, c in (evo.mutate(CHAMP, rng) for _ in range(3000)) if n == "kind=rank"]
+    assert found and all(evo.cfg_key(_merge(CHAMP, c)) == evo.cfg_key(rank_only) for c in found)
+
+
 def test_cfg_moves_names_systematic_and_mutation_candidates_alike():
     assert evo.cfg_moves(CHAMP, _merge(CHAMP, {"params": {"min_child_samples": 50}})) == {"min_child_samples=50"}
     assert evo.cfg_moves(CHAMP, _merge(CHAMP, {"hard_neg": True, "neg_rate": 0.03})) == {"hard_neg=True", "neg=0.03"}
@@ -90,8 +121,8 @@ def test_next_candidate_mostly_skips_bad_moves():
     ev.rng = random.Random(1)
     cands = [ev.next_candidate(st) for _ in range(2000)]
     share = sum(cfg.get("hard_neg", False) for _, cfg in cands) / len(cands)
-    # 건너뛰지 않으면 약 15%, BAD_SKIP(95%)만큼 건너뛰면 약 1% — 완전히 막지는 않음
-    assert 0 < share < 0.08
+    # hard_neg 단독은 이미 평가돼 섞인 변이만 남음: 건너뛰지 않으면 약 7~9%, BAD_SKIP(95%)만큼 건너뛰면 약 0.5% — 완전히 막지는 않음
+    assert 0 < share < 0.03
 
 
 def test_merge_strips_rank_params_against_rank_defaults():

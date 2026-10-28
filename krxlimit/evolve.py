@@ -156,11 +156,15 @@ def bad_moves(st: dict) -> set[str]:
 
 
 def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
-    """설정 하나(가끔 둘)를 바꾼 변이 후보. 두 번 바꿀 때 같은 변경(같은 그룹·파라미터·종류 등)은 다시 고르지 않는다."""
-    changes, names, used_ops, used_groups = {}, [], set(), set()
+    """설정 하나(가끔 둘)를 바꾼 변이 후보. 두 번 바꿀 때 같은 변경(같은 그룹·파라미터·종류 등)은 다시 고르지 않는다.
+    파라미터·음성 비율은 지금 값과 다른 값만 고른다 (같은 값이면 이름에만 남고 실제로는 안 바뀐 변경이 됨).
+    rank 로 바꾸면 챔피언의 lgbm 파라미터는 버리고 rank 기본값에서 출발하며, 함께 고른 파라미터는 그 위에 얹는다."""
+    ops = []
     for _ in range(1 if rng.random() < 0.7 else 2):
-        op = rng.choice([o for o in MUTATION_OPS if o in ("group", "param") or o not in used_ops])
-        used_ops.add(op)
+        ops.append(rng.choice([o for o in MUTATION_OPS if o in ("group", "param") or o not in ops]))
+    ops.sort(key=lambda o: o != "kind")  # 종류를 먼저 정해야 파라미터의 '지금 값'을 새 종류 기준으로 볼 수 있음
+    changes, names, used_groups, picked = {}, [], set(), {}
+    for op in ops:
         if op == "group":
             g = rng.choice([g for g in FEATURE_GROUPS if g not in PROTECTED_GROUPS and g not in used_groups])
             used_groups.add(g)
@@ -169,12 +173,14 @@ def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
             changes["groups"] = groups
             names.append(("-" if g in cfg["groups"] else "+") + g)
         elif op == "param":
-            p = rng.choice([p for p in SPACE if p not in changes.get("params", {})])
-            v = rng.choice(SPACE[p])
-            changes.setdefault("params", {})[p] = v
-            names.append(f"{p}={v}")
+            p = rng.choice([p for p in SPACE if p not in picked])
+            kind = changes.get("kind", cfg["kind"])
+            base = {} if kind == "rank" != cfg["kind"] else (cfg.get("params") or {})
+            now = base.get(p, (RANK_PARAMS if kind == "rank" else LGBM_PARAMS).get(p))
+            picked[p] = rng.choice([v for v in SPACE[p] if v != now])
+            names.append(f"{p}={picked[p]}")
         elif op == "neg":
-            v = rng.choice(NEG_RATES)
+            v = rng.choice([v for v in NEG_RATES if v != cfg["neg_rate"]])
             changes["neg_rate"] = v
             names.append(f"neg={v}")
         elif op == "hard":
@@ -183,8 +189,6 @@ def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
         elif op == "kind":
             v = rng.choice([k for k in KINDS if k != cfg["kind"]])
             changes["kind"] = v
-            if v == "rank":
-                changes["params"] = {}
             names.append(f"kind={v}")
         elif op == "years":
             v = rng.choice([y for y in TRAIN_YEARS if y != cfg["train_years"]])
@@ -194,6 +198,12 @@ def mutate(cfg: dict, rng: random.Random) -> tuple[str, dict]:
             ex = list(cfg["exclude"])
             changes["exclude"] = [e for e in ex if e != "spac"] if "spac" in ex else ex + ["spac"]
             names.append("spac " + ("포함" if "spac" in ex else "제외"))
+    if changes.get("kind") == "rank" != cfg["kind"]:
+        # _merge 는 params 를 챔피언 값 위에 덮어쓰므로, 챔피언 값을 rank 기본값으로 되돌리는 항목을 같이 넣는다
+        # (기본값과 같은 항목은 _merge 가 지움). 파라미터를 함께 고르지 않았으면 예전처럼 {} — 같은 설정, 같은 키.
+        changes["params"] = {**{k: RANK_PARAMS.get(k) for k in (cfg.get("params") or {})}, **picked} if picked else {}
+    elif picked:
+        changes["params"] = picked
     return " & ".join(names), changes
 
 
