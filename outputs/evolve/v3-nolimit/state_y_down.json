@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 376,
+ "iteration": 377,
  "dev_champion": {
   "key": "a204c8dea7",
   "label": "-volatility & +overheat",
@@ -12463,6 +12463,42 @@
     "train_years": null,
     "hard_neg": false
    }
+  },
+  "07b2c9dc42": {
+   "label": "spac 제외 & reg_lambda=30.0",
+   "P@k": 0.004912790842354298,
+   "AP": 0.010606595145553713,
+   "gain": -0.0013953489251434803,
+   "t": -4.932086226206183,
+   "accepted": false,
+   "time": "10-28 22:09",
+   "base": "a204c8dea7",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "learning_rate": 0.02,
+     "reg_lambda": 30.0
+    },
+    "neg_rate": 0.05,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [
+     "spac"
+    ],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -12509,7 +12545,7 @@
    "result": "승격 → y_down_v5"
   }
  ],
- "last_event": "evolve y_down: try #370 reg_lambda=0.0 & neg=0.03 (dP@20=-0.0006, t=-3.06)",
+ "last_event": "evolve y_down: try #371 spac 제외 & reg_lambda=30.0 (dP@20=-0.0014, t=-4.93)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
