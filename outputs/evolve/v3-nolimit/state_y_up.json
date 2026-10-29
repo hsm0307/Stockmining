@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 502,
+ "iteration": 503,
  "dev_champion": {
   "key": "b67dcd43d2",
   "label": "min_child_samples=400 & neg=0.2",
@@ -17147,6 +17147,42 @@
     "train_years": 3,
     "hard_neg": true
    }
+  },
+  "c99746cf9d": {
+   "label": "years=None & +overheat",
+   "P@k": 0.07796511799097061,
+   "AP": 0.06593680819205157,
+   "gain": -0.0031976744066923857,
+   "t": -3.468892855808055,
+   "accepted": false,
+   "time": "10-29 20:12",
+   "base": "b67dcd43d2",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "min_child_samples": 400
+    },
+    "neg_rate": 0.2,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": null,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -17184,7 +17220,7 @@
    "result": "승격 → y_up_v6"
   }
  ],
- "last_event": "evolve y_up: try #494 neg=0.3 & hard_neg=True (dP@10=-0.0035, t=-3.50)",
+ "last_event": "evolve y_up: try #495 years=None & +overheat (dP@10=-0.0032, t=-3.47)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
