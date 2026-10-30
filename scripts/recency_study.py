@@ -60,6 +60,11 @@ CANDS = {
     "dec182":   dict(months=None, half_life=182),
     "ft3m":     dict(months=None, finetune_months=3),     # v5 모델에 최근 3개월로 나무를 더 키움
     "w3m_big":  dict(months=3, params={"num_leaves": 127, "min_child_samples": 20}, trees=500),  # 말 그대로 과적합
+    # 나무 수 교란 확인(검토 의견): 짧은 창은 300개 고정, v5 는 대부분 50개로 재학습 → 같은 나무 수로 맞춰 본다
+    "w6m_t50":   dict(months=6, trees=50),
+    "w3m_t50":   dict(months=3, trees=50),
+    "w6m_small": dict(months=6, params={"num_leaves": 15, "min_child_samples": 50}, trees=100),
+    "base_t300": dict(months=None, trees=300),            # v5 를 300개 고정으로 — 짧은 창만큼 떨어지면 나무 수 탓
 }
 MIXES = {"mix_w3m": ("base", "w3m"), "mix_w6m": ("base", "w6m"), "mix_dec91": ("base", "dec91")}
 
