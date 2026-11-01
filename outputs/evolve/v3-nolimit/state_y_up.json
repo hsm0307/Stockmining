@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 667,
+ "iteration": 668,
  "dev_champion": {
   "key": "b67dcd43d2",
   "label": "min_child_samples=400 & neg=0.2",
@@ -22931,6 +22931,44 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "6139f02910": {
+   "label": "+overheat & spac 제외",
+   "P@k": 0.07755813747644424,
+   "AP": 0.062063524205961174,
+   "gain": -0.0036046509630978107,
+   "t": -3.816424547330802,
+   "accepted": false,
+   "time": "11-01 00:36",
+   "base": "b67dcd43d2",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "min_child_samples": 400
+    },
+    "neg_rate": 0.2,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [
+     "spac"
+    ],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -22968,7 +23006,7 @@
    "result": "승격 → y_up_v6"
   }
  ],
- "last_event": "evolve y_up: try #657 -peer & num_leaves=127 (dP@10=-0.0006, t=-0.73)",
+ "last_event": "evolve y_up: try #658 +overheat & spac 제외 (dP@10=-0.0036, t=-3.82)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
