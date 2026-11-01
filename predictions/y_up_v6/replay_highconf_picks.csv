@@ -1,2 +1,4 @@
 ﻿기준일,결과일,code,name,예측순위,예측확률,적중,시가매수가능적중,기록검증
 2026-10-28,2026-10-29,276730,한울앤제주,1,0.2009,False,False,timing_records_passed
+2026-10-29,2026-10-30,900100,파이온엑스,1,0.2234,False,False,timing_records_passed
+2026-10-29,2026-10-30,046890,서울반도체,2,0.1823,False,False,timing_records_passed
