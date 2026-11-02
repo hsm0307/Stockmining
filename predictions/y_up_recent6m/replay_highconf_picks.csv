@@ -16,3 +16,7 @@
 2026-10-29,2026-10-30,900100,파이온엑스,1,0.3258,False,False,timing_records_passed
 2026-10-29,2026-10-30,092190,서울바이오시스,2,0.1713,False,False,timing_records_passed
 2026-10-29,2026-10-30,046890,서울반도체,3,0.152,False,False,timing_records_passed
+2026-10-30,2026-11-02,011080,형지I&C,1,0.2306,False,False,timing_records_passed
+2026-10-30,2026-11-02,051630,진양화학,2,0.2104,False,False,timing_records_passed
+2026-10-30,2026-11-02,093240,형지엘리트,3,0.199,False,False,timing_records_passed
+2026-10-30,2026-11-02,184230,SGA솔루션즈,4,0.1591,True,True,timing_records_passed
