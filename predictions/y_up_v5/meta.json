@@ -89,13 +89,13 @@
   "exclude": [],
   "train_years": 3,
   "hard_neg": false,
-  "trained_through": "2026-10-30",
-  "created": "2026-11-02 23:11:08",
+  "trained_through": "2026-11-02",
+  "created": "2026-11-03 23:12:24",
   "best_iter": [
-    7,
+    9,
     10,
     8
   ],
-  "n_train": 1913198,
-  "n_pos": 5043
+  "n_train": 1913297,
+  "n_pos": 5046
 }
