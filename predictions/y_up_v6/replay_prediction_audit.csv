@@ -3,4 +3,5 @@
 20261029.csv.gz,2026-10-29,2026-10-30,True,timing_records_passed
 20261030.csv.gz,2026-10-30,2026-11-02,True,timing_records_passed
 20261102.csv.gz,2026-11-02,2026-11-03,True,timing_records_passed
-20261103.csv.gz,2026-11-03,,False,outcome_not_observed
+20261103.csv.gz,2026-11-03,2026-11-04,True,timing_records_passed
+20261104.csv.gz,2026-11-04,,False,outcome_not_observed
