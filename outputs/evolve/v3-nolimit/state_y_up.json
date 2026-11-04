@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 966,
+ "iteration": 967,
  "dev_champion": {
   "key": "b67dcd43d2",
   "label": "min_child_samples=400 & neg=0.2",
@@ -32723,6 +32723,40 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "d2a55a6dd3": {
+   "label": "-size_type & min_child_samples=100",
+   "P@k": 0.07436046749353409,
+   "AP": 0.05678356289144327,
+   "gain": -0.00680232560262084,
+   "t": -6.190138339867685,
+   "accepted": false,
+   "time": "11-04 21:18",
+   "base": "b67dcd43d2",
+   "cfg": {
+    "kind": "bag3",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "min_child_samples": 100
+    },
+    "neg_rate": 0.2,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -32760,7 +32794,7 @@
    "result": "승격 → y_up_v6"
   }
  ],
- "last_event": "evolve y_up: try #935 +market2 & learning_rate=0.02 (dP@10=-0.0008, t=-0.93)",
+ "last_event": "evolve y_up: try #936 -size_type & min_child_samples=100 (dP@10=-0.0068, t=-6.19)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
