@@ -1,6 +1,6 @@
 {
  "target": "y_up",
- "iteration": 935,
+ "iteration": 936,
  "dev_champion": {
   "key": "b67dcd43d2",
   "label": "min_child_samples=400 & neg=0.2",
@@ -31771,6 +31771,42 @@
     "train_years": 3,
     "hard_neg": false
    }
+  },
+  "0275769d0b": {
+   "label": "kind=lgbm & +overheat",
+   "P@k": 0.07668604701757431,
+   "AP": 0.059838718637191965,
+   "gain": -0.004476744215935469,
+   "t": -4.447619884239513,
+   "accepted": false,
+   "time": "11-04 16:03",
+   "base": "b67dcd43d2",
+   "cfg": {
+    "kind": "lgbm",
+    "params": {
+     "num_leaves": 63,
+     "learning_rate": 0.05,
+     "min_child_samples": 400
+    },
+    "neg_rate": 0.2,
+    "groups": [
+     "candle",
+     "momentum",
+     "limit_hist",
+     "volume",
+     "volatility",
+     "accumulation",
+     "size_type",
+     "market",
+     "peer",
+     "calendar",
+     "pref_link",
+     "overheat"
+    ],
+    "exclude": [],
+    "train_years": 3,
+    "hard_neg": false
+   }
   }
  },
  "versions": [
@@ -31808,7 +31844,7 @@
    "result": "승격 → y_up_v6"
   }
  ],
- "last_event": "evolve y_up: try #908 reg_lambda=0.0 & -accumulation (dP@10=-0.0012, t=-1.50)",
+ "last_event": "evolve y_up: try #909 kind=lgbm & +overheat (dP@10=-0.0045, t=-4.45)",
  "ten_baseline": [
   {
    "기간": "10년 전체",
