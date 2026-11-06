@@ -1,1143 +1,1143 @@
 ﻿키,후보,P@10,AP,Δ(vs 당시 챔피언),t,채택,시각
 4e2a7b3182,subsample=0.6 & reg_lambda=0.0,0.08157,0.06574,0.00041,0.46046,False,10-31 12:39
 ae1972e1de,colsample0.4,0.08122,0.06637,0.00087,1.12756,True,10-23 15:33
-7b6e5e442e,-peer & -volatility,0.08116,0.0654,0.0,0.0,False,11-04 11:54
 b67dcd43d2,min_child_samples=400 & neg=0.2,0.08116,0.06406,0.00081,1.03777,True,10-28 04:25
-c5f8cd269e,+stock_hist & +market_alert,0.08105,0.064,0.0007,0.79463,False,10-27 11:23
+7b6e5e442e,-peer & -volatility,0.08116,0.0654,0.0,0.0,False,11-04 11:54
 52e025e4c4,-pref_link & +market_alert,0.08105,0.06678,-0.00012,-0.13668,False,11-05 10:34
-36488c5978,learning_rate=0.02 & neg=0.3,0.08099,0.06509,-0.00017,-0.2205,False,10-30 21:38
+c5f8cd269e,+stock_hist & +market_alert,0.08105,0.064,0.0007,0.79463,False,10-27 11:23
 84ab4e4106,min_child_samples=200 & +stock_hist,0.08099,0.0671,-0.00017,-0.21701,False,11-05 17:30
-f3278fb11a,-peer & neg=0.3,0.08099,0.06557,-0.00017,-0.21261,False,10-29 01:20
 94da838400,colsample_bytree=0.4 & learning_rate=0.02,0.08099,0.0655,0.00064,0.91346,False,10-24 03:18
+f3278fb11a,-peer & neg=0.3,0.08099,0.06557,-0.00017,-0.21261,False,10-29 01:20
+36488c5978,learning_rate=0.02 & neg=0.3,0.08099,0.06509,-0.00017,-0.2205,False,10-30 21:38
 c16d5ff88b,+overheat & -peer,0.08093,0.06056,-0.00023,-0.28711,False,11-02 06:50
-3e45e31159,learning_rate=0.03 & +stock_hist,0.08093,0.06591,-0.00023,-0.27465,False,11-02 03:06
 9798e5609e,learning_rate=0.03 & +rel_strength,0.08093,0.06425,-0.00023,-0.30492,False,11-01 04:17
-db7ed5159e,neg=0.05 & num_leaves=127,0.08087,0.06148,-0.00029,-0.32067,False,11-02 10:00
+3e45e31159,learning_rate=0.03 & +stock_hist,0.08093,0.06591,-0.00023,-0.27465,False,11-02 03:06
+8f4ad19297,+rel_strength & reg_lambda=0.0,0.08087,0.06715,-0.00029,-0.35084,False,10-29 19:44
 5ec78ad044,num_leaves=127 & colsample_bytree=0.4,0.08087,0.06486,-0.00029,-0.38226,False,11-01 09:20
 26c8e20950,+stock_hist & +rel_strength,0.08087,0.06626,-0.00029,-0.33325,False,11-01 20:15
-8f4ad19297,+rel_strength & reg_lambda=0.0,0.08087,0.06715,-0.00029,-0.35084,False,10-29 19:44
 44159ffa46,+peer2 & -peer,0.08087,0.06541,-0.00029,-0.37362,False,11-01 16:18
 8c85a38e4e,learning_rate=0.02 & -volatility,0.08087,0.06239,-0.00029,-0.35797,False,11-02 13:22
+db7ed5159e,neg=0.05 & num_leaves=127,0.08087,0.06148,-0.00029,-0.32067,False,11-02 10:00
 a632378829,-volatility & -pref_link,0.08081,0.06435,-0.00035,-0.4263,False,11-04 16:28
-ff8d335211,+market_alert & min_child_samples=800,0.08081,0.06672,-0.00035,-0.40815,False,10-29 21:54
 f4924bb357,+stock_hist & +market_alert,0.08081,0.06515,-0.00035,-0.42206,False,10-31 23:35
 6561686d0d,colsample_bytree=0.4 & -volatility,0.08081,0.06693,-0.00035,-0.44711,False,10-31 03:31
-2689992d22,num_leaves=127 & learning_rate=0.02,0.08076,0.06222,-0.00041,-0.50117,False,10-31 08:09
-a1c2e197f8,min_child_samples=800 & colsample_bytree=1.0,0.08076,0.06545,-0.00041,-0.47291,False,11-01 07:54
+ff8d335211,+market_alert & min_child_samples=800,0.08081,0.06672,-0.00035,-0.40815,False,10-29 21:54
 4528df505d,-pref_link,0.08076,0.06257,0.00041,0.56214,False,10-23 19:29
 f6ae1854f6,colsample_bytree=0.55 & min_child_samples=800,0.08076,0.06372,-0.00041,-0.51178,False,11-04 03:53
-c6a6315463,num_leaves=127 & learning_rate=0.03,0.0807,0.05617,0.00035,0.46558,False,10-25 14:15
+2689992d22,num_leaves=127 & learning_rate=0.02,0.08076,0.06222,-0.00041,-0.50117,False,10-31 08:09
+a1c2e197f8,min_child_samples=800 & colsample_bytree=1.0,0.08076,0.06545,-0.00041,-0.47291,False,11-01 07:54
 9c43d40693,colsample_bytree=0.55 & learning_rate=0.02,0.0807,0.06366,-0.00047,-0.59951,False,10-30 16:36
 6899ce414c,+stock_hist & neg=0.1,0.0807,0.06485,-0.00047,-0.57132,False,11-03 13:43
-3cca0a5ac8,neg=0.3 & +market_alert,0.08064,0.06545,-0.00052,-0.61947,False,11-02 06:25
+c6a6315463,num_leaves=127 & learning_rate=0.03,0.0807,0.05617,0.00035,0.46558,False,10-25 14:15
 ff4d2b7a1c,+stock_hist & subsample=0.6,0.08064,0.06576,-0.00052,-0.62243,False,11-02 19:29
+3cca0a5ac8,neg=0.3 & +market_alert,0.08064,0.06545,-0.00052,-0.61947,False,11-02 06:25
 eb04c80232,min_child_samples=800 & colsample_bytree=0.85,0.08064,0.06547,-0.00052,-0.59463,False,11-01 07:38
-7f729619a5,num_leaves=31 & subsample=0.6,0.08058,0.06217,-0.00058,-0.73314,False,10-28 09:40
-a96a94601f,learning_rate=0.02 & neg=0.3,0.08058,0.06123,0.00023,0.29011,False,10-27 09:59
-b3fce5e099,colsample_bytree=0.55 & reg_lambda=0.0,0.08058,0.06627,-0.00058,-0.73711,False,10-30 08:08
-e9538ace8e,-peer & num_leaves=127,0.08058,0.06212,-0.00058,-0.72923,False,11-01 00:15
-4dda76a821,colsample_bytree=1.0 & neg=0.03,0.08058,0.05844,0.00023,0.25191,False,10-24 02:56
-41fa6aca89,+market_alert & -peer,0.08058,0.06543,-0.00058,-0.6867,False,11-04 06:50
 4e22755138,kind=ens & -peer,0.08058,0.06295,-0.00058,-0.65642,False,10-30 05:52
+7f729619a5,num_leaves=31 & subsample=0.6,0.08058,0.06217,-0.00058,-0.73314,False,10-28 09:40
+41fa6aca89,+market_alert & -peer,0.08058,0.06543,-0.00058,-0.6867,False,11-04 06:50
+e9538ace8e,-peer & num_leaves=127,0.08058,0.06212,-0.00058,-0.72923,False,11-01 00:15
+a96a94601f,learning_rate=0.02 & neg=0.3,0.08058,0.06123,0.00023,0.29011,False,10-27 09:59
+4dda76a821,colsample_bytree=1.0 & neg=0.03,0.08058,0.05844,0.00023,0.25191,False,10-24 02:56
+b3fce5e099,colsample_bytree=0.55 & reg_lambda=0.0,0.08058,0.06627,-0.00058,-0.73711,False,10-30 08:08
 133e18dd72,min_child_samples=400,0.08052,0.06389,0.00017,0.21932,False,10-24 05:33
 5e2fb8f2f3,subsample=0.6,0.08052,0.06304,0.00017,0.21154,False,10-23 23:43
 a28745da65,colsample_bytree=0.55 & -peer,0.08052,0.06487,-0.00064,-0.76446,False,11-04 14:43
-e64a85f938,learning_rate=0.02 & -pref_link,0.08047,0.06091,-0.0007,-0.88945,False,10-28 13:30
-a0a43a5c50,colsample_bytree=0.4 & num_leaves=31,0.08047,0.06357,-0.0007,-0.82409,False,11-02 19:49
-8f00dd0430,-volatility & reg_lambda=0.0,0.08047,0.06646,-0.0007,-0.83198,False,10-29 08:34
-eef33689a4,min_child_samples=800 & -volatility,0.08047,0.06389,-0.0007,-0.78104,False,11-04 02:03
-ce11e0e64e,-market & +rel_strength,0.08047,0.05884,-0.0007,-0.81266,False,11-06 03:18
-9245416ceb,learning_rate=0.03 & colsample_bytree=0.4,0.08047,0.06827,-0.0007,-0.88945,False,11-05 00:06
-50b7d6f674,learning_rate=0.02 & reg_lambda=0.0,0.08047,0.059,0.00012,0.14582,False,10-25 16:58
-462835ddbf,reg_lambda=10.0 & neg=0.05,0.08047,0.05625,0.00012,0.13015,False,10-27 06:24
-2deac9ee3a,colsample_bytree=0.85 & -peer,0.08047,0.06501,-0.0007,-0.83601,False,11-04 20:16
 0d56e214c6,neg=0.3 & +overheat,0.08047,0.06561,-0.0007,-0.86149,False,11-02 09:20
+a0a43a5c50,colsample_bytree=0.4 & num_leaves=31,0.08047,0.06357,-0.0007,-0.82409,False,11-02 19:49
+462835ddbf,reg_lambda=10.0 & neg=0.05,0.08047,0.05625,0.00012,0.13015,False,10-27 06:24
+e64a85f938,learning_rate=0.02 & -pref_link,0.08047,0.06091,-0.0007,-0.88945,False,10-28 13:30
+50b7d6f674,learning_rate=0.02 & reg_lambda=0.0,0.08047,0.059,0.00012,0.14582,False,10-25 16:58
+8f00dd0430,-volatility & reg_lambda=0.0,0.08047,0.06646,-0.0007,-0.83198,False,10-29 08:34
+9245416ceb,learning_rate=0.03 & colsample_bytree=0.4,0.08047,0.06827,-0.0007,-0.88945,False,11-05 00:06
 424a0babd2,+overheat & learning_rate=0.03,0.08047,0.06514,-0.0007,-0.84846,False,11-03 18:11
+ce11e0e64e,-market & +rel_strength,0.08047,0.05884,-0.0007,-0.81266,False,11-06 03:18
 c53d9c5f2b,colsample_bytree=0.55 & learning_rate=0.03,0.08047,0.06106,-0.0007,-0.87051,False,11-04 17:28
-7cbde4115f,subsample=0.6,0.08041,0.06403,-0.00076,-0.89069,False,10-28 17:46
-08e854da7f,min_child_samples=800 & +stock_hist,0.08041,0.06392,-0.00076,-0.84083,False,10-30 06:42
-916b3b8859,learning_rate=0.02,0.08041,0.05965,-0.00076,-1.05102,False,10-28 12:18
+eef33689a4,min_child_samples=800 & -volatility,0.08047,0.06389,-0.0007,-0.78104,False,11-04 02:03
+2deac9ee3a,colsample_bytree=0.85 & -peer,0.08047,0.06501,-0.0007,-0.83601,False,11-04 20:16
 40c2afccc8,+market2 & learning_rate=0.02,0.08041,0.0627,-0.00076,-0.93091,False,11-04 21:01
+194dbcd582,min_child_samples=200 & num_leaves=127,0.08041,0.06143,-0.00076,-0.91238,False,11-05 14:29
+f4d8eda27f,colsample_bytree=1.0 & -peer,0.08041,0.06478,-0.00076,-0.91691,False,11-03 00:40
+7cbde4115f,subsample=0.6,0.08041,0.06403,-0.00076,-0.89069,False,10-28 17:46
 19432ecce3,learning_rate=0.03 & -peer,0.08041,0.06617,-0.00076,-1.0,False,10-30 22:53
+916b3b8859,learning_rate=0.02,0.08041,0.05965,-0.00076,-1.05102,False,10-28 12:18
+08e854da7f,min_child_samples=800 & +stock_hist,0.08041,0.06392,-0.00076,-0.84083,False,10-30 06:42
 058a36ea0f,-pref_link & min_child_samples=800,0.08041,0.06589,-0.00076,-0.8784,False,10-30 20:00
-a479297620,colsample_bytree=0.55 & subsample=1.0,0.08041,0.06587,-0.00076,-0.84437,False,10-30 22:39
 64e2edcc74,subsample=1.0 & -volatility,0.08041,0.06178,-0.00076,-0.8784,False,11-03 21:23
 3eed83b581,+market2 & subsample=1.0,0.08041,0.05875,-0.00076,-0.90791,False,11-04 21:29
 e32add77b4,num_leaves=127 & reg_lambda=0.0,0.08041,0.06463,-0.00076,-0.91238,False,11-01 11:36
-f4d8eda27f,colsample_bytree=1.0 & -peer,0.08041,0.06478,-0.00076,-0.91691,False,11-03 00:40
-194dbcd582,min_child_samples=200 & num_leaves=127,0.08041,0.06143,-0.00076,-0.91238,False,11-05 14:29
+a479297620,colsample_bytree=0.55 & subsample=1.0,0.08041,0.06587,-0.00076,-0.84437,False,10-30 22:39
 9185c2efae,reg_lambda=10.0 & -peer,0.08035,0.06097,-0.00081,-0.92713,False,11-05 01:13
-7727acb6b3,subsample=1.0 & +market_alert,0.08035,0.05942,0.0,0.0,False,10-25 03:30
+0a55a5966c,+market2 & +overheat,0.08035,0.05982,-0.00081,-0.94385,False,11-04 17:58
+f82e58d306,+market2 & colsample_bytree=0.4,0.08035,0.06326,-0.00081,-1.00514,False,11-06 04:19
+fedb81fb68,learning_rate=0.03,0.08035,0.0599,0.0,0.0,False,10-23 21:12
+3453971d26,colsample_bytree=0.55 & +market2,0.08035,0.06647,-0.00081,-1.04938,False,11-05 21:16
+6dc4ee951e,learning_rate=0.03 & +market2,0.08035,0.06153,-0.00081,-1.00514,False,11-05 16:38
 d2216d5501,reg_lambda=0.0 & num_leaves=31,0.08035,0.06243,-0.00081,-1.02655,False,10-31 13:30
+47b3d9ae3a,reg_lambda=5.0 & num_leaves=31,0.08035,0.06382,-0.00081,-0.97541,False,11-01 03:15
+6128c321df,neg=0.1 & colsample_bytree=1.0,0.08035,0.06328,-0.00081,-0.93538,False,11-01 13:37
+24482b6d01,+overheat & learning_rate=0.02,0.08035,0.06233,-0.00081,-1.00514,False,11-02 05:34
+7b571cd793,neg=0.3 & subsample=1.0,0.08035,0.06342,-0.00081,-0.92309,False,11-02 03:31
+27902ea550,learning_rate=0.03 & num_leaves=127,0.08035,0.0625,-0.00081,-0.99493,False,11-03 06:07
+f6a651fdcb,num_leaves=31 & -peer,0.08035,0.06391,-0.00081,-1.01568,False,10-30 17:46
+63a52d943d,learning_rate=0.03 & years=None,0.08035,0.06763,-0.00081,-0.95255,False,10-30 06:07
+49fb04d8da,+peer2 & learning_rate=0.03,0.08035,0.06609,-0.00081,-1.08018,False,10-29 05:21
+7727acb6b3,subsample=1.0 & +market_alert,0.08035,0.05942,0.0,0.0,False,10-25 03:30
+4c9d716e59,kind=ens & learning_rate=0.02,0.08035,0.06226,-0.00081,-0.97541,False,10-28 21:34
+7996dcbee7,subsample=0.6 & num_leaves=127,0.08035,0.05813,-0.0,-0.0,False,10-27 16:59
+5d43b5cd35,-peer & neg=0.05,0.08035,0.06081,-0.0,-0.0,False,10-27 15:36
 febe14e196,num_leaves=31 & min_child_samples=100,0.08035,0.0605,0.0,0.0,False,10-27 16:10
 e56dd1946f,+stock_hist & years=None,0.08035,0.06381,0.0,0.0,False,10-27 10:25
-47b3d9ae3a,reg_lambda=5.0 & num_leaves=31,0.08035,0.06382,-0.00081,-0.97541,False,11-01 03:15
-0a55a5966c,+market2 & +overheat,0.08035,0.05982,-0.00081,-0.94385,False,11-04 17:58
-24482b6d01,+overheat & learning_rate=0.02,0.08035,0.06233,-0.00081,-1.00514,False,11-02 05:34
-6128c321df,neg=0.1 & colsample_bytree=1.0,0.08035,0.06328,-0.00081,-0.93538,False,11-01 13:37
-5d43b5cd35,-peer & neg=0.05,0.08035,0.06081,-0.0,-0.0,False,10-27 15:36
-7996dcbee7,subsample=0.6 & num_leaves=127,0.08035,0.05813,-0.0,-0.0,False,10-27 16:59
-f6a651fdcb,num_leaves=31 & -peer,0.08035,0.06391,-0.00081,-1.01568,False,10-30 17:46
-27902ea550,learning_rate=0.03 & num_leaves=127,0.08035,0.0625,-0.00081,-0.99493,False,11-03 06:07
-3453971d26,colsample_bytree=0.55 & +market2,0.08035,0.06647,-0.00081,-1.04938,False,11-05 21:16
-7b571cd793,neg=0.3 & subsample=1.0,0.08035,0.06342,-0.00081,-0.92309,False,11-02 03:31
-f82e58d306,+market2 & colsample_bytree=0.4,0.08035,0.06326,-0.00081,-1.00514,False,11-06 04:19
-4c9d716e59,kind=ens & learning_rate=0.02,0.08035,0.06226,-0.00081,-0.97541,False,10-28 21:34
-49fb04d8da,+peer2 & learning_rate=0.03,0.08035,0.06609,-0.00081,-1.08018,False,10-29 05:21
-63a52d943d,learning_rate=0.03 & years=None,0.08035,0.06763,-0.00081,-0.95255,False,10-30 06:07
-fedb81fb68,learning_rate=0.03,0.08035,0.0599,0.0,0.0,False,10-23 21:12
 f2e5035c75,y_up_v5(출발점),0.08035,0.05682,0.0,0.0,True,10-23 07:23
-6dc4ee951e,learning_rate=0.03 & +market2,0.08035,0.06153,-0.00081,-1.00514,False,11-05 16:38
-f28b72e085,colsample_bytree=1.0,0.08029,0.05612,-6e-05,-0.08302,False,10-24 02:06
-bb52dad216,reg_lambda=5.0 & colsample_bytree=0.55,0.08029,0.06402,-0.00087,-1.07422,False,10-31 02:42
 2f462e32bb,colsample_bytree=0.55 & -pref_link,0.08029,0.06642,-0.00087,-1.03266,False,10-31 17:29
-8ede5116dd,+stock_hist & learning_rate=0.02,0.08029,0.0647,-0.00087,-1.06875,False,10-31 06:36
-f659bea674,colsample_bytree=0.55,0.08029,0.06347,-6e-05,-0.07736,False,10-23 21:48
-065a53a8ae,learning_rate=0.03 & +market_alert,0.08029,0.06481,-0.00087,-1.09697,False,11-02 22:04
 d1f8777411,subsample=0.6 & learning_rate=0.02,0.08029,0.0638,-0.00087,-1.05806,False,10-31 20:48
-963f94e398,subsample=1.0 & learning_rate=0.02,0.08029,0.05866,-0.00087,-1.14053,False,10-31 09:49
 fb9a23cb57,neg=0.1 & -pref_link,0.08029,0.06288,-0.00087,-1.00448,False,10-31 17:55
-9be05e3519,+rel_strength & num_leaves=127,0.08029,0.06253,-0.00087,-1.05283,False,11-01 02:12
-020db47536,+market2 & min_child_samples=800,0.08029,0.06405,-0.00087,-1.01828,False,11-04 20:40
-4cf6133387,-peer & subsample=0.6,0.08029,0.06644,-0.00087,-1.05806,False,11-01 15:11
+065a53a8ae,learning_rate=0.03 & +market_alert,0.08029,0.06481,-0.00087,-1.09697,False,11-02 22:04
 73fb6fbd8e,subsample=0.6 & neg=0.1,0.08029,0.06374,-0.00087,-1.07978,False,10-29 20:45
-18680e1140,years=None & neg=0.03,0.08029,0.05729,-6e-05,-0.0631,False,10-25 16:17
-9098de83c6,reg_lambda=0.0 & learning_rate=0.03,0.08029,0.06302,-0.00087,-0.97848,False,10-29 07:12
+f28b72e085,colsample_bytree=1.0,0.08029,0.05612,-6e-05,-0.08302,False,10-24 02:06
 bc3a8f4b16,min_child_samples=100,0.08029,0.05748,-6e-05,-0.0783,False,10-25 20:13
+8ede5116dd,+stock_hist & learning_rate=0.02,0.08029,0.0647,-0.00087,-1.06875,False,10-31 06:36
+bb52dad216,reg_lambda=5.0 & colsample_bytree=0.55,0.08029,0.06402,-0.00087,-1.07422,False,10-31 02:42
+020db47536,+market2 & min_child_samples=800,0.08029,0.06405,-0.00087,-1.01828,False,11-04 20:40
+963f94e398,subsample=1.0 & learning_rate=0.02,0.08029,0.05866,-0.00087,-1.14053,False,10-31 09:49
+18680e1140,years=None & neg=0.03,0.08029,0.05729,-6e-05,-0.0631,False,10-25 16:17
+4cf6133387,-peer & subsample=0.6,0.08029,0.06644,-0.00087,-1.05806,False,11-01 15:11
 919c9543cb,+market_alert & neg=0.05,0.08029,0.05846,-0.00087,-0.98692,False,10-29 18:56
+9098de83c6,reg_lambda=0.0 & learning_rate=0.03,0.08029,0.06302,-0.00087,-0.97848,False,10-29 07:12
+9be05e3519,+rel_strength & num_leaves=127,0.08029,0.06253,-0.00087,-1.05283,False,11-01 02:12
+f659bea674,colsample_bytree=0.55,0.08029,0.06347,-6e-05,-0.07736,False,10-23 21:48
+e566966c6d,-calendar & colsample_bytree=0.55,0.08023,0.06438,-0.00093,-1.11485,False,11-06 10:33
+8c75a67e5b,learning_rate=0.03 & neg=0.05,0.08023,0.05958,-0.00093,-1.04154,False,10-30 21:20
+73ca96935d,-peer & min_child_samples=800,0.08023,0.06475,-0.00093,-1.17967,False,11-03 17:25
+5097ee1c15,+stock_hist & colsample_bytree=0.85,0.08023,0.06381,-0.00093,-1.17331,False,11-05 07:54
+bafdf88a5e,learning_rate=0.02 & -market,0.08023,0.05829,-0.00093,-1.10418,False,11-05 11:07
 fdbf89a267,+overheat & -volatility,0.08023,0.05873,-0.00093,-1.16704,False,11-02 11:59
-d55fba6388,num_leaves=127 & +market_alert,0.08023,0.0611,-0.00093,-1.10947,False,11-02 01:11
-5c274c9e40,colsample_bytree=0.55 & +peer2,0.08023,0.0636,-0.00093,-1.16088,False,10-29 21:16
+4b4b0d620e,-calendar & learning_rate=0.03,0.08023,0.06509,-0.00093,-1.18614,False,11-03 17:01
+2c010c5e50,-pref_link & num_leaves=127,0.08023,0.06225,-0.00093,-1.1994,False,11-03 13:14
 191d967ffe,+peer2 & learning_rate=0.02,0.08023,0.0649,-0.00093,-1.12584,False,11-06 01:30
 300132b700,+overheat & learning_rate=0.02,0.08023,0.05593,-0.00012,-0.1474,False,10-27 09:23
-4b4b0d620e,-calendar & learning_rate=0.03,0.08023,0.06509,-0.00093,-1.18614,False,11-03 17:01
-73ca96935d,-peer & min_child_samples=800,0.08023,0.06475,-0.00093,-1.17967,False,11-03 17:25
-2c010c5e50,-pref_link & num_leaves=127,0.08023,0.06225,-0.00093,-1.1994,False,11-03 13:14
-eeb2da3b98,min_child_samples=400 & colsample_bytree=0.55,0.08023,0.06441,-0.00012,-0.14582,False,10-24 03:05
-e566966c6d,-calendar & colsample_bytree=0.55,0.08023,0.06438,-0.00093,-1.11485,False,11-06 10:33
 75391e3c32,+peer2 & subsample=1.0,0.08023,0.06421,-0.00093,-1.09895,False,11-03 00:52
-81db6b5122,-calendar & learning_rate=0.02,0.08023,0.05865,-0.00093,-1.14884,False,11-05 14:22
-bafdf88a5e,learning_rate=0.02 & -market,0.08023,0.05829,-0.00093,-1.10418,False,11-05 11:07
+d55fba6388,num_leaves=127 & +market_alert,0.08023,0.0611,-0.00093,-1.10947,False,11-02 01:11
+5c274c9e40,colsample_bytree=0.55 & +peer2,0.08023,0.0636,-0.00093,-1.16088,False,10-29 21:16
+0a623387ef,subsample=0.6 & neg=0.3,0.08023,0.06286,-0.00093,-1.09895,False,10-29 20:30
+a9fcbf05ac,colsample_bytree=0.55 & +market_alert,0.08023,0.0668,-0.00093,-1.17331,False,11-01 10:32
+0496cfaba2,-volatility & years=None,0.08023,0.06444,-0.00012,-0.12448,False,10-26 17:47
 cf2d3b90d8,-pref_link & learning_rate=0.03,0.08023,0.06433,-0.00093,-1.12031,False,11-01 12:28
 9b1ca292cb,neg=0.05 & +stock_hist,0.08023,0.05738,-0.00012,-0.13242,False,10-26 07:12
-a9fcbf05ac,colsample_bytree=0.55 & +market_alert,0.08023,0.0668,-0.00093,-1.17331,False,11-01 10:32
-5097ee1c15,+stock_hist & colsample_bytree=0.85,0.08023,0.06381,-0.00093,-1.17331,False,11-05 07:54
-0496cfaba2,-volatility & years=None,0.08023,0.06444,-0.00012,-0.12448,False,10-26 17:47
-0a623387ef,subsample=0.6 & neg=0.3,0.08023,0.06286,-0.00093,-1.09895,False,10-29 20:30
+eeb2da3b98,min_child_samples=400 & colsample_bytree=0.55,0.08023,0.06441,-0.00012,-0.14582,False,10-24 03:05
+81db6b5122,-calendar & learning_rate=0.02,0.08023,0.05865,-0.00093,-1.14884,False,11-05 14:22
 bc357e325f,-pref_link & years=None,0.08023,0.06717,-0.00093,-1.04598,False,10-30 12:12
-8c75a67e5b,learning_rate=0.03 & neg=0.05,0.08023,0.05958,-0.00093,-1.04154,False,10-30 21:20
-c9f252e9be,years=5 & -pref_link,0.08017,0.06635,-0.00099,-1.15951,False,10-30 11:30
-08b3cf7cf4,colsample_bytree=0.85,0.08017,0.05549,-0.00017,-0.24907,False,10-25 09:36
-188942fac4,-accumulation,0.08017,0.06182,-0.00017,-0.24247,False,10-24 02:44
-5a71ae0fa3,subsample=0.6 & +market_alert,0.08017,0.06247,-0.00099,-1.10903,False,11-04 07:38
-4e34a36318,+market_alert,0.08017,0.06222,-0.00017,-0.23637,False,10-23 14:06
-e05690cff5,learning_rate=0.03,0.08017,0.05979,-0.00099,-1.27803,False,10-28 11:43
-3775904a6c,+stock_hist & colsample_bytree=0.4,0.08017,0.06238,-0.00099,-1.18747,False,11-02 00:46
-f314c74da0,+stock_hist & colsample_bytree=0.55,0.08017,0.06551,-0.00099,-1.27803,False,10-31 20:22
 5c60ad4c77,+market_alert & learning_rate=0.02,0.08017,0.06303,-0.00099,-1.23026,False,11-03 11:13
-750d526b11,learning_rate=0.02 & colsample_bytree=1.0,0.08017,0.05813,-0.00017,-0.21588,False,10-27 09:10
-b4692d19b9,+overheat & +rel_strength,0.08017,0.06512,-0.00099,-1.21757,False,11-04 14:15
-9f454fd752,-volume & -volatility,0.08017,0.06135,-0.00017,-0.19319,False,10-27 13:26
-8ef9842310,+overheat & colsample_bytree=0.4,0.08017,0.06488,-0.00099,-1.16494,False,11-04 18:19
-65c2df4edb,-accumulation & +stock_hist,0.08017,0.06216,-0.00099,-1.19331,False,11-04 18:49
 81c9a73c70,-volatility & subsample=1.0,0.08017,0.05898,-0.00017,-0.21932,False,10-27 02:44
-f11b88232c,+overheat & num_leaves=127,0.08012,0.06423,-0.00105,-1.23064,False,11-03 08:12
-7b0bd9576c,-calendar & colsample_bytree=0.4,0.08012,0.06539,-0.00105,-1.29258,False,11-03 07:52
-79d080a849,+rel_strength & -volatility,0.08012,0.06524,-0.00105,-1.24828,False,11-05 21:55
-f4228c1cbd,min_child_samples=800 & learning_rate=0.02,0.08012,0.0648,-0.00105,-1.30613,False,11-02 21:25
-cc3996cde5,colsample_bytree=0.4 & learning_rate=0.02,0.08012,0.06686,-0.00105,-1.36492,False,10-31 01:16
-dcd62aea38,num_leaves=31 & subsample=1.0,0.08012,0.06384,-0.00105,-1.2993,False,10-31 04:53
-9ff40df0af,-pref_link & colsample_bytree=0.4,0.08012,0.06639,-0.00105,-1.32011,False,10-31 03:47
-e748c85960,colsample_bytree=0.55 & -volatility,0.08012,0.06546,-0.00105,-1.31306,False,10-31 06:59
+c9f252e9be,years=5 & -pref_link,0.08017,0.06635,-0.00099,-1.15951,False,10-30 11:30
+5a71ae0fa3,subsample=0.6 & +market_alert,0.08017,0.06247,-0.00099,-1.10903,False,11-04 07:38
+e05690cff5,learning_rate=0.03,0.08017,0.05979,-0.00099,-1.27803,False,10-28 11:43
+65c2df4edb,-accumulation & +stock_hist,0.08017,0.06216,-0.00099,-1.19331,False,11-04 18:49
+8ef9842310,+overheat & colsample_bytree=0.4,0.08017,0.06488,-0.00099,-1.16494,False,11-04 18:19
+4e34a36318,+market_alert,0.08017,0.06222,-0.00017,-0.23637,False,10-23 14:06
+9f454fd752,-volume & -volatility,0.08017,0.06135,-0.00017,-0.19319,False,10-27 13:26
+750d526b11,learning_rate=0.02 & colsample_bytree=1.0,0.08017,0.05813,-0.00017,-0.21588,False,10-27 09:10
+f314c74da0,+stock_hist & colsample_bytree=0.55,0.08017,0.06551,-0.00099,-1.27803,False,10-31 20:22
+08b3cf7cf4,colsample_bytree=0.85,0.08017,0.05549,-0.00017,-0.24907,False,10-25 09:36
+3775904a6c,+stock_hist & colsample_bytree=0.4,0.08017,0.06238,-0.00099,-1.18747,False,11-02 00:46
+b4692d19b9,+overheat & +rel_strength,0.08017,0.06512,-0.00099,-1.21757,False,11-04 14:15
+188942fac4,-accumulation,0.08017,0.06182,-0.00017,-0.24247,False,10-24 02:44
 e288d96b74,num_leaves=31,0.08012,0.06458,-0.00023,-0.33325,False,10-23 23:12
-e609b97e2b,reg_lambda=0.0 & -pref_link,0.08012,0.06058,-0.00105,-1.28596,False,11-01 04:29
-f21955eb4b,colsample_bytree=0.4 & num_leaves=15,0.08012,0.06525,-0.00105,-1.16689,False,11-05 13:53
-cdf038962e,-pref_link & num_leaves=31,0.08012,0.06565,-0.00105,-1.21929,False,11-05 19:17
+f11b88232c,+overheat & num_leaves=127,0.08012,0.06423,-0.00105,-1.23064,False,11-03 08:12
+f4228c1cbd,min_child_samples=800 & learning_rate=0.02,0.08012,0.0648,-0.00105,-1.30613,False,11-02 21:25
 0e0eed0090,num_leaves=127 & neg=0.03,0.08012,0.06017,-0.00105,-1.14774,False,11-05 11:13
-27c4fded8e,neg=0.3 & +peer2,0.08006,0.06363,-0.0011,-1.28414,False,10-29 05:04
-8160c4e8bd,learning_rate=0.03 & min_child_samples=800,0.08006,0.06489,-0.0011,-1.33384,False,10-29 14:24
-8ced6baa4b,reg_lambda=10.0 & learning_rate=0.03,0.08006,0.06159,-0.0011,-1.26689,False,11-05 02:45
-872d4739c2,-peer & -pref_link,0.08006,0.06344,-0.0011,-1.49795,False,10-31 04:00
-4fc04eeca3,num_leaves=127,0.08006,0.05837,-0.00029,-0.47025,False,10-23 20:36
-49db3692da,subsample=1.0 & +market_alert,0.08006,0.06236,-0.0011,-1.29605,False,11-03 12:30
-180b0baf2f,-volatility & min_child_samples=200,0.08006,0.0643,-0.0011,-1.27831,False,11-05 13:01
-cc1a11faa4,learning_rate=0.03 & neg=0.03,0.08006,0.05824,-0.00029,-0.34913,False,10-25 10:24
-ac84927592,neg=0.3 & reg_lambda=5.0,0.08006,0.06327,-0.00029,-0.33325,False,10-27 18:55
-dad59a17de,colsample_bytree=0.4 & neg=0.1,0.08006,0.06422,-0.0011,-1.27256,False,11-02 07:31
-3e9323c3d5,+rel_strength & reg_lambda=5.0,0.08006,0.0616,-0.00029,-0.32608,False,10-27 03:49
+e609b97e2b,reg_lambda=0.0 & -pref_link,0.08012,0.06058,-0.00105,-1.28596,False,11-01 04:29
+e748c85960,colsample_bytree=0.55 & -volatility,0.08012,0.06546,-0.00105,-1.31306,False,10-31 06:59
+cdf038962e,-pref_link & num_leaves=31,0.08012,0.06565,-0.00105,-1.21929,False,11-05 19:17
+79d080a849,+rel_strength & -volatility,0.08012,0.06524,-0.00105,-1.24828,False,11-05 21:55
+f21955eb4b,colsample_bytree=0.4 & num_leaves=15,0.08012,0.06525,-0.00105,-1.16689,False,11-05 13:53
+dcd62aea38,num_leaves=31 & subsample=1.0,0.08012,0.06384,-0.00105,-1.2993,False,10-31 04:53
+cc3996cde5,colsample_bytree=0.4 & learning_rate=0.02,0.08012,0.06686,-0.00105,-1.36492,False,10-31 01:16
+7b0bd9576c,-calendar & colsample_bytree=0.4,0.08012,0.06539,-0.00105,-1.29258,False,11-03 07:52
+9ff40df0af,-pref_link & colsample_bytree=0.4,0.08012,0.06639,-0.00105,-1.32011,False,10-31 03:47
 d4cae9859d,+rel_strength & subsample=1.0,0.08006,0.06355,-0.0011,-1.34047,False,10-31 21:47
+872d4739c2,-peer & -pref_link,0.08006,0.06344,-0.0011,-1.49795,False,10-31 04:00
+49db3692da,subsample=1.0 & +market_alert,0.08006,0.06236,-0.0011,-1.29605,False,11-03 12:30
+ac84927592,neg=0.3 & reg_lambda=5.0,0.08006,0.06327,-0.00029,-0.33325,False,10-27 18:55
+8ced6baa4b,reg_lambda=10.0 & learning_rate=0.03,0.08006,0.06159,-0.0011,-1.26689,False,11-05 02:45
+27c4fded8e,neg=0.3 & +peer2,0.08006,0.06363,-0.0011,-1.28414,False,10-29 05:04
+180b0baf2f,-volatility & min_child_samples=200,0.08006,0.0643,-0.0011,-1.27831,False,11-05 13:01
+dad59a17de,colsample_bytree=0.4 & neg=0.1,0.08006,0.06422,-0.0011,-1.27256,False,11-02 07:31
+cc1a11faa4,learning_rate=0.03 & neg=0.03,0.08006,0.05824,-0.00029,-0.34913,False,10-25 10:24
+8160c4e8bd,learning_rate=0.03 & min_child_samples=800,0.08006,0.06489,-0.0011,-1.33384,False,10-29 14:24
 10197d76a7,reg_lambda=5.0 & colsample_bytree=0.4,0.08006,0.06551,-0.0011,-1.42055,False,10-31 18:18
-649d0808c9,+market_alert & colsample_bytree=0.85,0.08,0.0601,-0.00116,-1.33068,False,11-04 22:45
-fb07cb2140,-market,0.08,0.05631,-0.00035,-0.48656,False,10-25 12:16
-8bb395bb55,min_child_samples=100 & +rel_strength,0.08,0.05953,-0.00035,-0.4263,False,10-26 00:54
-0644c0cd3d,num_leaves=31 & neg=0.05,0.08,0.06159,-0.00116,-1.29666,False,10-29 16:21
-24f3787102,neg=0.3 & +stock_hist,0.08,0.06532,-0.00116,-1.39385,False,11-02 08:01
-e179ebb1ad,+stock_hist & +market2,0.08,0.06408,-0.00116,-1.36752,False,11-04 19:01
-356ed2da1e,num_leaves=127 & colsample_bytree=1.0,0.08,0.06047,-0.00116,-1.41463,False,11-01 17:54
-6f46e3dedb,-peer & subsample=1.0,0.08,0.06105,-0.00116,-1.37396,False,11-01 03:55
-9d6ece98b5,neg=0.05 & kind=ens,0.08,0.05612,-0.00035,-0.4026,False,10-27 02:26
-64176e05a2,num_leaves=127 & neg=0.3,0.08,0.06215,-0.00116,-1.50812,False,11-02 08:24
-f9f06e3ae4,+stock_hist & years=None,0.08,0.06839,-0.00116,-1.28589,False,10-31 22:22
+4fc04eeca3,num_leaves=127,0.08006,0.05837,-0.00029,-0.47025,False,10-23 20:36
+3e9323c3d5,+rel_strength & reg_lambda=5.0,0.08006,0.0616,-0.00029,-0.32608,False,10-27 03:49
 295a443a98,subsample=1.0 & +stock_hist,0.08,0.06298,-0.00116,-1.44383,False,10-30 19:12
+e179ebb1ad,+stock_hist & +market2,0.08,0.06408,-0.00116,-1.36752,False,11-04 19:01
 1387bfd7a6,learning_rate=0.02 & reg_lambda=5.0,0.08,0.06091,-0.00116,-1.34263,False,10-31 08:37
+f9f06e3ae4,+stock_hist & years=None,0.08,0.06839,-0.00116,-1.28589,False,10-31 22:22
+6f46e3dedb,-peer & subsample=1.0,0.08,0.06105,-0.00116,-1.37396,False,11-01 03:55
+24f3787102,neg=0.3 & +stock_hist,0.08,0.06532,-0.00116,-1.39385,False,11-02 08:01
+fb07cb2140,-market,0.08,0.05631,-0.00035,-0.48656,False,10-25 12:16
+356ed2da1e,num_leaves=127 & colsample_bytree=1.0,0.08,0.06047,-0.00116,-1.41463,False,11-01 17:54
 fa0b4546ff,+overheat & +rel_strength,0.08,0.0631,-0.00035,-0.44222,False,10-27 07:23
-a6cad60415,min_child_samples=100 & learning_rate=0.03,0.07994,0.05896,-0.00122,-1.45307,False,11-03 20:24
+8bb395bb55,min_child_samples=100 & +rel_strength,0.08,0.05953,-0.00035,-0.4263,False,10-26 00:54
+64176e05a2,num_leaves=127 & neg=0.3,0.08,0.06215,-0.00116,-1.50812,False,11-02 08:24
+649d0808c9,+market_alert & colsample_bytree=0.85,0.08,0.0601,-0.00116,-1.33068,False,11-04 22:45
+0644c0cd3d,num_leaves=31 & neg=0.05,0.08,0.06159,-0.00116,-1.29666,False,10-29 16:21
+9d6ece98b5,neg=0.05 & kind=ens,0.08,0.05612,-0.00035,-0.4026,False,10-27 02:26
+68662e8f43,-volume & learning_rate=0.03,0.07994,0.06312,-0.00122,-1.38206,False,11-02 18:09
 2570db2a3a,+peer2 & min_child_samples=800,0.07994,0.06432,-0.00122,-1.40666,False,11-03 22:21
-9e77559069,colsample_bytree=0.55 & learning_rate=0.02,0.07994,0.05617,-0.00041,-0.54817,False,10-27 11:49
+f8a45e648a,reg_lambda=0.0 & learning_rate=0.02,0.07994,0.05858,-0.00122,-1.43934,False,10-31 16:54
+7dc306546b,-peer & -calendar,0.07994,0.05987,-0.00122,-1.44616,False,11-06 10:09
+c3f5451ccd,neg=0.03,0.07994,0.0597,-0.00041,-0.47076,False,10-23 19:37
+09b66700b7,colsample_bytree=1.0 & learning_rate=0.02,0.07994,0.05688,-0.00122,-1.53628,False,10-31 22:02
+4e6fa34f34,colsample_bytree=0.85 & -volatility,0.07994,0.05975,-0.00041,-0.54817,False,10-28 01:36
+19df98b633,min_child_samples=400 & reg_lambda=5.0,0.07994,0.06232,-0.00041,-0.46865,False,10-26 06:32
+83f74a3ac2,min_child_samples=400 & +market_alert,0.07994,0.06613,-0.00041,-0.49862,False,10-26 06:05
 9756166284,-volatility & num_leaves=31,0.07994,0.06453,-0.00122,-1.52009,False,11-01 03:34
 d43fb6557a,reg_lambda=0.0 & neg=0.03,0.07994,0.05961,-0.00122,-1.34747,False,11-05 13:33
-7dc306546b,-peer & -calendar,0.07994,0.05987,-0.00122,-1.44616,False,11-06 10:09
-f7c188aab9,colsample_bytree=0.4 & subsample=0.6,0.07994,0.06519,-0.00122,-1.43934,False,11-04 13:22
-09b66700b7,colsample_bytree=1.0 & learning_rate=0.02,0.07994,0.05688,-0.00122,-1.53628,False,10-31 22:02
-f8a45e648a,reg_lambda=0.0 & learning_rate=0.02,0.07994,0.05858,-0.00122,-1.43934,False,10-31 16:54
-0e5e08d9e2,-volatility & learning_rate=0.03,0.07994,0.06568,-0.00122,-1.48918,False,10-30 17:31
-c3f5451ccd,neg=0.03,0.07994,0.0597,-0.00041,-0.47076,False,10-23 19:37
 2096163e78,-pref_link & colsample_bytree=1.0,0.07994,0.05888,-0.00122,-1.47441,False,11-04 16:16
+9e77559069,colsample_bytree=0.55 & learning_rate=0.02,0.07994,0.05617,-0.00041,-0.54817,False,10-27 11:49
+f7c188aab9,colsample_bytree=0.4 & subsample=0.6,0.07994,0.06519,-0.00122,-1.43934,False,11-04 13:22
+a6cad60415,min_child_samples=100 & learning_rate=0.03,0.07994,0.05896,-0.00122,-1.45307,False,11-03 20:24
+48914214a9,colsample_bytree=0.4 & reg_lambda=10.0,0.07994,0.06296,-0.00122,-1.48918,False,11-05 18:57
 a194446f54,reg_lambda=0.0 & +peer2,0.07994,0.06266,-0.00122,-1.48174,False,11-01 14:09
 9ef70e081a,+stock_hist & num_leaves=31,0.07994,0.06856,-0.00122,-1.48918,False,11-05 09:08
-f66f2641eb,reg_lambda=0.0 & -accumulation,0.07994,0.06362,-0.00122,-1.50439,False,11-04 16:00
-c5655ee8eb,neg=0.1 & learning_rate=0.03,0.07994,0.06364,-0.00122,-1.45307,False,10-30 08:39
-19df98b633,min_child_samples=400 & reg_lambda=5.0,0.07994,0.06232,-0.00041,-0.46865,False,10-26 06:32
 3453e57e76,subsample=0.6 & colsample_bytree=0.55,0.07994,0.06366,-0.00122,-1.47441,False,10-30 04:52
-d0c94f4b1f,colsample_bytree=0.55 & +overheat,0.07994,0.06624,-0.00122,-1.48174,False,11-06 00:05
-1914960d78,neg=0.3 & -pref_link,0.07994,0.06331,-0.00122,-1.46719,False,10-29 03:00
-4e6fa34f34,colsample_bytree=0.85 & -volatility,0.07994,0.05975,-0.00041,-0.54817,False,10-28 01:36
 cc69eb5544,years=5 & learning_rate=0.03,0.07994,0.06796,-0.00122,-1.41947,False,10-29 18:26
-68662e8f43,-volume & learning_rate=0.03,0.07994,0.06312,-0.00122,-1.38206,False,11-02 18:09
-83f74a3ac2,min_child_samples=400 & +market_alert,0.07994,0.06613,-0.00041,-0.49862,False,10-26 06:05
-48914214a9,colsample_bytree=0.4 & reg_lambda=10.0,0.07994,0.06296,-0.00122,-1.48918,False,11-05 18:57
-979db9d48d,-volatility & +peer2,0.07988,0.06293,-0.00128,-1.43863,False,11-04 10:33
-222db463e1,-accumulation & -volatility,0.07988,0.06421,-0.00128,-1.51872,False,11-04 15:35
-ab505e8b00,neg=0.03 & years=5,0.07988,0.0575,-0.00047,-0.50995,False,10-25 11:03
-e9bfde80e3,+rel_strength & min_child_samples=800,0.07988,0.06474,-0.00128,-1.55628,False,11-04 04:40
-87cfe508c2,colsample_bytree=0.85 & +market2,0.07988,0.06479,-0.00128,-1.53341,False,11-06 12:00
-c71a39f37c,neg=0.05 & min_child_samples=800,0.07988,0.05773,-0.00047,-0.4713,False,10-26 01:14
-e001f60cbd,neg=0.1 & -volatility,0.07988,0.06368,-0.00128,-1.54092,False,10-30 10:56
-134a657720,+peer2 & +overheat,0.07988,0.06188,-0.00128,-1.53341,False,11-04 20:28
-61d074ce7d,subsample=1.0 & min_child_samples=800,0.07988,0.0587,-0.00128,-1.47705,False,10-31 07:22
-59837f059b,min_child_samples=100 & colsample_bytree=0.4,0.07988,0.06511,-0.00128,-1.52601,False,11-03 10:09
-8cdeee9c86,subsample=1.0,0.07988,0.05836,-0.00047,-0.62081,False,10-24 00:08
-bde3b977a3,colsample_bytree=0.4 & neg=0.05,0.07988,0.06156,-0.00128,-1.45746,False,11-04 11:33
-4285e9e527,num_leaves=127 & +peer2,0.07988,0.06022,-0.00128,-1.65916,False,11-01 02:57
-cd7343855b,years=None,0.07988,0.06591,-0.00128,-1.67837,False,10-28 10:21
-fa2caedf0c,+market2 & reg_lambda=0.0,0.07988,0.06417,-0.00128,-1.51872,False,11-04 08:53
+d0c94f4b1f,colsample_bytree=0.55 & +overheat,0.07994,0.06624,-0.00122,-1.48174,False,11-06 00:05
+c5655ee8eb,neg=0.1 & learning_rate=0.03,0.07994,0.06364,-0.00122,-1.45307,False,10-30 08:39
+0e5e08d9e2,-volatility & learning_rate=0.03,0.07994,0.06568,-0.00122,-1.48918,False,10-30 17:31
+f66f2641eb,reg_lambda=0.0 & -accumulation,0.07994,0.06362,-0.00122,-1.50439,False,11-04 16:00
+1914960d78,neg=0.3 & -pref_link,0.07994,0.06331,-0.00122,-1.46719,False,10-29 03:00
 a931d6e247,neg0.05,0.07988,0.05687,-0.00047,-0.57724,False,10-23 17:12
-41e76a2909,-volume & +overheat,0.07988,0.06589,-0.00128,-1.39178,False,11-04 23:54
-d62c1a7a56,colsample_bytree=1.0 & +market_alert,0.07988,0.0622,-0.00128,-1.56413,False,10-29 18:13
-5bec936d87,+overheat & +market_alert,0.07988,0.06303,-0.00128,-1.55628,False,11-02 22:45
-99b22ec9c0,+rel_strength & neg=0.1,0.07988,0.06123,-0.00128,-1.4639,False,10-31 00:25
-b6c3acef3c,subsample=0.6 & colsample_bytree=1.0,0.07988,0.06105,-0.00128,-1.59677,False,10-30 16:54
-b36a8d2835,lambda10,0.07988,0.05994,-0.00047,-0.55459,False,10-23 17:02
-52e2ad4f40,neg=0.03 & -volatility,0.07988,0.05703,-0.00128,-1.34923,False,11-05 17:00
-b32b07f811,+overheat & -pref_link,0.07988,0.06352,-0.00047,-0.57425,False,10-27 05:22
-bdf0ed2c84,+rel_strength & reg_lambda=10.0,0.07988,0.06275,-0.00128,-1.5802,False,11-05 19:54
 1c5e68efb4,min_child_samples=800 & colsample_bytree=0.4,0.07988,0.06694,-0.00128,-1.51153,False,11-05 21:25
+99b22ec9c0,+rel_strength & neg=0.1,0.07988,0.06123,-0.00128,-1.4639,False,10-31 00:25
 8c930d2653,reg_lambda=0.0 & +market_alert,0.07988,0.06684,-0.00128,-1.52601,False,11-02 15:31
-a7e662b9d8,neg=0.3 & min_child_samples=800,0.07988,0.06285,-0.00128,-1.50444,False,11-03 09:31
+52e2ad4f40,neg=0.03 & -volatility,0.07988,0.05703,-0.00128,-1.34923,False,11-05 17:00
+4285e9e527,num_leaves=127 & +peer2,0.07988,0.06022,-0.00128,-1.65916,False,11-01 02:57
+d62c1a7a56,colsample_bytree=1.0 & +market_alert,0.07988,0.0622,-0.00128,-1.56413,False,10-29 18:13
+ab505e8b00,neg=0.03 & years=5,0.07988,0.0575,-0.00047,-0.50995,False,10-25 11:03
+c71a39f37c,neg=0.05 & min_child_samples=800,0.07988,0.05773,-0.00047,-0.4713,False,10-26 01:14
+bdf0ed2c84,+rel_strength & reg_lambda=10.0,0.07988,0.06275,-0.00128,-1.5802,False,11-05 19:54
+e001f60cbd,neg=0.1 & -volatility,0.07988,0.06368,-0.00128,-1.54092,False,10-30 10:56
+8cdeee9c86,subsample=1.0,0.07988,0.05836,-0.00047,-0.62081,False,10-24 00:08
+5bec936d87,+overheat & +market_alert,0.07988,0.06303,-0.00128,-1.55628,False,11-02 22:45
+979db9d48d,-volatility & +peer2,0.07988,0.06293,-0.00128,-1.43863,False,11-04 10:33
+fa2caedf0c,+market2 & reg_lambda=0.0,0.07988,0.06417,-0.00128,-1.51872,False,11-04 08:53
+e9bfde80e3,+rel_strength & min_child_samples=800,0.07988,0.06474,-0.00128,-1.55628,False,11-04 04:40
+b32b07f811,+overheat & -pref_link,0.07988,0.06352,-0.00047,-0.57425,False,10-27 05:22
 aa72df224d,learning_rate=0.02 & +rel_strength,0.07988,0.05676,-0.00128,-1.59677,False,11-04 03:05
-10bfafe988,+rel_strength & colsample_bytree=0.85,0.07983,0.06292,-0.00134,-1.562,False,11-06 17:21
-27b2704694,+rel_strength,0.07983,0.06141,-0.00052,-0.72751,False,10-23 08:04
-3ea27bd32c,subsample=0.6 & +market2,0.07983,0.06161,-0.00134,-1.58408,False,11-03 21:01
-0d24693e4d,min_child_samples=200 & colsample_bytree=0.55,0.07983,0.06421,-0.00134,-1.49455,False,11-06 06:15
-b5547b91fd,-calendar & -pref_link,0.07983,0.05968,-0.00134,-1.59165,False,11-03 19:11
-878b67d3da,colsample_bytree=0.55 & +rel_strength,0.07983,0.06422,-0.00134,-1.66508,False,11-01 12:01
-ee60bdf52b,+rel_strength & num_leaves=31,0.07983,0.06575,-0.00134,-1.63121,False,11-04 19:25
-7682a7aa16,num_leaves=31 & colsample_bytree=1.0,0.07983,0.06619,-0.00134,-1.63121,False,11-05 09:32
-dc159e2d7b,recent5y,0.07983,0.06539,-0.00134,-1.82525,False,10-28 08:45
+59837f059b,min_child_samples=100 & colsample_bytree=0.4,0.07988,0.06511,-0.00128,-1.52601,False,11-03 10:09
+a7e662b9d8,neg=0.3 & min_child_samples=800,0.07988,0.06285,-0.00128,-1.50444,False,11-03 09:31
+cd7343855b,years=None,0.07988,0.06591,-0.00128,-1.67837,False,10-28 10:21
+41e76a2909,-volume & +overheat,0.07988,0.06589,-0.00128,-1.39178,False,11-04 23:54
+bde3b977a3,colsample_bytree=0.4 & neg=0.05,0.07988,0.06156,-0.00128,-1.45746,False,11-04 11:33
+222db463e1,-accumulation & -volatility,0.07988,0.06421,-0.00128,-1.51872,False,11-04 15:35
+134a657720,+peer2 & +overheat,0.07988,0.06188,-0.00128,-1.53341,False,11-04 20:28
+b6c3acef3c,subsample=0.6 & colsample_bytree=1.0,0.07988,0.06105,-0.00128,-1.59677,False,10-30 16:54
+61d074ce7d,subsample=1.0 & min_child_samples=800,0.07988,0.0587,-0.00128,-1.47705,False,10-31 07:22
+87cfe508c2,colsample_bytree=0.85 & +market2,0.07988,0.06479,-0.00128,-1.53341,False,11-06 12:00
+b36a8d2835,lambda10,0.07988,0.05994,-0.00047,-0.55459,False,10-23 17:02
 a6e02cf83e,colsample_bytree=0.4 & +rel_strength,0.07983,0.06372,-0.00052,-0.63788,False,10-27 18:42
-d432cd948e,colsample_bytree=0.85 & num_leaves=127,0.07983,0.05955,-0.00134,-1.64789,False,11-02 19:14
-620345a8fe,-peer & +rel_strength,0.07983,0.05964,-0.00134,-1.58408,False,11-02 18:30
-5a3fdad81c,num_leaves=127 & subsample=0.6,0.07983,0.06332,-0.00134,-1.70114,False,11-01 16:02
-ca90d18be0,neg=0.2 & colsample_bytree=0.4,0.07983,0.06534,-0.00052,-0.57963,False,10-27 05:58
-e396ef64f4,-peer & learning_rate=0.02,0.07983,0.0625,-0.00134,-1.66508,False,11-02 03:51
+ee60bdf52b,+rel_strength & num_leaves=31,0.07983,0.06575,-0.00134,-1.63121,False,11-04 19:25
 eb4478bb9f,-volume & colsample_bytree=0.55,0.07983,0.06233,-0.00134,-1.45222,False,11-04 15:47
-ef205fda6a,num_leaves=127 & reg_lambda=5.0,0.07977,0.06521,-0.0014,-1.62626,False,10-31 03:03
-0646cdc175,learning_rate=0.02,0.07977,0.0535,-0.00058,-0.81103,False,10-24 01:34
-fd9b443280,colsample_bytree=1.0 & subsample=1.0,0.07977,0.05968,-0.0014,-1.64141,False,10-31 13:58
-bd7140524d,subsample=0.6 & +peer2,0.07977,0.06227,-0.00058,-0.72538,False,10-27 03:41
-91abf67480,-volume & reg_lambda=5.0,0.07977,0.06052,-0.0014,-1.59718,False,11-06 14:16
-420cbd5db0,num_leaves=127 & colsample_bytree=0.55,0.07977,0.06615,-0.0014,-1.75143,False,10-31 04:19
-f7c4e09fd7,+overheat & min_child_samples=800,0.07977,0.06286,-0.0014,-1.64141,False,11-03 17:53
-cab8aade85,+peer2 & reg_lambda=5.0,0.07977,0.06315,-0.0014,-1.70655,False,11-03 03:41
-18a26be90e,+stock_hist & -market,0.07977,0.05941,-0.0014,-1.54982,False,11-04 10:17
-e8d29d9b2b,+overheat & -accumulation,0.07977,0.06399,-0.0014,-1.68954,False,11-05 22:21
-20b6695219,-pref_link & +peer2,0.07977,0.06682,-0.0014,-1.74217,False,10-28 21:45
-d123fcd33c,num_leaves=31 & +overheat,0.07977,0.06651,-0.0014,-1.66496,False,11-02 16:33
-442f96f35a,+rel_strength & colsample_bytree=1.0,0.07977,0.06239,-0.0014,-1.72409,False,11-02 15:55
-3b59f60178,+rel_strength & subsample=0.6,0.07977,0.06241,-0.0014,-1.55633,False,11-01 10:14
-51e13e211f,colsample_bytree=0.55 & neg=0.3,0.07977,0.0591,-0.0014,-1.66496,False,10-30 22:29
-9830530908,colsample_bytree=0.85 & +overheat,0.07977,0.06471,-0.0014,-1.71525,False,11-02 09:37
-907f8f7a2e,reg_lambda=5.0 & learning_rate=0.02,0.07977,0.05965,-0.00058,-0.69327,False,10-28 00:58
-e58998794a,+rel_strength & +peer2,0.07977,0.06648,-0.0014,-1.83123,False,10-30 00:31
-5bca08beb7,+peer2 & colsample_bytree=0.85,0.07977,0.06345,-0.0014,-1.62626,False,11-05 19:36
-c337f62550,colsample0.4,0.07977,0.06469,-0.0014,-1.75143,False,10-28 07:46
-a4095313e8,+rel_strength & -calendar,0.07977,0.06395,-0.0014,-1.6043,False,11-05 04:25
-565d1237b5,+market2 & +market_alert,0.07977,0.06687,-0.0014,-1.67303,False,11-06 03:26
+dc159e2d7b,recent5y,0.07983,0.06539,-0.00134,-1.82525,False,10-28 08:45
+878b67d3da,colsample_bytree=0.55 & +rel_strength,0.07983,0.06422,-0.00134,-1.66508,False,11-01 12:01
+d432cd948e,colsample_bytree=0.85 & num_leaves=127,0.07983,0.05955,-0.00134,-1.64789,False,11-02 19:14
+ca90d18be0,neg=0.2 & colsample_bytree=0.4,0.07983,0.06534,-0.00052,-0.57963,False,10-27 05:58
+3ea27bd32c,subsample=0.6 & +market2,0.07983,0.06161,-0.00134,-1.58408,False,11-03 21:01
+b5547b91fd,-calendar & -pref_link,0.07983,0.05968,-0.00134,-1.59165,False,11-03 19:11
+e396ef64f4,-peer & learning_rate=0.02,0.07983,0.0625,-0.00134,-1.66508,False,11-02 03:51
+5a3fdad81c,num_leaves=127 & subsample=0.6,0.07983,0.06332,-0.00134,-1.70114,False,11-01 16:02
+7682a7aa16,num_leaves=31 & colsample_bytree=1.0,0.07983,0.06619,-0.00134,-1.63121,False,11-05 09:32
+27b2704694,+rel_strength,0.07983,0.06141,-0.00052,-0.72751,False,10-23 08:04
+10bfafe988,+rel_strength & colsample_bytree=0.85,0.07983,0.06292,-0.00134,-1.562,False,11-06 17:21
+620345a8fe,-peer & +rel_strength,0.07983,0.05964,-0.00134,-1.58408,False,11-02 18:30
+0d24693e4d,min_child_samples=200 & colsample_bytree=0.55,0.07983,0.06421,-0.00134,-1.49455,False,11-06 06:15
 8fae2866dc,-calendar & subsample=0.6,0.07977,0.06167,-0.0014,-1.67303,False,11-03 09:49
+c337f62550,colsample0.4,0.07977,0.06469,-0.0014,-1.75143,False,10-28 07:46
+5bca08beb7,+peer2 & colsample_bytree=0.85,0.07977,0.06345,-0.0014,-1.62626,False,11-05 19:36
+3b59f60178,+rel_strength & subsample=0.6,0.07977,0.06241,-0.0014,-1.55633,False,11-01 10:14
+907f8f7a2e,reg_lambda=5.0 & learning_rate=0.02,0.07977,0.05965,-0.00058,-0.69327,False,10-28 00:58
+442f96f35a,+rel_strength & colsample_bytree=1.0,0.07977,0.06239,-0.0014,-1.72409,False,11-02 15:55
+565d1237b5,+market2 & +market_alert,0.07977,0.06687,-0.0014,-1.67303,False,11-06 03:26
+fd9b443280,colsample_bytree=1.0 & subsample=1.0,0.07977,0.05968,-0.0014,-1.64141,False,10-31 13:58
+d123fcd33c,num_leaves=31 & +overheat,0.07977,0.06651,-0.0014,-1.66496,False,11-02 16:33
+9830530908,colsample_bytree=0.85 & +overheat,0.07977,0.06471,-0.0014,-1.71525,False,11-02 09:37
+bd7140524d,subsample=0.6 & +peer2,0.07977,0.06227,-0.00058,-0.72538,False,10-27 03:41
+cab8aade85,+peer2 & reg_lambda=5.0,0.07977,0.06315,-0.0014,-1.70655,False,11-03 03:41
+20b6695219,-pref_link & +peer2,0.07977,0.06682,-0.0014,-1.74217,False,10-28 21:45
+f7c4e09fd7,+overheat & min_child_samples=800,0.07977,0.06286,-0.0014,-1.64141,False,11-03 17:53
 805b7f9c30,reg_lambda=5.0,0.07977,0.06348,-0.0014,-1.73306,False,10-28 12:28
-282575a16a,+market2,0.07971,0.06122,-0.00064,-0.8723,False,10-23 08:17
-53207cba07,-volatility & years=5,0.07971,0.06602,-0.00145,-1.61788,False,10-29 10:25
-fbb07495df,+peer2 & +stock_hist,0.07971,0.0638,-0.00145,-1.70593,False,11-04 08:37
+18a26be90e,+stock_hist & -market,0.07977,0.05941,-0.0014,-1.54982,False,11-04 10:17
+0646cdc175,learning_rate=0.02,0.07977,0.0535,-0.00058,-0.81103,False,10-24 01:34
+ef205fda6a,num_leaves=127 & reg_lambda=5.0,0.07977,0.06521,-0.0014,-1.62626,False,10-31 03:03
+e58998794a,+rel_strength & +peer2,0.07977,0.06648,-0.0014,-1.83123,False,10-30 00:31
+91abf67480,-volume & reg_lambda=5.0,0.07977,0.06052,-0.0014,-1.59718,False,11-06 14:16
+51e13e211f,colsample_bytree=0.55 & neg=0.3,0.07977,0.0591,-0.0014,-1.66496,False,10-30 22:29
+420cbd5db0,num_leaves=127 & colsample_bytree=0.55,0.07977,0.06615,-0.0014,-1.75143,False,10-31 04:19
+a4095313e8,+rel_strength & -calendar,0.07977,0.06395,-0.0014,-1.6043,False,11-05 04:25
+e8d29d9b2b,+overheat & -accumulation,0.07977,0.06399,-0.0014,-1.68954,False,11-05 22:21
+c9f1aae8b6,-accumulation & colsample_bytree=0.4,0.07971,0.06453,-0.00145,-1.6457,False,11-05 20:47
 42007def42,ens,0.07971,0.06277,-0.00145,-1.80071,False,10-28 08:29
+fbb07495df,+peer2 & +stock_hist,0.07971,0.0638,-0.00145,-1.70593,False,11-04 08:37
 a31522faee,-accumulation & +market_alert,0.07971,0.06451,-0.00145,-1.70593,False,11-06 09:00
-92bd1b7a50,+stock_hist & -calendar,0.07971,0.06268,-0.00145,-1.70593,False,11-04 14:58
-f6fae2790f,subsample=0.6 & num_leaves=15,0.07971,0.06273,-0.00145,-1.55406,False,11-05 13:09
-48fd03e42f,colsample_bytree=0.55 & neg=0.03,0.07971,0.05981,-0.00145,-1.53634,False,11-05 13:43
-dd08b33be9,-volatility & reg_lambda=0.0,0.07971,0.05893,-0.00064,-0.78363,False,10-27 11:36
-6978037c12,-peer,0.07971,0.06167,-0.00064,-0.88348,False,10-25 08:21
-eaf732676c,-accumulation & neg=0.05,0.07971,0.06217,-0.00145,-1.6457,False,11-04 12:59
 ee0dd59319,+stock_hist & -volatility,0.07971,0.06249,-0.00145,-1.73029,False,10-30 20:32
-5cab8298f3,reg_lambda=0.0 & colsample_bytree=0.85,0.07971,0.06434,-0.00145,-1.73029,False,11-02 16:12
-4267507305,neg=0.1 & -calendar,0.07971,0.06429,-0.00145,-1.60448,False,11-04 22:11
+d859cd22af,learning_rate=0.03 & colsample_bytree=1.0,0.07971,0.05804,-0.00145,-1.71394,False,11-03 14:30
 b4b7791c52,+peer2 & +market2,0.07971,0.06516,-0.00145,-1.84935,False,11-05 03:28
 f4eceacca1,+rel_strength & -pref_link,0.07971,0.06567,-0.00145,-1.74712,False,10-29 18:39
-c17b4f2215,kind=ens & reg_lambda=0.0,0.07971,0.06312,-0.00145,-1.63861,False,10-31 19:49
-d859cd22af,learning_rate=0.03 & colsample_bytree=1.0,0.07971,0.05804,-0.00145,-1.71394,False,11-03 14:30
 2879d49f09,+peer2 & -accumulation,0.07971,0.06016,-0.00145,-1.65288,False,11-06 15:05
+53207cba07,-volatility & years=5,0.07971,0.06602,-0.00145,-1.61788,False,10-29 10:25
+92bd1b7a50,+stock_hist & -calendar,0.07971,0.06268,-0.00145,-1.70593,False,11-04 14:58
+eaf732676c,-accumulation & neg=0.05,0.07971,0.06217,-0.00145,-1.6457,False,11-04 12:59
+48fd03e42f,colsample_bytree=0.55 & neg=0.03,0.07971,0.05981,-0.00145,-1.53634,False,11-05 13:43
+f6fae2790f,subsample=0.6 & num_leaves=15,0.07971,0.06273,-0.00145,-1.55406,False,11-05 13:09
+dd08b33be9,-volatility & reg_lambda=0.0,0.07971,0.05893,-0.00064,-0.78363,False,10-27 11:36
+c17b4f2215,kind=ens & reg_lambda=0.0,0.07971,0.06312,-0.00145,-1.63861,False,10-31 19:49
+4267507305,neg=0.1 & -calendar,0.07971,0.06429,-0.00145,-1.60448,False,11-04 22:11
+6978037c12,-peer,0.07971,0.06167,-0.00064,-0.88348,False,10-25 08:21
+5cab8298f3,reg_lambda=0.0 & colsample_bytree=0.85,0.07971,0.06434,-0.00145,-1.73029,False,11-02 16:12
+282575a16a,+market2,0.07971,0.06122,-0.00064,-0.8723,False,10-23 08:17
 bd4668054a,-peer & +market2,0.07971,0.06601,-0.00145,-1.73864,False,11-06 18:23
-c9f1aae8b6,-accumulation & colsample_bytree=0.4,0.07971,0.06453,-0.00145,-1.6457,False,11-05 20:47
-b08a291299,colsample_bytree=0.55,0.07965,0.05844,-0.00151,-2.08369,False,10-28 19:13
-660d0088bc,+market2 & -pref_link,0.07965,0.06603,-0.00151,-1.82159,False,11-06 08:06
-68a2cd2298,+overheat & neg=0.05,0.07965,0.05758,-0.00151,-1.60702,False,11-03 02:40
-efea12a454,colsample_bytree=0.85 & learning_rate=0.03,0.07965,0.06001,-0.00151,-1.82159,False,10-29 12:37
-e334ad2acf,colsample_bytree=1.0 & reg_lambda=0.0,0.07965,0.06099,-0.00151,-1.73822,False,10-30 23:44
+8c51d4c814,subsample=1.0 & -pref_link,0.07965,0.06142,-0.00151,-1.82159,False,11-04 19:35
 77c9a5705e,min_child_samples=100 & num_leaves=15,0.07965,0.05926,-0.0007,-0.83601,False,10-25 21:43
 5eca265a3e,years=5 & neg=0.05,0.07965,0.05881,-0.0007,-0.75885,False,10-27 05:15
-8c51d4c814,subsample=1.0 & -pref_link,0.07965,0.06142,-0.00151,-1.82159,False,11-04 19:35
-1534747c39,+peer2,0.07965,0.06211,-0.0007,-0.98639,False,10-23 13:23
-1ed56b3150,+stock_hist,0.07965,0.06149,-0.0007,-0.91495,False,10-23 08:11
-7dd280284d,minchild800,0.07965,0.06331,-0.0007,-0.85274,False,10-23 14:55
-d6b7422b89,reg_lambda=5.0 & learning_rate=0.03,0.07965,0.06201,-0.00151,-1.69337,False,10-30 07:02
-d2c54d1f28,neg=0.05 & -market,0.07965,0.0575,-0.00151,-1.6132,False,11-04 14:26
 219c1db8cc,+market2 & colsample_bytree=1.0,0.07965,0.06255,-0.00151,-1.80396,False,11-06 20:11
+1534747c39,+peer2,0.07965,0.06211,-0.0007,-0.98639,False,10-23 13:23
+e334ad2acf,colsample_bytree=1.0 & reg_lambda=0.0,0.07965,0.06099,-0.00151,-1.73822,False,10-30 23:44
+efea12a454,colsample_bytree=0.85 & learning_rate=0.03,0.07965,0.06001,-0.00151,-1.82159,False,10-29 12:37
+1ed56b3150,+stock_hist,0.07965,0.06149,-0.0007,-0.91495,False,10-23 08:11
 311996d4f3,-peer & colsample_bytree=0.4,0.07965,0.06654,-0.00151,-1.86804,False,10-31 19:32
-368cc6fc10,neg=0.3 & -market,0.07959,0.05759,-0.00157,-1.86009,False,11-05 08:04
-cecd416305,-volume,0.07959,0.06295,-0.00076,-0.91691,False,10-23 22:25
-5f70a17abc,+market_alert & reg_lambda=5.0,0.07959,0.06433,-0.00157,-1.80925,False,10-31 16:03
-308e3c707e,-volatility & num_leaves=127,0.07959,0.06153,-0.00157,-1.80925,False,11-04 12:51
-11ea5ed704,-market & colsample_bytree=0.4,0.07959,0.06358,-0.00157,-1.86009,False,11-06 15:22
-36ab106a23,subsample=0.6 & -market,0.07959,0.05999,-0.00157,-1.72596,False,11-05 11:36
-fa88319bd9,num_leaves=15 & reg_lambda=5.0,0.07959,0.06326,-0.00157,-1.76236,False,11-05 09:49
-fc1d2add20,+rel_strength & colsample_bytree=0.4,0.07959,0.06418,-0.00157,-1.94507,False,11-01 19:08
-f8c271c72c,neg=0.1 & -peer,0.07959,0.06377,-0.00157,-1.90589,False,10-31 23:22
-d3241e517c,reg_lambda=10.0 & learning_rate=0.03,0.07959,0.05839,-0.00076,-0.89918,False,10-28 01:53
-1d74fe063b,neg=0.3 & -accumulation,0.07959,0.06449,-0.00157,-1.81743,False,11-04 05:15
-fdd011f708,reg_lambda=5.0 & -peer,0.07959,0.06537,-0.00157,-1.90589,False,10-28 22:17
-16f30db84e,neg=0.3 & learning_rate=0.03,0.07959,0.06503,-0.00157,-2.09137,False,10-29 01:03
+b08a291299,colsample_bytree=0.55,0.07965,0.05844,-0.00151,-2.08369,False,10-28 19:13
+7dd280284d,minchild800,0.07965,0.06331,-0.0007,-0.85274,False,10-23 14:55
+68a2cd2298,+overheat & neg=0.05,0.07965,0.05758,-0.00151,-1.60702,False,11-03 02:40
+660d0088bc,+market2 & -pref_link,0.07965,0.06603,-0.00151,-1.82159,False,11-06 08:06
+d2c54d1f28,neg=0.05 & -market,0.07965,0.0575,-0.00151,-1.6132,False,11-04 14:26
+d6b7422b89,reg_lambda=5.0 & learning_rate=0.03,0.07965,0.06201,-0.00151,-1.69337,False,10-30 07:02
 a900f8232f,years=5 & colsample_bytree=1.0,0.07959,0.06694,-0.00157,-1.81743,False,10-29 07:34
-caf9764414,colsample_bytree=0.85,0.07959,0.06363,-0.00157,-1.9656,False,10-28 12:02
+36ab106a23,subsample=0.6 & -market,0.07959,0.05999,-0.00157,-1.72596,False,11-05 11:36
+5f70a17abc,+market_alert & reg_lambda=5.0,0.07959,0.06433,-0.00157,-1.80925,False,10-31 16:03
+368cc6fc10,neg=0.3 & -market,0.07959,0.05759,-0.00157,-1.86009,False,11-05 08:04
 45fefb6551,colsample_bytree=0.4 & neg=0.3,0.07959,0.06176,-0.00157,-1.88717,False,10-30 07:35
 9ef332ab4f,num_leaves=15 & reg_lambda=0.0,0.07959,0.06254,-0.00157,-1.74753,False,11-04 19:13
-94ba198784,+rel_strength,0.07959,0.0629,-0.00157,-2.19968,False,10-28 05:24
+11ea5ed704,-market & colsample_bytree=0.4,0.07959,0.06358,-0.00157,-1.86009,False,11-06 15:22
+caf9764414,colsample_bytree=0.85,0.07959,0.06363,-0.00157,-1.9656,False,10-28 12:02
+fc1d2add20,+rel_strength & colsample_bytree=0.4,0.07959,0.06418,-0.00157,-1.94507,False,11-01 19:08
 ba60e9f45e,subsample=0.6 & -accumulation,0.07959,0.06041,-0.00076,-0.92151,False,10-27 05:48
-e2b4e04f9d,num_leaves=127 & -accumulation,0.07959,0.06412,-0.00157,-1.80925,False,11-04 11:20
 31c0461c7e,num_leaves=127 & +market2,0.07959,0.05892,-0.00076,-0.98836,False,10-27 09:34
+fdd011f708,reg_lambda=5.0 & -peer,0.07959,0.06537,-0.00157,-1.90589,False,10-28 22:17
+d3241e517c,reg_lambda=10.0 & learning_rate=0.03,0.07959,0.05839,-0.00076,-0.89918,False,10-28 01:53
+16f30db84e,neg=0.3 & learning_rate=0.03,0.07959,0.06503,-0.00157,-2.09137,False,10-29 01:03
+fa88319bd9,num_leaves=15 & reg_lambda=5.0,0.07959,0.06326,-0.00157,-1.76236,False,11-05 09:49
 066426c50e,subsample=0.6 & num_leaves=31,0.07959,0.05934,-0.00076,-0.90351,False,10-27 22:00
-e56c5850b2,min_child_samples=200 & subsample=1.0,0.07959,0.061,-0.00157,-1.89646,False,11-05 22:32
+1d74fe063b,neg=0.3 & -accumulation,0.07959,0.06449,-0.00157,-1.81743,False,11-04 05:15
+94ba198784,+rel_strength,0.07959,0.0629,-0.00157,-2.19968,False,10-28 05:24
 9deaf0100f,neg0.05,0.07959,0.061,-0.00157,-1.77758,False,10-28 08:15
-c83ca91c0b,+peer2,0.07953,0.06474,-0.00163,-2.14976,False,10-28 06:01
-832731294c,+stock_hist & reg_lambda=10.0,0.07953,0.06363,-0.00163,-1.83956,False,11-05 04:02
-3e653ca1f5,kind=ens & +market_alert,0.07953,0.06245,-0.00163,-1.91553,False,11-01 00:52
-f111e57bc0,subsample=1.0 & neg=0.05,0.07953,0.06155,-0.00163,-1.80858,False,10-31 02:23
-ef7bb4a548,-volatility & neg=0.3,0.07953,0.06245,-0.00163,-1.88917,False,10-30 18:02
-11f7f396ca,reg_lambda=5.0 & subsample=0.6,0.07953,0.06093,-0.00163,-1.93372,False,11-04 00:48
-6817992474,kind=ens & subsample=1.0,0.07953,0.06448,-0.00163,-1.81618,False,10-31 00:59
-66af55107d,-pref_link & subsample=0.6,0.07953,0.06553,-0.00163,-1.93372,False,11-04 07:05
+308e3c707e,-volatility & num_leaves=127,0.07959,0.06153,-0.00157,-1.80925,False,11-04 12:51
+e2b4e04f9d,num_leaves=127 & -accumulation,0.07959,0.06412,-0.00157,-1.80925,False,11-04 11:20
+cecd416305,-volume,0.07959,0.06295,-0.00076,-0.91691,False,10-23 22:25
+f8c271c72c,neg=0.1 & -peer,0.07959,0.06377,-0.00157,-1.90589,False,10-31 23:22
+e56c5850b2,min_child_samples=200 & subsample=1.0,0.07959,0.061,-0.00157,-1.89646,False,11-05 22:32
 991536d1f2,min_child_samples=800 & reg_lambda=0.0,0.07953,0.06063,-0.00163,-1.94302,False,11-04 08:04
-63adf59274,num_leaves=31,0.07953,0.06595,-0.00163,-2.28901,False,10-28 16:44
-14f920478f,learning_rate=0.03 & num_leaves=31,0.07953,0.06247,-0.00163,-1.94302,False,11-02 11:16
-aaeec6fcc2,-pref_link,0.07953,0.06281,-0.00163,-1.95245,False,10-29 03:53
-362ae6ca8c,neg=0.1 & num_leaves=31,0.07953,0.06185,-0.00163,-1.95245,False,10-29 21:39
-59488f8200,reg_lambda=5.0,0.07953,0.06267,-0.00081,-0.98994,False,10-23 21:33
-c8d916f9f3,num_leaves=15 & neg=0.3,0.07953,0.0648,-0.00163,-1.84756,False,11-05 03:16
-4b2729005a,colsample_bytree=0.85 & -volume,0.07953,0.06344,-0.00163,-1.84756,False,11-06 17:46
-40328b9b52,learning_rate=0.02 & neg=0.2,0.07953,0.05803,-0.00081,-1.08667,False,10-24 02:32
-062b469222,subsample=0.6 & neg=0.05,0.07953,0.05816,-0.00163,-1.76492,False,10-31 10:34
-156a8148b0,reg_lambda=10.0 & -market,0.07953,0.05858,-0.00163,-1.65074,False,11-05 17:12
+3e653ca1f5,kind=ens & +market_alert,0.07953,0.06245,-0.00163,-1.91553,False,11-01 00:52
 f35dbc6413,+stock_hist & -volume,0.07953,0.06319,-0.00163,-1.96202,False,11-01 21:09
-7fc9bd6e9d,neg=0.05 & years=None,0.07953,0.06022,-0.00081,-0.8457,False,10-27 17:09
-4aa3a013f8,+stock_hist,0.07953,0.0664,-0.00163,-2.1127,False,10-28 05:40
-4e8699f0e3,learning_rate=0.02 & neg=0.05,0.07953,0.05848,-0.00163,-1.86387,False,10-30 11:57
 a9b0bb6c7e,neg=0.3 & num_leaves=31,0.07953,0.06197,-0.00081,-0.99493,False,10-27 14:16
+7fc9bd6e9d,neg=0.05 & years=None,0.07953,0.06022,-0.00081,-0.8457,False,10-27 17:09
+f111e57bc0,subsample=1.0 & neg=0.05,0.07953,0.06155,-0.00163,-1.80858,False,10-31 02:23
+59488f8200,reg_lambda=5.0,0.07953,0.06267,-0.00081,-0.98994,False,10-23 21:33
+40328b9b52,learning_rate=0.02 & neg=0.2,0.07953,0.05803,-0.00081,-1.08667,False,10-24 02:32
+14f920478f,learning_rate=0.03 & num_leaves=31,0.07953,0.06247,-0.00163,-1.94302,False,11-02 11:16
+4b2729005a,colsample_bytree=0.85 & -volume,0.07953,0.06344,-0.00163,-1.84756,False,11-06 17:46
+062b469222,subsample=0.6 & neg=0.05,0.07953,0.05816,-0.00163,-1.76492,False,10-31 10:34
+ef7bb4a548,-volatility & neg=0.3,0.07953,0.06245,-0.00163,-1.88917,False,10-30 18:02
+c8d916f9f3,num_leaves=15 & neg=0.3,0.07953,0.0648,-0.00163,-1.84756,False,11-05 03:16
+4aa3a013f8,+stock_hist,0.07953,0.0664,-0.00163,-2.1127,False,10-28 05:40
+832731294c,+stock_hist & reg_lambda=10.0,0.07953,0.06363,-0.00163,-1.83956,False,11-05 04:02
 ce7fc1f2bf,reg_lambda=0.0 & +overheat,0.07953,0.06078,-0.00081,-0.99493,False,10-27 18:35
-04767e175b,-volatility & colsample_bytree=1.0,0.07953,0.06425,-0.00163,-1.95245,False,11-01 14:46
-b3a4a1f75d,subsample=0.6 & +peer2,0.07953,0.06349,-0.00163,-1.95245,False,10-30 06:16
+11f7f396ca,reg_lambda=5.0 & subsample=0.6,0.07953,0.06093,-0.00163,-1.93372,False,11-04 00:48
+362ae6ca8c,neg=0.1 & num_leaves=31,0.07953,0.06185,-0.00163,-1.95245,False,10-29 21:39
 f920c2bfb9,kind=lgbm,0.07953,0.06188,-0.00163,-2.12484,False,10-28 11:25
-b6317947a0,-volume & -pref_link,0.07948,0.06188,-0.00169,-1.89317,False,11-02 22:21
-ccb8c52d11,-volume & neg=0.3,0.07948,0.06271,-0.00169,-1.96126,False,11-01 05:46
-d52a156872,subsample=1.0 & learning_rate=0.03,0.07948,0.0609,-0.00169,-2.06813,False,10-31 09:24
-6542bd9c77,kind=ens & colsample_bytree=0.85,0.07948,0.06252,-0.00169,-1.92631,False,10-31 04:42
-41aaed90e3,kind=ens & min_child_samples=100,0.07948,0.06344,-0.00169,-1.87723,False,10-31 07:42
-d36a8f9648,-market & +market_alert,0.07948,0.06149,-0.00169,-2.03726,False,11-06 07:58
-bf6b09febb,colsample_bytree=0.55 & min_child_samples=50,0.07948,0.06061,-0.00087,-1.06336,False,10-24 04:32
-6f55df0f6a,num_leaves=127 & +stock_hist,0.07948,0.06487,-0.00169,-2.01744,False,11-05 10:19
-8fdfe584ea,+market2 & reg_lambda=10.0,0.07948,0.06044,-0.00169,-1.88515,False,11-05 18:45
-7816bfe0d5,colsample_bytree=0.4 & subsample=1.0,0.07948,0.06606,-0.00169,-2.0474,False,11-01 21:31
+63adf59274,num_leaves=31,0.07953,0.06595,-0.00163,-2.28901,False,10-28 16:44
+b3a4a1f75d,subsample=0.6 & +peer2,0.07953,0.06349,-0.00163,-1.95245,False,10-30 06:16
+6817992474,kind=ens & subsample=1.0,0.07953,0.06448,-0.00163,-1.81618,False,10-31 00:59
+aaeec6fcc2,-pref_link,0.07953,0.06281,-0.00163,-1.95245,False,10-29 03:53
+04767e175b,-volatility & colsample_bytree=1.0,0.07953,0.06425,-0.00163,-1.95245,False,11-01 14:46
+156a8148b0,reg_lambda=10.0 & -market,0.07953,0.05858,-0.00163,-1.65074,False,11-05 17:12
+66af55107d,-pref_link & subsample=0.6,0.07953,0.06553,-0.00163,-1.93372,False,11-04 07:05
+4e8699f0e3,learning_rate=0.02 & neg=0.05,0.07953,0.05848,-0.00163,-1.86387,False,10-30 11:57
+c83ca91c0b,+peer2,0.07953,0.06474,-0.00163,-2.14976,False,10-28 06:01
+7531d78a28,subsample=1.0 & reg_lambda=0.0,0.07948,0.06315,-0.00169,-2.14599,False,10-28 18:33
 fccb4cf851,learning_rate=0.03 & subsample=0.6,0.07948,0.05777,-0.00169,-1.9013,False,10-29 19:10
-2bf0a9d16e,colsample_bytree=0.55 & years=None,0.07948,0.06714,-0.00169,-1.97946,False,10-30 11:05
+d36a8f9648,-market & +market_alert,0.07948,0.06149,-0.00169,-2.03726,False,11-06 07:58
+b6317947a0,-volume & -pref_link,0.07948,0.06188,-0.00169,-1.89317,False,11-02 22:21
+39dc4030cf,reg_lambda=0.0,0.07948,0.05937,-0.00087,-1.21284,False,10-25 18:45
+92f24e84e7,learning_rate=0.02 & neg=0.1,0.07948,0.05982,-0.00169,-1.90953,False,10-29 09:17
+6f55df0f6a,num_leaves=127 & +stock_hist,0.07948,0.06487,-0.00169,-2.01744,False,11-05 10:19
 3576928516,colsample_bytree=0.85 & learning_rate=0.02,0.07948,0.0596,-0.00169,-2.11156,False,10-30 14:57
+d52a156872,subsample=1.0 & learning_rate=0.03,0.07948,0.0609,-0.00169,-2.06813,False,10-31 09:24
+9ff884330d,kind=ens & neg=0.05,0.07948,0.06036,-0.00169,-1.77588,False,10-29 05:33
+bf6b09febb,colsample_bytree=0.55 & min_child_samples=50,0.07948,0.06061,-0.00087,-1.06336,False,10-24 04:32
+5af424c538,num_leaves=127,0.07948,0.06533,-0.00169,-2.31739,False,10-28 17:21
+c246fed2e3,neg=0.3 & colsample_bytree=1.0,0.07948,0.0582,-0.00087,-1.01828,False,10-25 13:54
+8fdfe584ea,+market2 & reg_lambda=10.0,0.07948,0.06044,-0.00169,-1.88515,False,11-05 18:45
 0fd2c81fb0,colsample_bytree=1.0 & -accumulation,0.07948,0.05832,-0.00169,-1.89317,False,11-04 20:47
+6542bd9c77,kind=ens & colsample_bytree=0.85,0.07948,0.06252,-0.00169,-1.92631,False,10-31 04:42
 af2dc1a981,kind=ens & neg=0.3,0.07948,0.06147,-0.00169,-1.731,False,10-30 07:50
 681dbc37e4,+peer2 & num_leaves=31,0.07948,0.06427,-0.00169,-1.99818,False,11-04 19:53
-92f24e84e7,learning_rate=0.02 & neg=0.1,0.07948,0.05982,-0.00169,-1.90953,False,10-29 09:17
-07d249d4e7,colsample_bytree=0.85 & -size_type,0.07948,0.06258,-0.00169,-2.00774,False,11-04 07:50
-39dc4030cf,reg_lambda=0.0,0.07948,0.05937,-0.00087,-1.21284,False,10-25 18:45
-c246fed2e3,neg=0.3 & colsample_bytree=1.0,0.07948,0.0582,-0.00087,-1.01828,False,10-25 13:54
-7531d78a28,subsample=1.0 & reg_lambda=0.0,0.07948,0.06315,-0.00169,-2.14599,False,10-28 18:33
-9ff884330d,kind=ens & neg=0.05,0.07948,0.06036,-0.00169,-1.77588,False,10-29 05:33
+7816bfe0d5,colsample_bytree=0.4 & subsample=1.0,0.07948,0.06606,-0.00169,-2.0474,False,11-01 21:31
 366fbf9447,+market_alert,0.07948,0.06629,-0.00169,-2.0474,False,10-28 06:16
-5af424c538,num_leaves=127,0.07948,0.06533,-0.00169,-2.31739,False,10-28 17:21
+07d249d4e7,colsample_bytree=0.85 & -size_type,0.07948,0.06258,-0.00169,-2.00774,False,11-04 07:50
 99c421dd79,+overheat,0.07948,0.05669,-0.00087,-1.20499,False,10-23 14:18
-0e6d4f0616,-pref_link & reg_lambda=5.0,0.07942,0.06339,-0.00174,-1.93804,False,11-06 02:34
-25cf4260a5,neg=0.3 & reg_lambda=5.0,0.07942,0.06448,-0.00174,-2.00622,False,10-28 16:17
-5a036f6914,-calendar & +market2,0.07942,0.06038,-0.00174,-2.09225,False,11-04 22:23
+2bf0a9d16e,colsample_bytree=0.55 & years=None,0.07948,0.06714,-0.00169,-1.97946,False,10-30 11:05
+ccb8c52d11,-volume & neg=0.3,0.07948,0.06271,-0.00169,-1.96126,False,11-01 05:46
+41aaed90e3,kind=ens & min_child_samples=100,0.07948,0.06344,-0.00169,-1.87723,False,10-31 07:42
 13a23be099,-volatility & +market2,0.07942,0.06256,-0.00174,-1.97982,False,11-04 22:56
-8a4617456c,+stock_hist & colsample_bytree=1.0,0.07942,0.06037,-0.00174,-1.97125,False,11-05 00:57
+5a036f6914,-calendar & +market2,0.07942,0.06038,-0.00174,-2.09225,False,11-04 22:23
 c48d409d62,learning_rate=0.03 & min_child_samples=200,0.07942,0.06089,-0.00174,-2.21414,False,10-30 07:18
-ce3640d084,min_child_samples=100 & colsample_bytree=0.55,0.07942,0.06562,-0.00174,-2.03371,False,11-05 10:08
-8ae8c04bf3,-market & num_leaves=31,0.07942,0.06318,-0.00174,-2.09225,False,11-05 11:44
-2ea7cd4cba,subsample=0.6 & min_child_samples=100,0.07942,0.0621,-0.00174,-1.97982,False,11-01 07:22
-059b3b2a9a,neg=0.3 & num_leaves=31,0.07942,0.06169,-0.00174,-2.09225,False,10-30 00:16
-2b8a6762ed,neg=0.3 & min_child_samples=400,0.07942,0.0635,-0.00093,-1.11485,False,10-27 01:51
+25cf4260a5,neg=0.3 & reg_lambda=5.0,0.07942,0.06448,-0.00174,-2.00622,False,10-28 16:17
 49e0be0100,min_child_samples=100 & years=5,0.07942,0.06414,-0.00093,-1.05966,False,10-25 03:15
-063c1bcc02,years=5 & -market,0.07942,0.06422,-0.00093,-1.03715,False,10-28 02:58
-bf479b1015,colsample_bytree=0.4 & -peer,0.07942,0.06063,-0.00093,-1.15481,False,10-27 16:00
-da315c6ac7,years=5 & colsample_bytree=0.55,0.07942,0.06721,-0.00174,-2.01526,False,10-30 12:29
-b38638800a,num_leaves=127 & neg=0.03,0.07942,0.05743,-0.00093,-0.97734,False,10-27 22:54
-c515d50281,-volume & reg_lambda=0.0,0.07942,0.06303,-0.00174,-2.10251,False,11-03 04:01
-8f7aa79f6a,-volume & subsample=1.0,0.07942,0.06317,-0.00174,-2.01526,False,11-03 16:33
-dfbe8f2f2b,learning_rate=0.03 & years=5,0.07942,0.06144,-0.00093,-1.12031,False,10-28 02:27
-346405f7d2,+stock_hist & -pref_link,0.07942,0.06294,-0.00174,-2.1451,False,10-30 11:40
-b4282a5003,kind=ens & -size_type,0.07942,0.05977,-0.00093,-1.01601,False,10-28 03:31
-354aa546e1,colsample_bytree=1.0 & neg=0.05,0.07942,0.05896,-0.00174,-2.00622,False,11-01 16:42
-b8f35a3f56,-volatility & reg_lambda=5.0,0.07942,0.06311,-0.00174,-1.92206,False,10-29 03:35
-8375a2afe3,subsample=0.6 & min_child_samples=800,0.07942,0.0642,-0.00174,-1.96279,False,11-02 05:05
-87a1497317,+market2 & subsample=1.0,0.07942,0.05756,-0.00093,-1.13146,False,10-28 00:27
+059b3b2a9a,neg=0.3 & num_leaves=31,0.07942,0.06169,-0.00174,-2.09225,False,10-30 00:16
 eb08589ff6,-pref_link & +market2,0.07942,0.06276,-0.00093,-1.08371,False,10-27 21:28
+87a1497317,+market2 & subsample=1.0,0.07942,0.05756,-0.00093,-1.13146,False,10-28 00:27
+8ae8c04bf3,-market & num_leaves=31,0.07942,0.06318,-0.00174,-2.09225,False,11-05 11:44
+bf479b1015,colsample_bytree=0.4 & -peer,0.07942,0.06063,-0.00093,-1.15481,False,10-27 16:00
 20441f9fd3,min_child_samples=100 & +peer2,0.07942,0.06234,-0.00174,-1.97125,False,11-05 14:55
+2ea7cd4cba,subsample=0.6 & min_child_samples=100,0.07942,0.0621,-0.00174,-1.97982,False,11-01 07:22
+b38638800a,num_leaves=127 & neg=0.03,0.07942,0.05743,-0.00093,-0.97734,False,10-27 22:54
 8813900a19,min_child_samples=100 & num_leaves=31,0.07942,0.06277,-0.00174,-1.97982,False,10-30 13:06
-bb697d2f6c,colsample_bytree=0.85 & neg=0.05,0.07936,0.06126,-0.00099,-1.14365,False,10-27 06:06
+da315c6ac7,years=5 & colsample_bytree=0.55,0.07942,0.06721,-0.00174,-2.01526,False,10-30 12:29
+b4282a5003,kind=ens & -size_type,0.07942,0.05977,-0.00093,-1.01601,False,10-28 03:31
+063c1bcc02,years=5 & -market,0.07942,0.06422,-0.00093,-1.03715,False,10-28 02:58
+346405f7d2,+stock_hist & -pref_link,0.07942,0.06294,-0.00174,-2.1451,False,10-30 11:40
+2b8a6762ed,neg=0.3 & min_child_samples=400,0.07942,0.0635,-0.00093,-1.11485,False,10-27 01:51
+dfbe8f2f2b,learning_rate=0.03 & years=5,0.07942,0.06144,-0.00093,-1.12031,False,10-28 02:27
+b8f35a3f56,-volatility & reg_lambda=5.0,0.07942,0.06311,-0.00174,-1.92206,False,10-29 03:35
+c515d50281,-volume & reg_lambda=0.0,0.07942,0.06303,-0.00174,-2.10251,False,11-03 04:01
+354aa546e1,colsample_bytree=1.0 & neg=0.05,0.07942,0.05896,-0.00174,-2.00622,False,11-01 16:42
+8f7aa79f6a,-volume & subsample=1.0,0.07942,0.06317,-0.00174,-2.01526,False,11-03 16:33
+8a4617456c,+stock_hist & colsample_bytree=1.0,0.07942,0.06037,-0.00174,-1.97125,False,11-05 00:57
+8375a2afe3,subsample=0.6 & min_child_samples=800,0.07942,0.0642,-0.00174,-1.96279,False,11-02 05:05
+0e6d4f0616,-pref_link & reg_lambda=5.0,0.07942,0.06339,-0.00174,-1.93804,False,11-06 02:34
+ce3640d084,min_child_samples=100 & colsample_bytree=0.55,0.07942,0.06562,-0.00174,-2.03371,False,11-05 10:08
+67684271b4,-market & min_child_samples=800,0.07936,0.06118,-0.0018,-1.87758,False,11-06 07:21
+76106ee489,+stock_hist & reg_lambda=0.0,0.07936,0.06469,-0.0018,-1.99862,False,10-30 16:17
+2083c8619b,+peer2 & colsample_bytree=0.4,0.07936,0.06633,-0.0018,-2.21115,False,10-29 08:14
+e60c9c1630,num_leaves=31 & +market_alert,0.07936,0.06455,-0.0018,-1.92035,False,11-06 04:50
+68f75da04a,kind=ens & reg_lambda=10.0,0.07936,0.05915,-0.0018,-1.92777,False,11-05 02:57
+26e0d700cf,colsample_bytree=0.55 & num_leaves=31,0.07936,0.06442,-0.0018,-2.18898,False,11-04 06:27
+27dd4c751a,+peer2 & colsample_bytree=1.0,0.07936,0.05775,-0.0018,-2.05045,False,10-30 09:07
+e067be4d5e,+market2 & -calendar,0.07936,0.06127,-0.00099,-1.27087,False,10-27 20:04
+544c3af069,num_leaves=15 & colsample_bytree=0.85,0.07936,0.06217,-0.0018,-1.94286,False,11-05 21:04
 114aa57215,learning_rate=0.02 & num_leaves=127,0.07936,0.05824,-0.00099,-1.3401,False,10-26 00:28
 47c1c653a4,reg_lambda=0.0 & -peer,0.07936,0.06666,-0.0018,-2.05948,False,11-02 10:51
 2aa63d1190,+market_alert & years=5,0.07936,0.067,-0.0018,-2.08732,False,10-29 06:34
-26e0d700cf,colsample_bytree=0.55 & num_leaves=31,0.07936,0.06442,-0.0018,-2.18898,False,11-04 06:27
-7f7ec318b2,neg=0.05 & +market2,0.07936,0.06162,-0.0018,-2.01546,False,11-04 02:51
-333e378cec,reg_lambda=0.0 & subsample=0.6,0.07936,0.0641,-0.00099,-1.15951,False,10-28 02:04
-76106ee489,+stock_hist & reg_lambda=0.0,0.07936,0.06469,-0.0018,-1.99862,False,10-30 16:17
-27dd4c751a,+peer2 & colsample_bytree=1.0,0.07936,0.05775,-0.0018,-2.05045,False,10-30 09:07
-e60c9c1630,num_leaves=31 & +market_alert,0.07936,0.06455,-0.0018,-1.92035,False,11-06 04:50
-68f75da04a,kind=ens & reg_lambda=10.0,0.07936,0.05915,-0.0018,-1.92777,False,11-05 02:57
 6dfcfc1e01,learning_rate=0.02 & reg_lambda=10.0,0.07936,0.05896,-0.0018,-2.02404,False,11-05 06:54
-67684271b4,-market & min_child_samples=800,0.07936,0.06118,-0.0018,-1.87758,False,11-06 07:21
-900635ef7f,-volume & -peer,0.07936,0.06302,-0.0018,-2.21115,False,11-04 17:39
 0641d208df,reg_lambda=5.0 & neg=0.05,0.07936,0.05896,-0.0018,-1.84404,False,10-29 22:24
-1eb3b4bb3c,neg=0.05 & +peer2,0.07936,0.05914,-0.0018,-1.94286,False,10-30 13:50
-2083c8619b,+peer2 & colsample_bytree=0.4,0.07936,0.06633,-0.0018,-2.21115,False,10-29 08:14
 33b855b3f3,kind=ens & +rel_strength,0.07936,0.06082,-0.00099,-1.06462,False,10-27 09:43
-e067be4d5e,+market2 & -calendar,0.07936,0.06127,-0.00099,-1.27087,False,10-27 20:04
+7f7ec318b2,neg=0.05 & +market2,0.07936,0.06162,-0.0018,-2.01546,False,11-04 02:51
 b32f1153fc,subsample=1.0 & reg_lambda=10.0,0.07936,0.06194,-0.0018,-2.08732,False,11-05 16:52
-544c3af069,num_leaves=15 & colsample_bytree=0.85,0.07936,0.06217,-0.0018,-1.94286,False,11-05 21:04
+1eb3b4bb3c,neg=0.05 & +peer2,0.07936,0.05914,-0.0018,-1.94286,False,10-30 13:50
 e645aa2815,+overheat & -market,0.07936,0.06314,-0.0018,-2.23402,False,11-05 15:23
-765a24800f,-volume & min_child_samples=200,0.0793,0.06303,-0.00186,-2.01761,False,11-06 18:12
-8b87085aac,-accumulation & subsample=0.6,0.0793,0.06549,-0.00186,-2.18989,False,11-06 08:46
-4e7ea4e9d2,colsample_bytree=0.55 & -accumulation,0.0793,0.06407,-0.00186,-2.23213,False,11-04 22:00
-816f6cc3b6,-pref_link & neg=0.03,0.0793,0.05607,-0.00186,-1.91385,False,11-06 02:22
-43a45db944,reg_lambda=10.0 & +peer2,0.0793,0.06299,-0.00186,-2.23213,False,11-05 01:28
-5cad596824,+stock_hist & -peer,0.0793,0.06557,-0.00186,-2.1797,False,11-02 17:27
+900635ef7f,-volume & -peer,0.07936,0.06302,-0.0018,-2.21115,False,11-04 17:39
+333e378cec,reg_lambda=0.0 & subsample=0.6,0.07936,0.0641,-0.00099,-1.15951,False,10-28 02:04
+bb697d2f6c,colsample_bytree=0.85 & neg=0.05,0.07936,0.06126,-0.00099,-1.14365,False,10-27 06:06
 248fc3cf07,reg_lambda=5.0 & -calendar,0.0793,0.06337,-0.00186,-2.14031,False,11-04 05:54
 db3a02dd47,subsample=0.6 & -volatility,0.0793,0.06496,-0.00186,-2.00963,False,11-04 09:08
-d041ca4edb,colsample_bytree=0.85 & reg_lambda=10.0,0.0793,0.05939,-0.00186,-2.00175,False,11-05 08:40
-9aeeb1f69a,colsample_bytree=1.0 & +market2,0.0793,0.0609,-0.00105,-1.37284,False,10-24 07:20
-f0f2173562,recent5y,0.0793,0.06396,-0.00105,-1.50055,False,10-23 18:03
-5ae96c5e10,neg=0.2 & reg_lambda=5.0,0.0793,0.06343,-0.00105,-1.21373,False,10-28 02:47
+da2720ac06,-pref_link & neg=0.05,0.0793,0.05975,-0.00186,-2.06756,False,11-01 08:37
+b220439d5a,-calendar & years=5,0.0793,0.06524,-0.00186,-2.0505,False,11-01 10:59
+16836e24d6,num_leaves=127 & years=5,0.0793,0.06634,-0.00105,-1.23644,False,10-26 10:52
+a9c2f49867,reg_lambda=10.0 & min_child_samples=400,0.0793,0.05847,-0.00105,-1.23644,False,10-28 00:41
+4e7ea4e9d2,colsample_bytree=0.55 & -accumulation,0.0793,0.06407,-0.00186,-2.23213,False,11-04 22:00
 4f81ed3c94,neg=0.3 & -market,0.0793,0.05907,-0.00105,-1.1572,False,10-27 14:39
+1fe48e561f,-volatility,0.0793,0.06119,-0.00105,-1.40596,False,10-23 18:54
 8f5f214df3,neg=0.03 & min_child_samples=50,0.0793,0.05934,-0.00186,-2.08505,False,11-06 21:44
-277b78cf1c,neg=0.3 & +rel_strength,0.0793,0.06489,-0.00186,-2.25418,False,10-31 00:04
-197dd4b584,+overheat & reg_lambda=0.0,0.0793,0.06093,-0.00186,-2.18989,False,11-05 05:10
-20a25780a1,neg=0.05 & +rel_strength,0.0793,0.05665,-0.00186,-2.00963,False,11-03 14:45
-890328ecd6,min_child_samples=50 & subsample=0.6,0.0793,0.05784,-0.00186,-1.97112,False,11-06 20:26
-e4e7c7cd13,reg_lambda=10.0 & num_leaves=127,0.0793,0.06059,-0.00186,-2.14031,False,11-06 12:12
-1fcf73dc88,+peer2 & learning_rate=0.02,0.0793,0.05754,-0.00105,-1.27944,False,10-27 00:48
 b005ea4ccd,kind=ens & colsample_bytree=1.0,0.0793,0.06194,-0.00186,-2.12141,False,10-30 05:39
-bbf3b16026,kind=ens & years=None,0.0793,0.06303,-0.00186,-2.02568,False,10-28 09:11
-1d9e046930,min_child_samples=800 & reg_lambda=5.0,0.0793,0.06095,-0.00186,-1.99396,False,10-29 12:58
-c1b82327c3,min_child_samples=100 & neg=0.05,0.0793,0.05931,-0.00186,-2.10299,False,10-28 12:46
 dc781bb0d0,-volume & +rel_strength,0.0793,0.06349,-0.00186,-2.1308,False,11-01 18:18
 2f12e1ba63,neg=0.05 & -volatility,0.0793,0.05922,-0.00186,-1.99396,False,11-02 04:14
+20a25780a1,neg=0.05 & +rel_strength,0.0793,0.05665,-0.00186,-2.00963,False,11-03 14:45
+5ae96c5e10,neg=0.2 & reg_lambda=5.0,0.0793,0.06343,-0.00105,-1.21373,False,10-28 02:47
+43a45db944,reg_lambda=10.0 & +peer2,0.0793,0.06299,-0.00186,-2.23213,False,11-05 01:28
+197dd4b584,+overheat & reg_lambda=0.0,0.0793,0.06093,-0.00186,-2.18989,False,11-05 05:10
+1fcf73dc88,+peer2 & learning_rate=0.02,0.0793,0.05754,-0.00105,-1.27944,False,10-27 00:48
 badbacfadc,reg_lambda=0.0 & colsample_bytree=0.4,0.0793,0.06377,-0.00186,-2.22134,False,11-02 07:06
-b220439d5a,-calendar & years=5,0.0793,0.06524,-0.00186,-2.0505,False,11-01 10:59
-a9c2f49867,reg_lambda=10.0 & min_child_samples=400,0.0793,0.05847,-0.00105,-1.23644,False,10-28 00:41
-da2720ac06,-pref_link & neg=0.05,0.0793,0.05975,-0.00186,-2.06756,False,11-01 08:37
-16836e24d6,num_leaves=127 & years=5,0.0793,0.06634,-0.00105,-1.23644,False,10-26 10:52
-1fe48e561f,-volatility,0.0793,0.06119,-0.00105,-1.40596,False,10-23 18:54
-d9f3debef4,years=None & subsample=0.6,0.07924,0.06548,-0.00192,-2.07669,False,10-28 20:15
-6307c3da9e,learning_rate=0.02 & num_leaves=31,0.07924,0.058,-0.00192,-2.1279,False,11-03 08:38
-59864b526c,-volatility & min_child_samples=100,0.07924,0.05749,-0.00192,-2.15496,False,11-01 17:29
-1ef22970e9,learning_rate=0.02 & min_child_samples=100,0.07924,0.05942,-0.00192,-2.23251,False,10-30 14:30
-4017fe4180,num_leaves=31 & colsample_bytree=0.85,0.07924,0.06574,-0.00192,-2.36634,False,10-31 02:06
-3a8a57acdb,colsample_bytree=0.85 & neg=0.03,0.07924,0.0589,-0.0011,-1.25031,False,10-27 19:30
-4cd798a506,reg_lambda=10.0 & neg=0.3,0.07924,0.06169,-0.00192,-2.18309,False,11-05 05:22
-09cdeb5663,num_leaves=127 & min_child_samples=800,0.07924,0.06202,-0.00192,-2.31909,False,11-05 06:25
-21bad19ba9,num_leaves=15 & neg=0.05,0.07924,0.05783,-0.0011,-1.24493,False,10-24 00:21
-ce77138389,-accumulation & neg=0.05,0.07924,0.0609,-0.0011,-1.29605,False,10-23 21:57
-5cbb31ab97,colsample_bytree=0.55 & -market,0.07924,0.06199,-0.00192,-2.35426,False,11-06 10:45
-1294172a8e,num_leaves=31 & -calendar,0.07924,0.0631,-0.00192,-2.30772,False,11-04 04:15
-e335bee59d,+stock_hist & +overheat,0.07924,0.06591,-0.00192,-2.31909,False,11-05 00:00
+9aeeb1f69a,colsample_bytree=1.0 & +market2,0.0793,0.0609,-0.00105,-1.37284,False,10-24 07:20
+bbf3b16026,kind=ens & years=None,0.0793,0.06303,-0.00186,-2.02568,False,10-28 09:11
+c1b82327c3,min_child_samples=100 & neg=0.05,0.0793,0.05931,-0.00186,-2.10299,False,10-28 12:46
+d041ca4edb,colsample_bytree=0.85 & reg_lambda=10.0,0.0793,0.05939,-0.00186,-2.00175,False,11-05 08:40
+1d9e046930,min_child_samples=800 & reg_lambda=5.0,0.0793,0.06095,-0.00186,-1.99396,False,10-29 12:58
+8b87085aac,-accumulation & subsample=0.6,0.0793,0.06549,-0.00186,-2.18989,False,11-06 08:46
+f0f2173562,recent5y,0.0793,0.06396,-0.00105,-1.50055,False,10-23 18:03
+e4e7c7cd13,reg_lambda=10.0 & num_leaves=127,0.0793,0.06059,-0.00186,-2.14031,False,11-06 12:12
+5cad596824,+stock_hist & -peer,0.0793,0.06557,-0.00186,-2.1797,False,11-02 17:27
+277b78cf1c,neg=0.3 & +rel_strength,0.0793,0.06489,-0.00186,-2.25418,False,10-31 00:04
+765a24800f,-volume & min_child_samples=200,0.0793,0.06303,-0.00186,-2.01761,False,11-06 18:12
+816f6cc3b6,-pref_link & neg=0.03,0.0793,0.05607,-0.00186,-1.91385,False,11-06 02:22
+890328ecd6,min_child_samples=50 & subsample=0.6,0.0793,0.05784,-0.00186,-1.97112,False,11-06 20:26
 9ab5d2f442,+peer2 & num_leaves=15,0.07924,0.06302,-0.00192,-2.1368,False,11-06 04:35
-cc17492d18,kind=lgbm & learning_rate=0.02,0.07924,0.05718,-0.00192,-2.20246,False,10-28 16:29
+21125bb343,-market & learning_rate=0.03,0.07924,0.05284,-0.0011,-1.49795,False,10-25 20:46
+0084e8c5c3,neg=0.05 & colsample_bytree=0.85,0.07924,0.05954,-0.00192,-2.15496,False,10-30 15:16
+5cbb31ab97,colsample_bytree=0.55 & -market,0.07924,0.06199,-0.00192,-2.35426,False,11-06 10:45
+c9a27a4844,years=5 & min_child_samples=100,0.07924,0.06435,-0.00192,-1.99899,False,10-30 18:54
+997704b742,-peer & min_child_samples=100,0.07924,0.06288,-0.00192,-2.27457,False,10-31 06:11
 149fb05990,years=None & subsample=0.6,0.07924,0.06436,-0.0011,-1.21902,False,10-25 17:17
 135bbee5c0,num_leaves=31 & +market2,0.07924,0.0612,-0.00192,-2.28546,False,11-05 13:17
-aa7ddd1fbf,subsample=0.6 & neg=0.2,0.07924,0.05597,-0.0011,-1.32731,False,10-27 07:35
-f01a36b4f4,-calendar & +peer2,0.07924,0.05905,-0.00192,-2.24281,False,11-04 15:27
-c86cc5087f,reg_lambda=5.0 & +stock_hist,0.07924,0.06309,-0.00192,-2.18309,False,11-05 15:05
-21125bb343,-market & learning_rate=0.03,0.07924,0.05284,-0.0011,-1.49795,False,10-25 20:46
-4b285b1f71,+rel_strength & -accumulation,0.07924,0.06567,-0.00192,-2.29651,False,11-05 17:47
+09cdeb5663,num_leaves=127 & min_child_samples=800,0.07924,0.06202,-0.00192,-2.31909,False,11-05 06:25
 1cb8900cbe,min_child_samples=200 & -pref_link,0.07924,0.06273,-0.00192,-2.21234,False,11-05 18:06
-19450a171a,num_leaves=15 & +market_alert,0.07924,0.06124,-0.00192,-2.17359,False,11-05 10:01
-97c687dc1c,min_child_samples=800 & years=None,0.07924,0.06598,-0.00192,-2.03673,False,10-29 22:09
-a21a93693b,learning_rate=0.02 & min_child_samples=100,0.07924,0.0562,-0.0011,-1.46202,False,10-27 02:01
-fb09453227,-volatility & -volume,0.07924,0.06227,-0.00192,-2.03673,False,11-02 20:45
+c86cc5087f,reg_lambda=5.0 & +stock_hist,0.07924,0.06309,-0.00192,-2.18309,False,11-05 15:05
+aa7ddd1fbf,subsample=0.6 & neg=0.2,0.07924,0.05597,-0.0011,-1.32731,False,10-27 07:35
+1294172a8e,num_leaves=31 & -calendar,0.07924,0.0631,-0.00192,-2.30772,False,11-04 04:15
+4b285b1f71,+rel_strength & -accumulation,0.07924,0.06567,-0.00192,-2.29651,False,11-05 17:47
+59864b526c,-volatility & min_child_samples=100,0.07924,0.05749,-0.00192,-2.15496,False,11-01 17:29
 89af2165ea,-calendar & neg=0.05,0.07924,0.05686,-0.00192,-2.15496,False,11-03 19:30
-0084e8c5c3,neg=0.05 & colsample_bytree=0.85,0.07924,0.05954,-0.00192,-2.15496,False,10-30 15:16
-c9a27a4844,years=5 & min_child_samples=100,0.07924,0.06435,-0.00192,-1.99899,False,10-30 18:54
-180a927ea5,colsample_bytree=0.55 & neg=0.05,0.07924,0.06087,-0.00192,-2.07669,False,10-31 05:17
-997704b742,-peer & min_child_samples=100,0.07924,0.06288,-0.00192,-2.27457,False,10-31 06:11
+d9f3debef4,years=None & subsample=0.6,0.07924,0.06548,-0.00192,-2.07669,False,10-28 20:15
+fb09453227,-volatility & -volume,0.07924,0.06227,-0.00192,-2.03673,False,11-02 20:45
+a21a93693b,learning_rate=0.02 & min_child_samples=100,0.07924,0.0562,-0.0011,-1.46202,False,10-27 02:01
+97c687dc1c,min_child_samples=800 & years=None,0.07924,0.06598,-0.00192,-2.03673,False,10-29 22:09
+6307c3da9e,learning_rate=0.02 & num_leaves=31,0.07924,0.058,-0.00192,-2.1279,False,11-03 08:38
+4cd798a506,reg_lambda=10.0 & neg=0.3,0.07924,0.06169,-0.00192,-2.18309,False,11-05 05:22
+cc17492d18,kind=lgbm & learning_rate=0.02,0.07924,0.05718,-0.00192,-2.20246,False,10-28 16:29
+19450a171a,num_leaves=15 & +market_alert,0.07924,0.06124,-0.00192,-2.17359,False,11-05 10:01
 b0f4b7ef36,+market2 & colsample_bytree=0.85,0.07924,0.05858,-0.0011,-1.31454,False,10-27 22:18
 ca603ec194,-volume & num_leaves=31,0.07924,0.06424,-0.00192,-2.21234,False,11-05 14:10
-e8d7a6140c,neg=0.1 & subsample=1.0,0.07919,0.05818,-0.00198,-2.33816,False,10-31 19:10
-6dfa3581ec,reg_lambda=0.0 & neg=0.05,0.07919,0.05723,-0.00198,-2.3493,False,10-31 18:46
-3fbd175cb7,neg=0.05 & -peer,0.07919,0.06097,-0.00198,-2.2252,False,10-30 10:40
-1c97419921,+stock_hist & neg=0.3,0.07919,0.06178,-0.00116,-1.37396,False,10-27 20:53
+3a8a57acdb,colsample_bytree=0.85 & neg=0.03,0.07924,0.0589,-0.0011,-1.25031,False,10-27 19:30
+180a927ea5,colsample_bytree=0.55 & neg=0.05,0.07924,0.06087,-0.00192,-2.07669,False,10-31 05:17
+ce77138389,-accumulation & neg=0.05,0.07924,0.0609,-0.0011,-1.29605,False,10-23 21:57
+21bad19ba9,num_leaves=15 & neg=0.05,0.07924,0.05783,-0.0011,-1.24493,False,10-24 00:21
+4017fe4180,num_leaves=31 & colsample_bytree=0.85,0.07924,0.06574,-0.00192,-2.36634,False,10-31 02:06
+e335bee59d,+stock_hist & +overheat,0.07924,0.06591,-0.00192,-2.31909,False,11-05 00:00
+1ef22970e9,learning_rate=0.02 & min_child_samples=100,0.07924,0.05942,-0.00192,-2.23251,False,10-30 14:30
+f01a36b4f4,-calendar & +peer2,0.07924,0.05905,-0.00192,-2.24281,False,11-04 15:27
+e48b356fc8,-pref_link & -accumulation,0.07919,0.06378,-0.00198,-2.30566,False,11-04 17:01
+ba2fc1d63c,neg=0.03 & colsample_bytree=1.0,0.07919,0.05825,-0.00198,-2.09462,False,11-05 16:17
 6bc0f19500,num_leaves=31 & +overheat,0.07919,0.05768,-0.00116,-1.34263,False,10-27 11:03
+1c97419921,+stock_hist & neg=0.3,0.07919,0.06178,-0.00116,-1.37396,False,10-27 20:53
+6dfa3581ec,reg_lambda=0.0 & neg=0.05,0.07919,0.05723,-0.00198,-2.3493,False,10-31 18:46
+e8d7a6140c,neg=0.1 & subsample=1.0,0.07919,0.05818,-0.00198,-2.33816,False,10-31 19:10
+e599543b7e,years=5 & num_leaves=127,0.07919,0.06657,-0.00198,-2.20637,False,10-31 13:07
+8d13ada839,+stock_hist & neg=0.03,0.07919,0.06011,-0.00198,-2.09462,False,11-05 16:01
+694489b58f,+peer2 & +market_alert,0.07919,0.06582,-0.00198,-2.36061,False,11-01 19:52
 7d2c70fb48,minchild50,0.07919,0.0627,-0.00198,-2.24452,False,10-28 07:27
+3203074551,neg=0.03 & colsample_bytree=0.4,0.07919,0.05866,-0.00198,-2.05594,False,11-05 19:07
+5163a0dd59,kind=ens & +peer2,0.07919,0.06047,-0.00198,-2.26436,False,11-01 14:28
 411b06c07e,reg_lambda=10.0 & subsample=0.6,0.07919,0.05727,-0.00116,-1.27023,False,10-25 07:58
 ebd613702f,-market & years=None,0.07919,0.06176,-0.00116,-1.38712,False,10-23 22:46
-bdfe262051,neg=0.05 & +stock_hist,0.07919,0.0605,-0.00198,-2.19713,False,11-03 12:00
-e599543b7e,years=5 & num_leaves=127,0.07919,0.06657,-0.00198,-2.20637,False,10-31 13:07
 9adca38104,subsample=1.0 & -accumulation,0.07919,0.06133,-0.00198,-2.33816,False,11-05 05:51
-8d13ada839,+stock_hist & neg=0.03,0.07919,0.06011,-0.00198,-2.09462,False,11-05 16:01
-693eaa368b,reg_lambda=0.0,0.07919,0.06333,-0.00198,-2.30566,False,10-29 04:32
-5163a0dd59,kind=ens & +peer2,0.07919,0.06047,-0.00198,-2.26436,False,11-01 14:28
-e48b356fc8,-pref_link & -accumulation,0.07919,0.06378,-0.00198,-2.30566,False,11-04 17:01
 c88f64f8c0,+overheat & neg=0.1,0.07919,0.06103,-0.00198,-2.36061,False,11-01 01:14
-694489b58f,+peer2 & +market_alert,0.07919,0.06582,-0.00198,-2.36061,False,11-01 19:52
-ba2fc1d63c,neg=0.03 & colsample_bytree=1.0,0.07919,0.05825,-0.00198,-2.09462,False,11-05 16:17
-3203074551,neg=0.03 & colsample_bytree=0.4,0.07919,0.05866,-0.00198,-2.05594,False,11-05 19:07
-8d83542c75,-volume,0.07919,0.06249,-0.00198,-2.41968,False,10-28 14:17
+3fbd175cb7,neg=0.05 & -peer,0.07919,0.06097,-0.00198,-2.2252,False,10-30 10:40
+693eaa368b,reg_lambda=0.0,0.07919,0.06333,-0.00198,-2.30566,False,10-29 04:32
 12a8699ef6,+peer2 & -peer,0.07919,0.06184,-0.00116,-1.36752,False,10-27 07:48
+bdfe262051,neg=0.05 & +stock_hist,0.07919,0.0605,-0.00198,-2.19713,False,11-03 12:00
+8d83542c75,-volume,0.07919,0.06249,-0.00198,-2.41968,False,10-28 14:17
 804601cf08,subsample=1.0 & neg=0.3,0.07919,0.06051,-0.00116,-1.2601,False,10-27 04:31
-656338723f,kind=ens & +rel_strength,0.07913,0.06178,-0.00203,-2.22957,False,11-02 17:47
-bebd9d7bf8,-accumulation & min_child_samples=800,0.07913,0.06454,-0.00203,-2.23867,False,11-05 03:07
-cd3f46e795,subsample=1.0,0.07913,0.06134,-0.00203,-2.53651,False,10-28 18:57
-ec8195a468,-volatility,0.07913,0.06572,-0.00203,-2.51026,False,10-28 18:48
-0b1e23a9f0,reg_lambda=10.0 & +overheat,0.07913,0.06104,-0.00203,-2.29577,False,11-03 06:59
-b37f2abb0e,years=5 & -market,0.07913,0.0632,-0.00203,-2.21168,False,11-03 08:59
-4722c9717f,learning_rate=0.02 & years=5,0.07913,0.05889,-0.00122,-1.426,False,10-23 23:26
-6068796e9f,years=5 & +overheat,0.07913,0.06644,-0.00203,-2.2479,False,11-02 21:11
-2060ac3cdc,kind=ens & min_child_samples=200,0.07913,0.06479,-0.00203,-2.34684,False,10-31 01:51
-f21ca8da25,neg=0.03 & subsample=0.6,0.07913,0.05595,-0.00203,-1.97369,False,11-05 14:45
-d4a3812d26,years=None & -peer,0.07913,0.06455,-0.00122,-1.38206,False,10-27 08:45
-c64c2fecc7,learning_rate=0.03 & -market,0.07913,0.06247,-0.00203,-2.39025,False,11-05 10:24
-e7502df323,num_leaves=127 & -calendar,0.07913,0.06302,-0.00203,-2.36825,False,10-28 09:27
-7203a80a9d,+peer2 & years=None,0.07913,0.0673,-0.00203,-2.28595,False,10-30 05:03
-210e1a3b83,+market_alert & min_child_samples=200,0.07913,0.0673,-0.00203,-2.27626,False,11-05 16:11
-ac41d862be,spac 제외 & colsample_bytree=0.55,0.07913,0.06542,-0.00203,-2.22957,False,11-05 18:20
-142be0eefb,num_leaves=127 & -market,0.07913,0.0598,-0.00203,-2.36825,False,11-05 22:43
-a7aeedd368,num_leaves=31 & years=5,0.07913,0.06555,-0.00203,-2.40148,False,10-30 21:01
-30410cafc9,colsample_bytree=0.4 & neg=0.03,0.07913,0.05662,-0.00122,-1.43263,False,10-27 13:15
+cacba1d5c2,neg=0.2,0.07913,0.05908,-0.00122,-1.43934,False,10-24 00:43
 f92483fb18,learning_rate=0.03 & neg=0.05,0.07913,0.05965,-0.00122,-1.57914,False,10-27 18:13
+2060ac3cdc,kind=ens & min_child_samples=200,0.07913,0.06479,-0.00203,-2.34684,False,10-31 01:51
 c998388b2c,min_child_samples=100 & -peer,0.07913,0.06261,-0.00122,-1.38809,False,10-28 04:03
 7a7cd89f55,kind=ens & min_child_samples=100,0.07913,0.06004,-0.00122,-1.37024,False,10-27 13:36
+30410cafc9,colsample_bytree=0.4 & neg=0.03,0.07913,0.05662,-0.00122,-1.43263,False,10-27 13:15
+f21ca8da25,neg=0.03 & subsample=0.6,0.07913,0.05595,-0.00203,-1.97369,False,11-05 14:45
+cd3f46e795,subsample=1.0,0.07913,0.06134,-0.00203,-2.53651,False,10-28 18:57
+d4a3812d26,years=None & -peer,0.07913,0.06455,-0.00122,-1.38206,False,10-27 08:45
+ec8195a468,-volatility,0.07913,0.06572,-0.00203,-2.51026,False,10-28 18:48
+6068796e9f,years=5 & +overheat,0.07913,0.06644,-0.00203,-2.2479,False,11-02 21:11
+656338723f,kind=ens & +rel_strength,0.07913,0.06178,-0.00203,-2.22957,False,11-02 17:47
 96b9bec3fe,kind=ens & subsample=0.6,0.07913,0.06198,-0.00203,-2.37917,False,10-30 23:21
-cacba1d5c2,neg=0.2,0.07913,0.05908,-0.00122,-1.43934,False,10-24 00:43
-a81f19990f,colsample_bytree=0.85 & reg_lambda=5.0,0.07907,0.06147,-0.00209,-2.41957,False,11-04 22:33
-cafaa31b2a,reg_lambda=10.0 & years=5,0.07907,0.06094,-0.00209,-2.27962,False,11-05 04:46
-e8bd5cc0be,reg_lambda=10.0 & colsample_bytree=0.55,0.07907,0.06247,-0.00209,-2.47618,False,11-05 09:03
-cd01cfd683,-market & years=None,0.07907,0.06444,-0.00209,-2.48798,False,11-05 05:40
-351226ba74,-volume & +overheat,0.07907,0.06459,-0.00128,-1.48376,False,10-25 09:23
-4ba1733fda,-calendar & subsample=1.0,0.07907,0.05997,-0.00128,-1.62263,False,10-25 09:02
-38243f3c1d,years=5 & colsample_bytree=0.4,0.07907,0.06623,-0.00209,-2.44174,False,10-31 10:59
-388810323c,-accumulation & min_child_samples=100,0.07907,0.06214,-0.00128,-1.49056,False,10-27 10:55
-1e763eee1c,kind=ens & +stock_hist,0.07907,0.05887,-0.00209,-2.37698,False,10-31 05:48
-15107c43e9,-volume & neg=0.03,0.07907,0.05486,-0.00128,-1.43252,False,10-27 05:29
-e078341646,-accumulation & num_leaves=127,0.07907,0.06252,-0.00128,-1.5721,False,10-26 15:51
-84307cf89f,years=5 & +peer2,0.07907,0.06711,-0.00209,-2.33656,False,10-30 14:10
-87c7bcdcac,colsample_bytree=0.85 & neg=0.3,0.07907,0.06236,-0.00209,-2.44174,False,11-01 05:09
-9ce80308ee,kind=ens & num_leaves=127,0.07907,0.06459,-0.00209,-2.27962,False,11-01 01:50
-a73226fec0,neg=0.3 & +market_alert,0.07907,0.06209,-0.00128,-1.41463,False,10-27 19:09
-1757a5ef0b,-size_type & colsample_bytree=1.0,0.07907,0.0617,-0.00209,-2.49996,False,11-05 22:00
-7bce569d8e,years=5 & learning_rate=0.02,0.07907,0.06451,-0.00209,-2.39799,False,10-29 03:19
-c7929fb286,subsample=1.0 & +overheat,0.07907,0.06185,-0.00209,-2.56255,False,11-05 20:05
-9ce7b62df1,+market2 & +rel_strength,0.07907,0.0617,-0.00209,-2.54965,False,11-04 01:10
-7b4ab16473,years=5 & -peer,0.07907,0.06506,-0.00209,-2.33656,False,10-29 11:00
-b8a27830e1,-volume & min_child_samples=100,0.07907,0.06151,-0.00209,-2.28882,False,11-03 22:43
-f047fe43c2,num_leaves=127 & +market2,0.07907,0.06051,-0.00209,-2.56255,False,11-04 18:37
-4dbd34657a,leaves15,0.07907,0.06075,-0.00128,-1.56413,False,10-23 14:40
-104268cc8f,colsample_bytree=0.4 & min_child_samples=50,0.07907,0.06473,-0.00209,-2.25266,False,11-06 12:33
-84e3b9752a,reg_lambda=10.0 & +market_alert,0.07907,0.05987,-0.00209,-2.45306,False,11-06 00:17
-7465ba2998,reg_lambda=5.0 & +market2,0.07907,0.06228,-0.00209,-2.32677,False,11-06 00:11
+a7aeedd368,num_leaves=31 & years=5,0.07913,0.06555,-0.00203,-2.40148,False,10-30 21:01
+142be0eefb,num_leaves=127 & -market,0.07913,0.0598,-0.00203,-2.36825,False,11-05 22:43
+ac41d862be,spac 제외 & colsample_bytree=0.55,0.07913,0.06542,-0.00203,-2.22957,False,11-05 18:20
+b37f2abb0e,years=5 & -market,0.07913,0.0632,-0.00203,-2.21168,False,11-03 08:59
+bebd9d7bf8,-accumulation & min_child_samples=800,0.07913,0.06454,-0.00203,-2.23867,False,11-05 03:07
+210e1a3b83,+market_alert & min_child_samples=200,0.07913,0.0673,-0.00203,-2.27626,False,11-05 16:11
+4722c9717f,learning_rate=0.02 & years=5,0.07913,0.05889,-0.00122,-1.426,False,10-23 23:26
+c64c2fecc7,learning_rate=0.03 & -market,0.07913,0.06247,-0.00203,-2.39025,False,11-05 10:24
+0b1e23a9f0,reg_lambda=10.0 & +overheat,0.07913,0.06104,-0.00203,-2.29577,False,11-03 06:59
+e7502df323,num_leaves=127 & -calendar,0.07913,0.06302,-0.00203,-2.36825,False,10-28 09:27
+7203a80a9d,+peer2 & years=None,0.07913,0.0673,-0.00203,-2.28595,False,10-30 05:03
 21a40ad833,num_leaves=15 & -volume,0.07907,0.06234,-0.00209,-2.38741,False,11-06 01:09
-0389396f50,+overheat,0.07907,0.06602,-0.00209,-2.70326,False,10-28 06:29
+84e3b9752a,reg_lambda=10.0 & +market_alert,0.07907,0.05987,-0.00209,-2.45306,False,11-06 00:17
 bf3980aed4,+rel_strength & min_child_samples=200,0.07907,0.06503,-0.00209,-2.36668,False,11-06 06:48
+4dbd34657a,leaves15,0.07907,0.06075,-0.00128,-1.56413,False,10-23 14:40
+1e763eee1c,kind=ens & +stock_hist,0.07907,0.05887,-0.00209,-2.37698,False,10-31 05:48
+38243f3c1d,years=5 & colsample_bytree=0.4,0.07907,0.06623,-0.00209,-2.44174,False,10-31 10:59
 7c0da55933,+market2 & min_child_samples=200,0.07907,0.06082,-0.00209,-2.46454,False,11-06 07:34
-c5351ecded,-peer & neg=0.03,0.07907,0.06002,-0.00128,-1.4639,False,10-27 22:41
+104268cc8f,colsample_bytree=0.4 & min_child_samples=50,0.07907,0.06473,-0.00209,-2.25266,False,11-06 12:33
+a81f19990f,colsample_bytree=0.85 & reg_lambda=5.0,0.07907,0.06147,-0.00209,-2.41957,False,11-04 22:33
+15107c43e9,-volume & neg=0.03,0.07907,0.05486,-0.00128,-1.43252,False,10-27 05:29
 9deb1bd49d,subsample=0.6 & +overheat,0.07907,0.06217,-0.00209,-2.37698,False,10-29 13:18
-37c6076115,-volume & +market2,0.07907,0.06312,-0.00209,-2.37698,False,11-04 02:16
 be4bc1b27f,kind=ens & colsample_bytree=1.0,0.07907,0.06124,-0.00128,-1.40306,False,10-27 03:44
+f047fe43c2,num_leaves=127 & +market2,0.07907,0.06051,-0.00209,-2.56255,False,11-04 18:37
+a73226fec0,neg=0.3 & +market_alert,0.07907,0.06209,-0.00128,-1.41463,False,10-27 19:09
+7465ba2998,reg_lambda=5.0 & +market2,0.07907,0.06228,-0.00209,-2.32677,False,11-06 00:11
+c7929fb286,subsample=1.0 & +overheat,0.07907,0.06185,-0.00209,-2.56255,False,11-05 20:05
+e078341646,-accumulation & num_leaves=127,0.07907,0.06252,-0.00128,-1.5721,False,10-26 15:51
+cafaa31b2a,reg_lambda=10.0 & years=5,0.07907,0.06094,-0.00209,-2.27962,False,11-05 04:46
+84307cf89f,years=5 & +peer2,0.07907,0.06711,-0.00209,-2.33656,False,10-30 14:10
+cd01cfd683,-market & years=None,0.07907,0.06444,-0.00209,-2.48798,False,11-05 05:40
+0389396f50,+overheat,0.07907,0.06602,-0.00209,-2.70326,False,10-28 06:29
+c5351ecded,-peer & neg=0.03,0.07907,0.06002,-0.00128,-1.4639,False,10-27 22:41
+87c7bcdcac,colsample_bytree=0.85 & neg=0.3,0.07907,0.06236,-0.00209,-2.44174,False,11-01 05:09
+1757a5ef0b,-size_type & colsample_bytree=1.0,0.07907,0.0617,-0.00209,-2.49996,False,11-05 22:00
+9ce7b62df1,+market2 & +rel_strength,0.07907,0.0617,-0.00209,-2.54965,False,11-04 01:10
+b8a27830e1,-volume & min_child_samples=100,0.07907,0.06151,-0.00209,-2.28882,False,11-03 22:43
+7bce569d8e,years=5 & learning_rate=0.02,0.07907,0.06451,-0.00209,-2.39799,False,10-29 03:19
+388810323c,-accumulation & min_child_samples=100,0.07907,0.06214,-0.00128,-1.49056,False,10-27 10:55
+e8bd5cc0be,reg_lambda=10.0 & colsample_bytree=0.55,0.07907,0.06247,-0.00209,-2.47618,False,11-05 09:03
+7b4ab16473,years=5 & -peer,0.07907,0.06506,-0.00209,-2.33656,False,10-29 11:00
 babffba768,+stock_hist & num_leaves=15,0.07907,0.06427,-0.00209,-2.35651,False,11-05 12:26
-3da65889bf,-volatility & -peer,0.07901,0.06123,-0.00134,-1.64789,False,10-27 12:28
-7121b3eb4f,min_child_samples=800 & num_leaves=15,0.07901,0.06265,-0.00215,-2.32916,False,11-05 18:24
-79b2592e88,neg=0.3 & kind=ens,0.07901,0.06116,-0.00134,-1.36274,False,10-27 19:58
-ce355c7237,kind=ens & reg_lambda=5.0,0.07901,0.06339,-0.00215,-2.38663,False,10-29 04:47
-c4a7546455,-pref_link & min_child_samples=100,0.07901,0.05858,-0.00215,-2.43792,False,11-02 13:46
-b871bf959b,subsample=1.0 & -market,0.07901,0.05474,-0.00134,-1.71053,False,10-27 19:38
+351226ba74,-volume & +overheat,0.07907,0.06459,-0.00128,-1.48376,False,10-25 09:23
+37c6076115,-volume & +market2,0.07907,0.06312,-0.00209,-2.37698,False,11-04 02:16
+9ce80308ee,kind=ens & num_leaves=127,0.07907,0.06459,-0.00209,-2.27962,False,11-01 01:50
+4ba1733fda,-calendar & subsample=1.0,0.07907,0.05997,-0.00128,-1.62263,False,10-25 09:02
 a272943d10,-volume & -calendar,0.07901,0.0631,-0.00215,-2.33845,False,11-06 05:01
+4fc503fc10,reg_lambda=10.0 & min_child_samples=200,0.07901,0.05828,-0.00215,-2.34785,False,11-06 21:51
+d19335b8c7,neg=0.1 & colsample_bytree=0.85,0.07901,0.06314,-0.00215,-2.367,False,10-31 10:12
+e96c12a64b,-accumulation & num_leaves=31,0.07901,0.06466,-0.00215,-2.47032,False,11-06 03:47
+c4a7546455,-pref_link & min_child_samples=100,0.07901,0.05858,-0.00215,-2.43792,False,11-02 13:46
+07aa634acc,colsample_bytree=0.85 & -volatility,0.07901,0.06095,-0.00215,-2.50406,False,11-04 06:09
+144a698b6c,colsample_bytree=0.85 & min_child_samples=100,0.07901,0.05863,-0.00215,-2.37676,False,11-05 19:27
+8ba9f40a87,years=None & colsample_bytree=1.0,0.07901,0.06712,-0.00215,-2.52733,False,10-29 16:42
+0a6737ad5c,+market2 & min_child_samples=100,0.07901,0.06067,-0.00215,-2.43792,False,11-05 02:13
+8b523728df,min_child_samples=800 & reg_lambda=10.0,0.07901,0.05829,-0.00215,-2.25024,False,11-05 03:50
+125849d05b,kind=ens & +overheat,0.07901,0.06143,-0.00215,-2.28431,False,11-03 02:58
+4657aa55d2,kind=ens & min_child_samples=800,0.07901,0.05635,-0.00134,-1.39754,False,10-27 08:07
+87b960d9c4,subsample=1.0 & min_child_samples=50,0.07901,0.06326,-0.00215,-2.37676,False,11-06 21:37
+3ceb0942da,num_leaves=31 & neg=0.2,0.07901,0.06263,-0.00134,-1.54081,False,10-27 03:36
+265dae9abf,-volume & reg_lambda=10.0,0.07901,0.06174,-0.00215,-2.40675,False,11-05 08:10
+39c40a4f41,learning_rate=0.02 & num_leaves=15,0.07901,0.05711,-0.00215,-2.23377,False,10-29 06:51
+0785f7b4ca,years=None & learning_rate=0.02,0.07901,0.06414,-0.00215,-2.35737,False,10-29 14:52
+ce355c7237,kind=ens & reg_lambda=5.0,0.07901,0.06339,-0.00215,-2.38663,False,10-29 04:47
+bc5e39e43e,neg=0.2 & -market,0.07901,0.06092,-0.00134,-1.51386,False,10-27 01:39
 9b5e564f1c,-peer & neg=0.2,0.07901,0.0626,-0.00134,-1.52046,False,10-27 04:04
+57ab185a69,years=5 & +stock_hist,0.07901,0.06744,-0.00215,-2.39663,False,10-28 13:45
+911f6b8b89,years=5 & min_child_samples=50,0.07901,0.06506,-0.00215,-2.24196,False,10-29 16:02
 ab55bf0892,-accumulation & colsample_bytree=0.85,0.07901,0.05816,-0.00215,-2.55126,False,11-04 15:14
 702e89c656,neg=0.1 & num_leaves=15,0.07901,0.05817,-0.00215,-2.25024,False,11-04 13:09
-598ca64658,-volume & -market,0.07901,0.06178,-0.00134,-1.48208,False,10-23 23:35
-4657aa55d2,kind=ens & min_child_samples=800,0.07901,0.05635,-0.00134,-1.39754,False,10-27 08:07
-d19335b8c7,neg=0.1 & colsample_bytree=0.85,0.07901,0.06314,-0.00215,-2.367,False,10-31 10:12
-57ab185a69,years=5 & +stock_hist,0.07901,0.06744,-0.00215,-2.39663,False,10-28 13:45
-0a6737ad5c,+market2 & min_child_samples=100,0.07901,0.06067,-0.00215,-2.43792,False,11-05 02:13
-e96c12a64b,-accumulation & num_leaves=31,0.07901,0.06466,-0.00215,-2.47032,False,11-06 03:47
+3da65889bf,-volatility & -peer,0.07901,0.06123,-0.00134,-1.64789,False,10-27 12:28
 ea9a730d59,colsample_bytree=1.0 & -market,0.07901,0.05383,-0.00215,-2.4274,False,11-05 05:58
-265dae9abf,-volume & reg_lambda=10.0,0.07901,0.06174,-0.00215,-2.40675,False,11-05 08:10
-0785f7b4ca,years=None & learning_rate=0.02,0.07901,0.06414,-0.00215,-2.35737,False,10-29 14:52
-f583248752,years=None & -volatility,0.07901,0.06627,-0.00215,-2.367,False,10-30 07:26
-911f6b8b89,years=5 & min_child_samples=50,0.07901,0.06506,-0.00215,-2.24196,False,10-29 16:02
-b39b57a003,+market_alert & colsample_bytree=1.0,0.07901,0.06165,-0.00134,-1.64789,False,10-27 17:20
-144a698b6c,colsample_bytree=0.85 & min_child_samples=100,0.07901,0.05863,-0.00215,-2.37676,False,11-05 19:27
-eff8bdae0f,neg=0.3 & reg_lambda=0.0,0.07901,0.06311,-0.00215,-2.50406,False,10-31 23:55
-bc5e39e43e,neg=0.2 & -market,0.07901,0.06092,-0.00134,-1.51386,False,10-27 01:39
-3ceb0942da,num_leaves=31 & neg=0.2,0.07901,0.06263,-0.00134,-1.54081,False,10-27 03:36
-d59c0755ac,kind=ens & -pref_link,0.07901,0.05907,-0.00215,-2.30194,False,10-31 03:12
-8ba9f40a87,years=None & colsample_bytree=1.0,0.07901,0.06712,-0.00215,-2.52733,False,10-29 16:42
-1032265ee7,-volume & neg=0.03,0.07901,0.05865,-0.00215,-2.32916,False,11-05 21:09
-125849d05b,kind=ens & +overheat,0.07901,0.06143,-0.00215,-2.28431,False,11-03 02:58
-8ffbaa95f4,kind=ens & num_leaves=15,0.07901,0.05969,-0.00215,-2.23377,False,11-05 21:19
-39c40a4f41,learning_rate=0.02 & num_leaves=15,0.07901,0.05711,-0.00215,-2.23377,False,10-29 06:51
-07aa634acc,colsample_bytree=0.85 & -volatility,0.07901,0.06095,-0.00215,-2.50406,False,11-04 06:09
-87b960d9c4,subsample=1.0 & min_child_samples=50,0.07901,0.06326,-0.00215,-2.37676,False,11-06 21:37
-4fc503fc10,reg_lambda=10.0 & min_child_samples=200,0.07901,0.05828,-0.00215,-2.34785,False,11-06 21:51
-8b523728df,min_child_samples=800 & reg_lambda=10.0,0.07901,0.05829,-0.00215,-2.25024,False,11-05 03:50
+7121b3eb4f,min_child_samples=800 & num_leaves=15,0.07901,0.06265,-0.00215,-2.32916,False,11-05 18:24
 39a854f24d,-volume & -accumulation,0.07901,0.0631,-0.00215,-2.39663,False,11-04 18:11
-e6634ba581,colsample_bytree=0.85 & -pref_link,0.07895,0.06129,-0.00221,-2.55449,False,11-05 04:35
-31c90d5791,colsample_bytree=0.55 & num_leaves=15,0.07895,0.06396,-0.00221,-2.46681,False,11-06 08:39
-daa5da82fc,kind=ens & colsample_bytree=0.4,0.07895,0.06462,-0.00221,-2.46681,False,10-28 16:06
-b222c887f6,neg=0.03 & -calendar,0.07895,0.05649,-0.0014,-1.53078,False,10-25 02:22
-f9b779d952,num_leaves=15 & -volume,0.07895,0.06212,-0.0014,-1.51242,False,10-28 03:42
-4afd1bbfc4,-calendar & neg=0.03,0.07895,0.05797,-0.00221,-2.30698,False,11-05 03:39
-3307cc8ffd,+rel_strength & +market_alert,0.07895,0.06017,-0.00221,-2.66525,False,11-06 04:00
-bddf1a9bf5,-pref_link & years=5,0.07895,0.06285,-0.0014,-1.66496,False,10-26 05:39
-733f6730e8,num_leaves=15 & +market2,0.07895,0.06186,-0.00221,-2.69188,False,11-05 20:40
-2d64ebb754,colsample_bytree=0.55 & subsample=0.6,0.07895,0.06157,-0.0014,-1.62626,False,10-26 05:11
-12a8ba9912,reg_lambda=0.0 & neg=0.1,0.07895,0.05552,-0.00221,-2.56612,False,11-03 01:06
-c07217eaa7,subsample=1.0 & neg=0.03,0.07895,0.05695,-0.00221,-2.45648,False,11-03 19:46
-adfdeb408b,neg=0.1 & num_leaves=127,0.07895,0.06111,-0.00221,-2.62674,False,11-02 04:41
-61b32baf9d,colsample_bytree=0.4 & -volume,0.07895,0.06351,-0.00221,-2.82245,False,11-01 15:36
-6a5527b0ef,subsample=0.6 & colsample_bytree=0.85,0.07895,0.06203,-0.00221,-2.77684,False,10-30 09:59
-b8a0e1b26a,years=5 & neg=0.3,0.07895,0.06505,-0.00221,-2.46681,False,10-29 01:59
-d88f592977,subsample=0.6 & -volume,0.07895,0.06142,-0.00221,-2.48788,False,11-03 02:17
+b871bf959b,subsample=1.0 & -market,0.07901,0.05474,-0.00134,-1.71053,False,10-27 19:38
+b39b57a003,+market_alert & colsample_bytree=1.0,0.07901,0.06165,-0.00134,-1.64789,False,10-27 17:20
+d59c0755ac,kind=ens & -pref_link,0.07901,0.05907,-0.00215,-2.30194,False,10-31 03:12
+79b2592e88,neg=0.3 & kind=ens,0.07901,0.06116,-0.00134,-1.36274,False,10-27 19:58
+f583248752,years=None & -volatility,0.07901,0.06627,-0.00215,-2.367,False,10-30 07:26
+598ca64658,-volume & -market,0.07901,0.06178,-0.00134,-1.48208,False,10-23 23:35
+1032265ee7,-volume & neg=0.03,0.07901,0.05865,-0.00215,-2.32916,False,11-05 21:09
+8ffbaa95f4,kind=ens & num_leaves=15,0.07901,0.05969,-0.00215,-2.23377,False,11-05 21:19
+eff8bdae0f,neg=0.3 & reg_lambda=0.0,0.07901,0.06311,-0.00215,-2.50406,False,10-31 23:55
 c1777240d0,reg_lambda=10.0 & years=None,0.07895,0.06116,-0.00221,-2.35073,False,11-05 15:45
-1f8b69a116,+overheat & num_leaves=127,0.07895,0.06246,-0.0014,-1.64915,False,10-26 12:11
+733f6730e8,num_leaves=15 & +market2,0.07895,0.06186,-0.00221,-2.69188,False,11-05 20:40
+bddf1a9bf5,-pref_link & years=5,0.07895,0.06285,-0.0014,-1.66496,False,10-26 05:39
+2d64ebb754,colsample_bytree=0.55 & subsample=0.6,0.07895,0.06157,-0.0014,-1.62626,False,10-26 05:11
+31c90d5791,colsample_bytree=0.55 & num_leaves=15,0.07895,0.06396,-0.00221,-2.46681,False,11-06 08:39
+3307cc8ffd,+rel_strength & +market_alert,0.07895,0.06017,-0.00221,-2.66525,False,11-06 04:00
+b8a0e1b26a,years=5 & neg=0.3,0.07895,0.06505,-0.00221,-2.46681,False,10-29 01:59
+b222c887f6,neg=0.03 & -calendar,0.07895,0.05649,-0.0014,-1.53078,False,10-25 02:22
+c07217eaa7,subsample=1.0 & neg=0.03,0.07895,0.05695,-0.00221,-2.45648,False,11-03 19:46
+daa5da82fc,kind=ens & colsample_bytree=0.4,0.07895,0.06462,-0.00221,-2.46681,False,10-28 16:06
+adfdeb408b,neg=0.1 & num_leaves=127,0.07895,0.06111,-0.00221,-2.62674,False,11-02 04:41
 3315b45695,-peer & num_leaves=63,0.07895,0.05857,-0.00221,-2.79179,False,10-28 11:18
-d09714d437,neg=0.3 & -calendar,0.07895,0.06181,-0.00221,-2.63939,False,11-01 06:32
+d88f592977,subsample=0.6 & -volume,0.07895,0.06142,-0.00221,-2.48788,False,11-03 02:17
+12a8ba9912,reg_lambda=0.0 & neg=0.1,0.07895,0.05552,-0.00221,-2.56612,False,11-03 01:06
+f9b779d952,num_leaves=15 & -volume,0.07895,0.06212,-0.0014,-1.51242,False,10-28 03:42
 0ce2d3a3d3,lambda10,0.07895,0.05922,-0.00221,-2.56612,False,10-28 08:00
-c84c13e01d,+rel_strength & reg_lambda=5.0,0.07895,0.06281,-0.00221,-2.61427,False,10-30 09:29
+61b32baf9d,colsample_bytree=0.4 & -volume,0.07895,0.06351,-0.00221,-2.82245,False,11-01 15:36
+d09714d437,neg=0.3 & -calendar,0.07895,0.06181,-0.00221,-2.63939,False,11-01 06:32
+6a5527b0ef,subsample=0.6 & colsample_bytree=0.85,0.07895,0.06203,-0.00221,-2.77684,False,10-30 09:59
 cff71dcc5c,subsample=1.0 & -calendar,0.07895,0.06125,-0.00221,-2.73337,False,10-30 12:38
-4f8970c781,min_child_samples=400 & years=5,0.0789,0.06417,-0.00145,-1.63161,False,10-27 02:21
-f8f540d70a,learning_rate=0.03 & colsample_bytree=1.0,0.0789,0.05524,-0.00145,-1.91328,False,10-27 07:58
-f9898ef8ee,+overheat & min_child_samples=200,0.0789,0.06149,-0.00227,-2.58143,False,11-06 06:03
-d6ee35f98e,neg0.3,0.0789,0.06279,-0.00145,-1.675,False,10-23 17:25
-573c968c25,-market & -pref_link,0.0789,0.05933,-0.00227,-2.68973,False,11-06 05:49
-e31084f377,years=5 & reg_lambda=0.0,0.0789,0.06349,-0.00227,-2.45549,False,10-29 12:16
-9256081f4f,learning_rate=0.02 & num_leaves=31,0.0789,0.05386,-0.00145,-1.63861,False,10-27 22:31
-1cd8f31aeb,num_leaves=31 & kind=ens,0.0789,0.064,-0.00227,-2.55909,False,10-28 10:57
-1d24b98331,-accumulation,0.0789,0.064,-0.00227,-2.61607,False,10-29 01:40
+4afd1bbfc4,-calendar & neg=0.03,0.07895,0.05797,-0.00221,-2.30698,False,11-05 03:39
+c84c13e01d,+rel_strength & reg_lambda=5.0,0.07895,0.06281,-0.00221,-2.61427,False,10-30 09:29
+e6634ba581,colsample_bytree=0.85 & -pref_link,0.07895,0.06129,-0.00221,-2.55449,False,11-05 04:35
+1f8b69a116,+overheat & num_leaves=127,0.07895,0.06246,-0.0014,-1.64915,False,10-26 12:11
 a47d7a263f,spac 제외 & subsample=0.6,0.0789,0.06303,-0.00227,-2.42678,False,11-03 18:33
-25495f941a,+market2 & -accumulation,0.0789,0.06264,-0.00227,-2.72898,False,10-29 07:53
-66a66ac6fb,neg=0.2 & years=5,0.0789,0.06472,-0.00145,-1.52486,False,10-23 21:03
 aab2e89c4e,neg=0.05 & years=5,0.0789,0.05727,-0.00227,-2.3379,False,10-28 14:07
-e892f8c234,-market,0.0789,0.06223,-0.00227,-2.52665,False,10-29 02:47
+1cd8f31aeb,num_leaves=31 & kind=ens,0.0789,0.064,-0.00227,-2.55909,False,10-28 10:57
 f40a6df3ce,learning_rate=0.03 & -size_type,0.0789,0.06393,-0.00227,-2.90511,False,10-28 19:56
+573c968c25,-market & -pref_link,0.0789,0.05933,-0.00227,-2.68973,False,11-06 05:49
+f9898ef8ee,+overheat & min_child_samples=200,0.0789,0.06149,-0.00227,-2.58143,False,11-06 06:03
+e31084f377,years=5 & reg_lambda=0.0,0.0789,0.06349,-0.00227,-2.45549,False,10-29 12:16
+25495f941a,+market2 & -accumulation,0.0789,0.06264,-0.00227,-2.72898,False,10-29 07:53
 f30c44a827,-peer & num_leaves=15,0.0789,0.06126,-0.00227,-2.39003,False,11-06 14:48
-ab9cf67e68,learning_rate=0.02 & neg=0.03,0.0789,0.05418,-0.00227,-2.29697,False,11-05 12:41
-c769574f32,colsample_bytree=0.4 & years=5,0.0789,0.06239,-0.00145,-1.66016,False,10-27 19:49
-0b294128d9,colsample_bytree=1.0 & -peer,0.0789,0.05741,-0.00145,-1.82943,False,10-27 13:03
-15453d2db1,+market_alert & neg=0.03,0.0789,0.05808,-0.00145,-1.61114,False,10-27 21:04
-ccdde30f91,colsample_bytree=1.0 & -calendar,0.0789,0.05844,-0.00227,-2.65213,False,11-04 11:46
-3c8caf6f1a,kind=ens & -volume,0.0789,0.06042,-0.00227,-2.3379,False,11-01 19:29
+d6ee35f98e,neg0.3,0.0789,0.06279,-0.00145,-1.675,False,10-23 17:25
+f8f540d70a,learning_rate=0.03 & colsample_bytree=1.0,0.0789,0.05524,-0.00145,-1.91328,False,10-27 07:58
 fb61fe56b0,num_leaves=31 & min_child_samples=800,0.0789,0.06531,-0.00227,-2.54814,False,11-01 08:13
-15bafed8fe,neg=0.2 & years=None,0.07884,0.06571,-0.00151,-1.6132,False,10-26 03:11
-71acff5341,kind=lgbm & min_child_samples=800,0.07884,0.06263,-0.00233,-2.50383,False,11-05 01:03
-ce6626415e,-calendar & reg_lambda=0.0,0.07884,0.06626,-0.00233,-2.72674,False,11-05 01:37
-588b0889b5,kind=ens & min_child_samples=50,0.07884,0.06038,-0.00233,-2.34388,False,11-02 18:48
-3f36360d19,-accumulation & learning_rate=0.03,0.07884,0.06393,-0.00233,-2.79243,False,11-04 12:07
+0b294128d9,colsample_bytree=1.0 & -peer,0.0789,0.05741,-0.00145,-1.82943,False,10-27 13:03
+ab9cf67e68,learning_rate=0.02 & neg=0.03,0.0789,0.05418,-0.00227,-2.29697,False,11-05 12:41
+3c8caf6f1a,kind=ens & -volume,0.0789,0.06042,-0.00227,-2.3379,False,11-01 19:29
+4f8970c781,min_child_samples=400 & years=5,0.0789,0.06417,-0.00145,-1.63161,False,10-27 02:21
+9256081f4f,learning_rate=0.02 & num_leaves=31,0.0789,0.05386,-0.00145,-1.63861,False,10-27 22:31
+ccdde30f91,colsample_bytree=1.0 & -calendar,0.0789,0.05844,-0.00227,-2.65213,False,11-04 11:46
+15453d2db1,+market_alert & neg=0.03,0.0789,0.05808,-0.00145,-1.61114,False,10-27 21:04
+66a66ac6fb,neg=0.2 & years=5,0.0789,0.06472,-0.00145,-1.52486,False,10-23 21:03
+e892f8c234,-market,0.0789,0.06223,-0.00227,-2.52665,False,10-29 02:47
+1d24b98331,-accumulation,0.0789,0.064,-0.00227,-2.61607,False,10-29 01:40
+c769574f32,colsample_bytree=0.4 & years=5,0.0789,0.06239,-0.00145,-1.66016,False,10-27 19:49
 4c657531df,neg=0.03 & reg_lambda=10.0,0.07884,0.05365,-0.00233,-2.19112,False,11-05 17:57
-c6c8baf7f3,colsample_bytree=0.85 & min_child_samples=200,0.07884,0.06229,-0.00233,-2.71415,False,10-29 22:54
 484b4954bd,reg_lambda=10.0 & num_leaves=15,0.07884,0.05936,-0.00233,-2.39374,False,11-05 21:46
-78e747742b,colsample_bytree=1.0,0.07884,0.06237,-0.00233,-2.84855,False,10-28 14:35
-822f1cbd1b,neg=0.05 & +overheat,0.07884,0.06015,-0.00151,-1.77844,False,10-27 16:32
-36d6af7cda,-volatility & num_leaves=15,0.07884,0.06309,-0.00233,-2.5544,False,11-05 18:29
-e840f530a8,neg=0.1 & -volume,0.07884,0.06106,-0.00233,-2.61933,False,11-01 17:02
-fe5b40b491,min_child_samples=50 & learning_rate=0.03,0.07884,0.05445,-0.00233,-2.5137,False,11-02 08:49
-e86a2ee967,num_leaves=15 & +rel_strength,0.07884,0.05913,-0.00151,-1.72288,False,10-27 05:07
-e24ff0a9bc,kind=ens & colsample_bytree=0.55,0.07884,0.06436,-0.00233,-2.6774,False,10-30 09:41
-59426c3880,years=None & min_child_samples=100,0.07884,0.06534,-0.00233,-2.39374,False,11-01 06:59
-9647018602,learning_rate=0.02 & years=None,0.07884,0.05947,-0.00151,-1.72288,False,10-27 02:36
-c4d6fe7a4a,+market2,0.07884,0.0593,-0.00233,-2.84855,False,10-28 05:53
-fc72230ffe,num_leaves=15 & neg=0.2,0.07884,0.06364,-0.00151,-1.7305,False,10-26 09:22
-9f9474fc43,-volume & years=None,0.07884,0.0644,-0.00233,-2.50383,False,10-30 05:17
-dfbe10d436,reg_lambda=5.0 & +overheat,0.07884,0.06239,-0.00233,-2.66548,False,11-05 11:27
-582b782867,num_leaves=31 & neg=0.03,0.07884,0.05512,-0.00233,-2.49407,False,10-31 14:45
-ecdf2ae1a5,reg_lambda=5.0 & subsample=1.0,0.07884,0.0639,-0.00233,-2.77892,False,10-31 00:44
-32e7c4367b,-pref_link & neg=0.3,0.07884,0.0621,-0.00151,-1.72288,False,10-28 04:18
-6c2eadfa42,+overheat & min_child_samples=100,0.07884,0.06326,-0.00233,-2.5137,False,11-04 12:25
-a196d50d22,-size_type,0.07884,0.06157,-0.00233,-2.73951,False,10-28 15:53
-8b92b34459,num_leaves=15 & +overheat,0.07884,0.06016,-0.00233,-2.54404,False,11-06 00:22
-368cc99fac,-calendar & min_child_samples=800,0.07884,0.06457,-0.00233,-2.63064,False,11-06 05:07
+15bafed8fe,neg=0.2 & years=None,0.07884,0.06571,-0.00151,-1.6132,False,10-26 03:11
 8bb7b67adc,-pref_link & reg_lambda=10.0,0.07884,0.06031,-0.00233,-2.65371,False,11-06 06:40
-8dda723295,neg=0.03 & +rel_strength,0.07884,0.05594,-0.00233,-2.44693,False,11-03 14:09
 528a96af6a,minchild50,0.07884,0.06139,-0.00151,-1.77017,False,10-23 14:46
-6c4051603e,learning_rate=0.03 & kind=lgbm,0.07878,0.05277,-0.00157,-1.88717,False,10-24 01:43
-ec19d80810,neg=0.3 & min_child_samples=50,0.07878,0.06284,-0.00238,-2.56164,False,11-06 21:32
-3759130d07,years=5 & -volatility,0.07878,0.06355,-0.00157,-1.83414,False,10-27 10:48
+822f1cbd1b,neg=0.05 & +overheat,0.07884,0.06015,-0.00151,-1.77844,False,10-27 16:32
+588b0889b5,kind=ens & min_child_samples=50,0.07884,0.06038,-0.00233,-2.34388,False,11-02 18:48
+8b92b34459,num_leaves=15 & +overheat,0.07884,0.06016,-0.00233,-2.54404,False,11-06 00:22
+36d6af7cda,-volatility & num_leaves=15,0.07884,0.06309,-0.00233,-2.5544,False,11-05 18:29
+8dda723295,neg=0.03 & +rel_strength,0.07884,0.05594,-0.00233,-2.44693,False,11-03 14:09
+c6c8baf7f3,colsample_bytree=0.85 & min_child_samples=200,0.07884,0.06229,-0.00233,-2.71415,False,10-29 22:54
+a196d50d22,-size_type,0.07884,0.06157,-0.00233,-2.73951,False,10-28 15:53
+fe5b40b491,min_child_samples=50 & learning_rate=0.03,0.07884,0.05445,-0.00233,-2.5137,False,11-02 08:49
+78e747742b,colsample_bytree=1.0,0.07884,0.06237,-0.00233,-2.84855,False,10-28 14:35
+e840f530a8,neg=0.1 & -volume,0.07884,0.06106,-0.00233,-2.61933,False,11-01 17:02
+6c2eadfa42,+overheat & min_child_samples=100,0.07884,0.06326,-0.00233,-2.5137,False,11-04 12:25
+3f36360d19,-accumulation & learning_rate=0.03,0.07884,0.06393,-0.00233,-2.79243,False,11-04 12:07
+582b782867,num_leaves=31 & neg=0.03,0.07884,0.05512,-0.00233,-2.49407,False,10-31 14:45
+71acff5341,kind=lgbm & min_child_samples=800,0.07884,0.06263,-0.00233,-2.50383,False,11-05 01:03
+ecdf2ae1a5,reg_lambda=5.0 & subsample=1.0,0.07884,0.0639,-0.00233,-2.77892,False,10-31 00:44
+e24ff0a9bc,kind=ens & colsample_bytree=0.55,0.07884,0.06436,-0.00233,-2.6774,False,10-30 09:41
+fc72230ffe,num_leaves=15 & neg=0.2,0.07884,0.06364,-0.00151,-1.7305,False,10-26 09:22
+9647018602,learning_rate=0.02 & years=None,0.07884,0.05947,-0.00151,-1.72288,False,10-27 02:36
+dfbe10d436,reg_lambda=5.0 & +overheat,0.07884,0.06239,-0.00233,-2.66548,False,11-05 11:27
+368cc99fac,-calendar & min_child_samples=800,0.07884,0.06457,-0.00233,-2.63064,False,11-06 05:07
+c4d6fe7a4a,+market2,0.07884,0.0593,-0.00233,-2.84855,False,10-28 05:53
+32e7c4367b,-pref_link & neg=0.3,0.07884,0.0621,-0.00151,-1.72288,False,10-28 04:18
+59426c3880,years=None & min_child_samples=100,0.07884,0.06534,-0.00233,-2.39374,False,11-01 06:59
+9f9474fc43,-volume & years=None,0.07884,0.0644,-0.00233,-2.50383,False,10-30 05:17
+e86a2ee967,num_leaves=15 & +rel_strength,0.07884,0.05913,-0.00151,-1.72288,False,10-27 05:07
+ce6626415e,-calendar & reg_lambda=0.0,0.07884,0.06626,-0.00233,-2.72674,False,11-05 01:37
 1bfe6d9211,colsample_bytree=1.0 & -volume,0.07878,0.06109,-0.00238,-2.66797,False,11-02 02:12
+628877f6f6,neg=0.03 & +market_alert,0.07878,0.05341,-0.00238,-2.34305,False,11-06 06:26
+d5edd5f8ae,-accumulation & neg=0.1,0.07878,0.06253,-0.00238,-2.71437,False,11-04 11:12
 def74dba84,years=None & -peer,0.07878,0.06614,-0.00238,-2.63469,False,10-30 11:19
 21638b000f,-market & -volume,0.07878,0.06272,-0.00238,-2.62387,False,11-05 08:19
-d1a11f6382,-calendar & +market_alert,0.07878,0.06509,-0.00238,-3.07199,False,11-05 19:42
-d5edd5f8ae,-accumulation & neg=0.1,0.07878,0.06253,-0.00238,-2.71437,False,11-04 11:12
+6c4051603e,learning_rate=0.03 & kind=lgbm,0.07878,0.05277,-0.00157,-1.88717,False,10-24 01:43
 ee55bc5b13,kind=ens & -volume,0.07878,0.05934,-0.00157,-1.65321,False,10-26 16:56
-e2535633d1,kind=ens & -pref_link,0.07878,0.06155,-0.00157,-1.63491,False,10-26 13:40
-628877f6f6,neg=0.03 & +market_alert,0.07878,0.05341,-0.00238,-2.34305,False,11-06 06:26
-9d780033b4,-volatility & -calendar,0.07878,0.06427,-0.00238,-2.72635,False,11-05 07:11
 9154b0982c,-peer & spac 제외,0.07878,0.06575,-0.00157,-1.69172,False,10-26 02:10
+d1a11f6382,-calendar & +market_alert,0.07878,0.06509,-0.00238,-3.07199,False,11-05 19:42
+ec19d80810,neg=0.3 & min_child_samples=50,0.07878,0.06284,-0.00238,-2.56164,False,11-06 21:32
+9d780033b4,-volatility & -calendar,0.07878,0.06427,-0.00238,-2.72635,False,11-05 07:11
+3759130d07,years=5 & -volatility,0.07878,0.06355,-0.00157,-1.83414,False,10-27 10:48
+e2535633d1,kind=ens & -pref_link,0.07878,0.06155,-0.00157,-1.63491,False,10-26 13:40
+b66a8a8fde,neg=0.03 & reg_lambda=5.0,0.07872,0.05148,-0.00244,-2.59911,False,10-31 15:12
+0651e15373,-accumulation & reg_lambda=10.0,0.07872,0.06077,-0.00244,-2.75086,False,11-05 10:45
+3f540c6888,neg=0.1 & +market2,0.07872,0.05383,-0.00244,-2.86371,False,10-31 14:23
+e9f6b49d73,kind=lgbm & -peer,0.07872,0.05286,-0.00244,-2.57941,False,11-04 00:35
+07576500a9,num_leaves=15 & years=None,0.07872,0.06086,-0.00163,-1.69246,False,10-24 04:44
+1b84e7fc2b,+market_alert & years=5,0.07872,0.0638,-0.00163,-1.92456,False,10-24 01:22
 6d4907cdbb,-pref_link & num_leaves=15,0.07872,0.06232,-0.00244,-2.70482,False,11-05 23:52
-d45c5b9938,years=None & min_child_samples=400,0.07872,0.06308,-0.00163,-1.77912,False,10-27 17:42
-424da15aa9,num_leaves=127 & min_child_samples=100,0.07872,0.05946,-0.00244,-2.85048,False,11-04 17:15
+4d1590d522,years=None & +market_alert,0.07872,0.06661,-0.00244,-2.54134,False,10-31 11:27
+4ff87c3293,+market2 & years=5,0.07872,0.0587,-0.00163,-1.84756,False,10-28 03:50
+7f04984947,+peer2 & neg=0.2,0.07872,0.06075,-0.00163,-1.93372,False,10-27 04:40
 6b8db81cc7,min_child_samples=800 & -volume,0.07872,0.06395,-0.00244,-2.661,False,11-01 22:47
+01673f03d7,neg=0.03 & min_child_samples=100,0.07872,0.058,-0.00244,-2.59911,False,11-06 01:53
+c1ba4b2e86,-accumulation & min_child_samples=200,0.07872,0.05957,-0.00244,-2.87713,False,10-29 15:10
+e9fac5508e,min_child_samples=100 & subsample=1.0,0.07872,0.06077,-0.00244,-2.661,False,11-03 04:49
 72173caaa8,reg_lambda=5.0 & subsample=1.0,0.07872,0.06297,-0.00163,-1.90662,False,10-28 01:25
 5938595de0,-calendar,0.07872,0.06444,-0.00244,-2.94715,False,10-28 22:32
-1b84e7fc2b,+market_alert & years=5,0.07872,0.0638,-0.00163,-1.92456,False,10-24 01:22
-e9fac5508e,min_child_samples=100 & subsample=1.0,0.07872,0.06077,-0.00244,-2.661,False,11-03 04:49
-c1ba4b2e86,-accumulation & min_child_samples=200,0.07872,0.05957,-0.00244,-2.87713,False,10-29 15:10
-b66a8a8fde,neg=0.03 & reg_lambda=5.0,0.07872,0.05148,-0.00244,-2.59911,False,10-31 15:12
-3f540c6888,neg=0.1 & +market2,0.07872,0.05383,-0.00244,-2.86371,False,10-31 14:23
-4ff87c3293,+market2 & years=5,0.07872,0.0587,-0.00163,-1.84756,False,10-28 03:50
 a96bba1d28,colsample_bytree=0.85 & years=None,0.07872,0.06559,-0.00244,-2.71611,False,10-28 19:41
-07576500a9,num_leaves=15 & years=None,0.07872,0.06086,-0.00163,-1.69246,False,10-24 04:44
-7f04984947,+peer2 & neg=0.2,0.07872,0.06075,-0.00163,-1.93372,False,10-27 04:40
 31b1dd1ee8,subsample=0.6 & min_child_samples=800,0.07872,0.05908,-0.00163,-1.81618,False,10-27 21:17
-0651e15373,-accumulation & reg_lambda=10.0,0.07872,0.06077,-0.00244,-2.75086,False,11-05 10:45
-4d1590d522,years=None & +market_alert,0.07872,0.06661,-0.00244,-2.54134,False,10-31 11:27
+d45c5b9938,years=None & min_child_samples=400,0.07872,0.06308,-0.00163,-1.77912,False,10-27 17:42
+424da15aa9,num_leaves=127 & min_child_samples=100,0.07872,0.05946,-0.00244,-2.85048,False,11-04 17:15
 dbea650a29,+market2 & years=5,0.07872,0.06295,-0.00244,-2.76275,False,11-04 07:23
-01673f03d7,neg=0.03 & min_child_samples=100,0.07872,0.058,-0.00244,-2.59911,False,11-06 01:53
-e9f6b49d73,kind=lgbm & -peer,0.07872,0.05286,-0.00244,-2.57941,False,11-04 00:35
-6a8f36ea10,reg_lambda=10.0 & num_leaves=31,0.07866,0.0596,-0.0025,-2.66636,False,11-05 02:33
-37f798fd42,kind=ens & min_child_samples=800,0.07866,0.06193,-0.0025,-2.75242,False,10-29 14:03
-d0ea459ae9,-calendar,0.07866,0.06362,-0.00169,-2.06813,False,10-23 23:01
-c7d6a71bff,-accumulation & learning_rate=0.02,0.07866,0.06117,-0.0025,-2.89871,False,11-03 07:27
-8571e1690d,-accumulation & -peer,0.07866,0.06502,-0.0025,-2.93908,False,11-05 13:23
-c8c3484384,min_child_samples=100 & num_leaves=15,0.07866,0.06248,-0.0025,-2.67667,False,11-05 14:02
-271442db46,years=None & num_leaves=127,0.07866,0.06606,-0.00169,-1.88515,False,10-27 14:53
-bd2b293084,years=None,0.07866,0.06527,-0.00169,-2.39517,False,10-23 21:23
-7906ac03a3,neg=0.03 & num_leaves=15,0.07866,0.05287,-0.00169,-1.77588,False,10-25 14:44
 598d5185e8,reg_lambda=10.0 & colsample_bytree=1.0,0.07866,0.06105,-0.0025,-2.85996,False,10-29 10:40
-ce4a78ce0e,-calendar & reg_lambda=10.0,0.07866,0.06088,-0.0025,-2.81063,False,11-05 06:42
 208d751fca,kind=lgbm & learning_rate=0.03,0.07866,0.05317,-0.0025,-2.77526,False,11-06 02:09
-1eada0cc04,subsample=1.0 & colsample_bytree=0.85,0.07866,0.05872,-0.0025,-3.04025,False,11-02 14:18
-5b0a1daa3f,colsample_bytree=0.85 & -calendar,0.07866,0.06419,-0.0025,-2.93908,False,11-05 22:16
 1c725e2c76,num_leaves=15 & -calendar,0.07866,0.06208,-0.0025,-2.6361,False,11-06 02:50
-5fc1a9ffc2,years=None & num_leaves=31,0.07866,0.06473,-0.0025,-2.75242,False,10-29 17:35
+c8c3484384,min_child_samples=100 & num_leaves=15,0.07866,0.06248,-0.0025,-2.67667,False,11-05 14:02
+d0ea459ae9,-calendar,0.07866,0.06362,-0.00169,-2.06813,False,10-23 23:01
+bd2b293084,years=None,0.07866,0.06527,-0.00169,-2.39517,False,10-23 21:23
+5b0a1daa3f,colsample_bytree=0.85 & -calendar,0.07866,0.06419,-0.0025,-2.93908,False,11-05 22:16
+8571e1690d,-accumulation & -peer,0.07866,0.06502,-0.0025,-2.93908,False,11-05 13:23
+6a8f36ea10,reg_lambda=10.0 & num_leaves=31,0.07866,0.0596,-0.0025,-2.66636,False,11-05 02:33
+7906ac03a3,neg=0.03 & num_leaves=15,0.07866,0.05287,-0.00169,-1.77588,False,10-25 14:44
 cc9a9ea404,neg=0.03 & reg_lambda=10.0,0.07866,0.05643,-0.00169,-1.85405,False,10-27 15:05
 eb5adf522b,+market2 & neg=0.3,0.07866,0.06332,-0.0025,-2.88562,False,10-29 05:55
+37f798fd42,kind=ens & min_child_samples=800,0.07866,0.06193,-0.0025,-2.75242,False,10-29 14:03
+1eada0cc04,subsample=1.0 & colsample_bytree=0.85,0.07866,0.05872,-0.0025,-3.04025,False,11-02 14:18
+271442db46,years=None & num_leaves=127,0.07866,0.06606,-0.00169,-1.88515,False,10-27 14:53
 be2a0602a5,leaves15,0.07866,0.0635,-0.0025,-3.22273,False,10-28 07:13
 99f82a58b4,min_child_samples=100,0.07866,0.06451,-0.0025,-2.91198,False,10-28 16:59
-f39b950b33,-market & num_leaves=15,0.0786,0.06115,-0.00256,-2.78828,False,10-29 02:12
-33e296d395,-calendar & min_child_samples=200,0.0786,0.06279,-0.00256,-2.9333,False,11-06 11:04
-628b52ac50,-size_type & learning_rate=0.02,0.0786,0.06079,-0.00256,-3.05825,False,11-06 13:53
-8318b9bc07,num_leaves=15 & kind=ens,0.0786,0.05776,-0.00174,-1.91421,False,10-24 04:10
-db85506aa9,-size_type,0.0786,0.06133,-0.00174,-2.21414,False,10-24 07:34
-6bdd58f5da,colsample_bytree=1.0 & +overheat,0.0786,0.06039,-0.00256,-3.07314,False,11-03 20:01
-1a62f41068,-volatility & num_leaves=15,0.0786,0.05646,-0.00174,-2.07218,False,10-24 06:19
-f9901498d0,+market2 & num_leaves=15,0.0786,0.05561,-0.00174,-1.93,False,10-27 16:19
-dc00155bdf,kind=ens & years=5,0.0786,0.06413,-0.00256,-2.74452,False,10-29 17:52
-0d1e2ab800,min_child_samples=100 & +market_alert,0.0786,0.05871,-0.00256,-2.69261,False,11-04 19:42
+c7d6a71bff,-accumulation & learning_rate=0.02,0.07866,0.06117,-0.0025,-2.89871,False,11-03 07:27
+5fc1a9ffc2,years=None & num_leaves=31,0.07866,0.06473,-0.0025,-2.75242,False,10-29 17:35
+ce4a78ce0e,-calendar & reg_lambda=10.0,0.07866,0.06088,-0.0025,-2.81063,False,11-05 06:42
 94be6aa37d,spac 제외 & -size_type,0.0786,0.06622,-0.00256,-2.67265,False,11-05 20:14
-844a077c78,kind=ens & +overheat,0.0786,0.06118,-0.00174,-1.86185,False,10-28 02:14
-d756690ac3,subsample=1.0 & min_child_samples=100,0.0786,0.0585,-0.00174,-2.19039,False,10-27 01:00
-e9aa0aa432,num_leaves=15 & years=5,0.0786,0.06043,-0.00174,-1.84069,False,10-24 05:16
-7c68a7dfb0,kind=ens & +market2,0.0786,0.05863,-0.00256,-2.75526,False,11-02 20:05
-ec5e22ec3d,reg_lambda=10.0 & subsample=0.6,0.0786,0.05738,-0.00256,-2.71302,False,11-01 04:48
-6647451aea,+market_alert & +peer2,0.0786,0.06318,-0.00174,-2.06236,False,10-26 14:07
+33e296d395,-calendar & min_child_samples=200,0.0786,0.06279,-0.00256,-2.9333,False,11-06 11:04
 3d4d716720,years=None & subsample=1.0,0.0786,0.06579,-0.00256,-2.8342,False,10-30 20:51
-0a49db7b6b,-volume & num_leaves=127,0.0786,0.06177,-0.00256,-2.88247,False,11-01 22:12
+ec5e22ec3d,reg_lambda=10.0 & subsample=0.6,0.0786,0.05738,-0.00256,-2.71302,False,11-01 04:48
+0d1e2ab800,min_child_samples=100 & +market_alert,0.0786,0.05871,-0.00256,-2.69261,False,11-04 19:42
+f9901498d0,+market2 & num_leaves=15,0.0786,0.05561,-0.00174,-1.93,False,10-27 16:19
 d9b17578f2,learning_rate=0.03 & num_leaves=15,0.0786,0.05977,-0.00256,-2.84604,False,11-05 00:48
-8037c7e11f,years=5 & neg=0.3,0.07855,0.06411,-0.0018,-1.8986,False,10-23 18:30
-3d43305ef8,years=None & num_leaves=127,0.07855,0.06555,-0.00262,-3.13574,False,10-28 22:49
-845c2b5ee0,+rel_strength & spac 제외,0.07855,0.06376,-0.0018,-1.95831,False,10-24 05:47
-c870a3a2eb,neg=0.03 & num_leaves=15,0.07855,0.05402,-0.00262,-2.6068,False,11-05 15:15
-327ea9972a,+rel_strength & years=None,0.07855,0.06275,-0.0018,-1.84404,False,10-27 00:36
-de983e953a,learning_rate=0.02 & -volume,0.07855,0.06373,-0.00262,-2.95467,False,11-06 01:17
-801a7be264,min_child_samples=100 & colsample_bytree=1.0,0.07855,0.06008,-0.00262,-2.83491,False,11-05 04:58
-d3b48411b4,neg=0.05 & reg_lambda=10.0,0.07855,0.05748,-0.00262,-2.67977,False,10-29 04:15
-a92f18e982,years=5 & +peer2,0.07855,0.06259,-0.0018,-2.11632,False,10-27 18:24
+d756690ac3,subsample=1.0 & min_child_samples=100,0.0786,0.0585,-0.00174,-2.19039,False,10-27 01:00
+6647451aea,+market_alert & +peer2,0.0786,0.06318,-0.00174,-2.06236,False,10-26 14:07
+0a49db7b6b,-volume & num_leaves=127,0.0786,0.06177,-0.00256,-2.88247,False,11-01 22:12
+6bdd58f5da,colsample_bytree=1.0 & +overheat,0.0786,0.06039,-0.00256,-3.07314,False,11-03 20:01
+844a077c78,kind=ens & +overheat,0.0786,0.06118,-0.00174,-1.86185,False,10-28 02:14
+f39b950b33,-market & num_leaves=15,0.0786,0.06115,-0.00256,-2.78828,False,10-29 02:12
+8318b9bc07,num_leaves=15 & kind=ens,0.0786,0.05776,-0.00174,-1.91421,False,10-24 04:10
+dc00155bdf,kind=ens & years=5,0.0786,0.06413,-0.00256,-2.74452,False,10-29 17:52
+7c68a7dfb0,kind=ens & +market2,0.0786,0.05863,-0.00256,-2.75526,False,11-02 20:05
+e9aa0aa432,num_leaves=15 & years=5,0.0786,0.06043,-0.00174,-1.84069,False,10-24 05:16
+db85506aa9,-size_type,0.0786,0.06133,-0.00174,-2.21414,False,10-24 07:34
+1a62f41068,-volatility & num_leaves=15,0.0786,0.05646,-0.00174,-2.07218,False,10-24 06:19
+628b52ac50,-size_type & learning_rate=0.02,0.0786,0.06079,-0.00256,-3.05825,False,11-06 13:53
 0d25d15bf8,colsample_bytree=1.0 & neg=0.3,0.07855,0.05982,-0.00262,-3.16666,False,10-31 09:01
-92c27fb499,reg_lambda=0.0 & years=5,0.07849,0.06242,-0.00186,-1.97111,False,10-27 20:14
-a68c8f945c,spac 제외 & +market_alert,0.07849,0.06129,-0.00186,-1.90703,False,10-27 17:51
-c209a5a139,neg=0.03,0.07849,0.05851,-0.00267,-2.91563,False,10-28 14:50
-915a574c0c,-volume & +peer2,0.07849,0.06398,-0.00267,-2.97606,False,11-02 00:56
-9ca1aa3d24,-market & neg=0.1,0.07849,0.05888,-0.00267,-2.89247,False,11-05 05:46
-f1dacef2b1,+market2 & -market,0.07849,0.05959,-0.00267,-3.21365,False,11-05 07:45
-0e0bb6e5c9,-accumulation & -market,0.07849,0.05858,-0.00267,-3.09501,False,11-06 05:31
-1a4cdbc996,+market2 & min_child_samples=50,0.07849,0.06123,-0.00186,-2.20022,False,10-24 04:56
-e7d4db7fde,+market_alert & years=None,0.07849,0.06416,-0.00186,-2.0505,False,10-28 01:16
-c75139b076,kind=ens & learning_rate=0.03,0.07849,0.06234,-0.00267,-2.89247,False,10-29 13:47
-62bfbe6f59,min_child_samples=800 & years=5,0.07849,0.06592,-0.00267,-2.80505,False,10-28 19:26
+d3b48411b4,neg=0.05 & reg_lambda=10.0,0.07855,0.05748,-0.00262,-2.67977,False,10-29 04:15
+845c2b5ee0,+rel_strength & spac 제외,0.07855,0.06376,-0.0018,-1.95831,False,10-24 05:47
+3d43305ef8,years=None & num_leaves=127,0.07855,0.06555,-0.00262,-3.13574,False,10-28 22:49
+c870a3a2eb,neg=0.03 & num_leaves=15,0.07855,0.05402,-0.00262,-2.6068,False,11-05 15:15
+8037c7e11f,years=5 & neg=0.3,0.07855,0.06411,-0.0018,-1.8986,False,10-23 18:30
+de983e953a,learning_rate=0.02 & -volume,0.07855,0.06373,-0.00262,-2.95467,False,11-06 01:17
+a92f18e982,years=5 & +peer2,0.07855,0.06259,-0.0018,-2.11632,False,10-27 18:24
+801a7be264,min_child_samples=100 & colsample_bytree=1.0,0.07855,0.06008,-0.00262,-2.83491,False,11-05 04:58
+327ea9972a,+rel_strength & years=None,0.07855,0.06275,-0.0018,-1.84404,False,10-27 00:36
 d6b690a97f,subsample=0.6 & years=5,0.07849,0.0662,-0.00267,-2.84776,False,10-29 19:29
+dc4906f8e4,-peer & neg=0.03,0.07849,0.05896,-0.00267,-2.67849,False,11-05 16:28
+915a574c0c,-volume & +peer2,0.07849,0.06398,-0.00267,-2.97606,False,11-02 00:56
+c75139b076,kind=ens & learning_rate=0.03,0.07849,0.06234,-0.00267,-2.89247,False,10-29 13:47
+1a4cdbc996,+market2 & min_child_samples=50,0.07849,0.06123,-0.00186,-2.20022,False,10-24 04:56
+3a28451533,colsample_bytree=0.85 & years=None,0.07849,0.06218,-0.00186,-2.24307,False,10-26 08:11
+62bfbe6f59,min_child_samples=800 & years=5,0.07849,0.06592,-0.00267,-2.80505,False,10-28 19:26
+0e0bb6e5c9,-accumulation & -market,0.07849,0.05858,-0.00267,-3.09501,False,11-06 05:31
+f1dacef2b1,+market2 & -market,0.07849,0.05959,-0.00267,-3.21365,False,11-05 07:45
+92c27fb499,reg_lambda=0.0 & years=5,0.07849,0.06242,-0.00186,-1.97111,False,10-27 20:14
+e7d4db7fde,+market_alert & years=None,0.07849,0.06416,-0.00186,-2.0505,False,10-28 01:16
+c209a5a139,neg=0.03,0.07849,0.05851,-0.00267,-2.91563,False,10-28 14:50
+a68c8f945c,spac 제외 & +market_alert,0.07849,0.06129,-0.00186,-1.90703,False,10-27 17:51
+9ca1aa3d24,-market & neg=0.1,0.07849,0.05888,-0.00267,-2.89247,False,11-05 05:46
 5431924263,years=5 & colsample_bytree=0.85,0.07849,0.06472,-0.00267,-3.12343,False,10-30 06:28
 e47bb0a173,+peer2 & neg=0.03,0.07849,0.05224,-0.00267,-2.86985,False,10-31 23:05
-dc4906f8e4,-peer & neg=0.03,0.07849,0.05896,-0.00267,-2.67849,False,11-05 16:28
-3a28451533,colsample_bytree=0.85 & years=None,0.07849,0.06218,-0.00186,-2.24307,False,10-26 08:11
-c5603e311e,minchild800,0.07843,0.06364,-0.00273,-3.1001,False,10-28 07:36
-3325e4bfa3,-accumulation & reg_lambda=5.0,0.07843,0.06174,-0.00273,-2.96153,False,11-04 05:27
-8fecfce911,years=None & -pref_link,0.07843,0.06174,-0.00192,-2.17359,False,10-26 08:50
-7ee2ca9705,colsample_bytree=0.4 & neg=0.05,0.07843,0.06138,-0.00192,-2.1279,False,10-26 07:37
-61e7029832,kind=ens & -calendar,0.07843,0.06067,-0.00192,-1.99899,False,10-26 09:51
-e0e6263fa5,num_leaves=15 & colsample_bytree=1.0,0.07843,0.06239,-0.00273,-2.99747,False,11-06 02:40
+cfc75aaf77,years=None & colsample_bytree=0.4,0.07843,0.0673,-0.00273,-2.98535,False,10-29 15:40
+9a3c0c929a,reg_lambda=5.0 & colsample_bytree=1.0,0.07843,0.06007,-0.00273,-3.12745,False,11-02 20:28
+627a78f9b5,-accumulation & num_leaves=31,0.07843,0.06088,-0.00192,-2.27457,False,10-26 14:32
 cdbe2977db,-volume & min_child_samples=50,0.07843,0.06247,-0.00192,-2.16422,False,10-26 12:59
-9782cd3549,subsample=1.0 & num_leaves=127,0.07843,0.06364,-0.00273,-3.24456,False,11-02 17:03
-c41820093d,years=5 & kind=ens,0.07843,0.06232,-0.00192,-2.1368,False,10-27 03:53
-0852570a1a,-calendar & -accumulation,0.07843,0.06277,-0.00273,-3.15554,False,11-05 05:29
-245d08280d,-volatility & reg_lambda=10.0,0.07843,0.06269,-0.00273,-3.03475,False,11-05 07:39
-1e281ad8ee,-volume & years=5,0.07843,0.06289,-0.00192,-2.1279,False,10-27 14:26
-2a80aa1766,-accumulation & kind=ens,0.07843,0.06104,-0.00192,-2.15496,False,10-27 11:14
 4b5926fdfa,years=None & +peer2,0.07843,0.06482,-0.00192,-2.14583,False,10-27 12:50
-5a95e732e9,learning_rate=0.03 & neg=0.03,0.07843,0.05638,-0.00273,-2.92685,False,11-02 10:25
-2ea5d34001,colsample_bytree=0.85 & -market,0.07843,0.05753,-0.00273,-3.11369,False,11-05 11:55
-75f8441613,neg=0.03 & -accumulation,0.07843,0.0584,-0.00273,-2.92685,False,11-05 12:51
 86f1c82777,spac 제외 & -accumulation,0.07843,0.06449,-0.00273,-2.89337,False,10-31 15:35
 530475182a,years=None & neg=0.05,0.07843,0.05739,-0.00273,-2.79941,False,10-30 05:30
+2a80aa1766,-accumulation & kind=ens,0.07843,0.06104,-0.00192,-2.15496,False,10-27 11:14
+3325e4bfa3,-accumulation & reg_lambda=5.0,0.07843,0.06174,-0.00273,-2.96153,False,11-04 05:27
+1e281ad8ee,-volume & years=5,0.07843,0.06289,-0.00192,-2.1279,False,10-27 14:26
 9960b4c52d,spac 제외 & -peer,0.07843,0.06562,-0.00273,-3.02217,False,11-04 10:01
-afac1095ea,years=5 & +rel_strength,0.07843,0.06559,-0.00273,-3.07346,False,11-01 06:10
-ebb76941fc,kind=lgbm & reg_lambda=5.0,0.07843,0.05669,-0.00192,-1.93604,False,10-26 18:26
-627a78f9b5,-accumulation & num_leaves=31,0.07843,0.06088,-0.00192,-2.27457,False,10-26 14:32
+0852570a1a,-calendar & -accumulation,0.07843,0.06277,-0.00273,-3.15554,False,11-05 05:29
+2ea5d34001,colsample_bytree=0.85 & -market,0.07843,0.05753,-0.00273,-3.11369,False,11-05 11:55
+75f8441613,neg=0.03 & -accumulation,0.07843,0.0584,-0.00273,-2.92685,False,11-05 12:51
 14f5c62447,colsample_bytree=0.85 & num_leaves=15,0.07843,0.06128,-0.00192,-2.34236,False,10-25 22:44
-9a3c0c929a,reg_lambda=5.0 & colsample_bytree=1.0,0.07843,0.06007,-0.00273,-3.12745,False,11-02 20:28
-cfc75aaf77,years=None & colsample_bytree=0.4,0.07843,0.0673,-0.00273,-2.98535,False,10-29 15:40
-f26ad3fd71,-accumulation & num_leaves=15,0.07837,0.0613,-0.00279,-2.99527,False,11-06 10:19
-f60c97972b,-accumulation & -size_type,0.07837,0.06501,-0.00198,-2.43204,False,10-25 18:22
+ebb76941fc,kind=lgbm & reg_lambda=5.0,0.07843,0.05669,-0.00192,-1.93604,False,10-26 18:26
+61e7029832,kind=ens & -calendar,0.07843,0.06067,-0.00192,-1.99899,False,10-26 09:51
+245d08280d,-volatility & reg_lambda=10.0,0.07843,0.06269,-0.00273,-3.03475,False,11-05 07:39
+c5603e311e,minchild800,0.07843,0.06364,-0.00273,-3.1001,False,10-28 07:36
+c41820093d,years=5 & kind=ens,0.07843,0.06232,-0.00192,-2.1368,False,10-27 03:53
+9782cd3549,subsample=1.0 & num_leaves=127,0.07843,0.06364,-0.00273,-3.24456,False,11-02 17:03
+5a95e732e9,learning_rate=0.03 & neg=0.03,0.07843,0.05638,-0.00273,-2.92685,False,11-02 10:25
+8fecfce911,years=None & -pref_link,0.07843,0.06174,-0.00192,-2.17359,False,10-26 08:50
+7ee2ca9705,colsample_bytree=0.4 & neg=0.05,0.07843,0.06138,-0.00192,-2.1279,False,10-26 07:37
+e0e6263fa5,num_leaves=15 & colsample_bytree=1.0,0.07843,0.06239,-0.00273,-2.99747,False,11-06 02:40
+afac1095ea,years=5 & +rel_strength,0.07843,0.06559,-0.00273,-3.07346,False,11-01 06:10
 0b3ce041ff,years=5 & -accumulation,0.07837,0.06377,-0.00198,-2.39552,False,10-25 16:36
+54a7f449b0,kind=rank & reg_lambda=5.0,0.07837,0.05522,-0.00279,-2.78603,False,11-05 04:14
 888a98c2a9,kind=ens & num_leaves=127,0.07837,0.06011,-0.00198,-2.15262,False,10-27 03:30
-a15ce5ee1b,no_spac,0.07837,0.06497,-0.00279,-3.04307,False,10-28 08:56
+7abf1f6a0a,spac 제외 & +peer2,0.07837,0.06071,-0.00198,-2.1701,False,10-27 07:04
 b40fb84347,+market2 & years=None,0.07837,0.06418,-0.00279,-2.96086,False,11-04 10:47
 dd3aac8a8e,-pref_link & +overheat,0.07837,0.06456,-0.00279,-3.47524,False,11-04 14:35
-7abf1f6a0a,spac 제외 & +peer2,0.07837,0.06071,-0.00198,-2.1701,False,10-27 07:04
-54a7f449b0,kind=rank & reg_lambda=5.0,0.07837,0.05522,-0.00279,-2.78603,False,11-05 04:14
+f60c97972b,-accumulation & -size_type,0.07837,0.06501,-0.00198,-2.43204,False,10-25 18:22
 b32bec11c2,-volume & years=5,0.07837,0.06333,-0.00279,-3.06784,False,10-28 21:20
+f26ad3fd71,-accumulation & num_leaves=15,0.07837,0.0613,-0.00279,-2.99527,False,11-06 10:19
 49684263bc,kind=lgbm & neg=0.1,0.07837,0.06239,-0.00279,-2.9722,False,10-29 00:44
 481ea4c3de,-market & subsample=1.0,0.07837,0.05652,-0.00279,-3.40455,False,11-05 20:32
 18479abd55,years=None & -calendar,0.07837,0.06503,-0.00279,-3.09323,False,11-02 12:25
+a15ce5ee1b,no_spac,0.07837,0.06497,-0.00279,-3.04307,False,10-28 08:56
+1707d50db4,-volume & neg=0.05,0.07831,0.05757,-0.00285,-3.17792,False,11-02 14:52
+57678648cd,min_child_samples=50 & -volatility,0.07831,0.06346,-0.00285,-3.08824,False,10-29 13:38
+3f963d76a4,-calendar & +overheat,0.07831,0.06217,-0.00285,-3.38353,False,11-06 21:07
 b3e7df9688,num_leaves=127 & min_child_samples=50,0.07831,0.05947,-0.00285,-2.99449,False,11-06 22:04
+619a3ae2f6,min_child_samples=50 & num_leaves=15,0.07831,0.0605,-0.00285,-2.81136,False,11-04 14:03
+681f156266,-market & reg_lambda=10.0,0.07831,0.05726,-0.00203,-2.18564,False,10-25 15:08
 de5910b202,learning_rate=0.02 & reg_lambda=30.0,0.07831,0.05577,-0.00285,-2.81136,False,11-06 08:19
 8edf520153,neg=0.05 & spac 제외,0.07831,0.05974,-0.00203,-2.12828,False,10-24 01:08
-3f963d76a4,-calendar & +overheat,0.07831,0.06217,-0.00285,-3.38353,False,11-06 21:07
-57678648cd,min_child_samples=50 & -volatility,0.07831,0.06346,-0.00285,-3.08824,False,10-29 13:38
-5506f41167,years=None & reg_lambda=0.0,0.07831,0.06292,-0.00203,-2.12045,False,10-27 06:12
-ff69a742d7,kind=lgbm & -volatility,0.07831,0.05692,-0.00285,-3.26134,False,10-30 12:48
-4e4ce98301,colsample_bytree=0.4 & years=None,0.07831,0.06398,-0.00203,-2.27626,False,10-27 08:57
-60916a6d2d,kind=ens & -volatility,0.07831,0.06096,-0.00285,-3.11308,False,11-01 05:28
-681f156266,-market & reg_lambda=10.0,0.07831,0.05726,-0.00203,-2.18564,False,10-25 15:08
-619a3ae2f6,min_child_samples=50 & num_leaves=15,0.07831,0.0605,-0.00285,-2.81136,False,11-04 14:03
-9b695abd72,+market_alert & -volume,0.07831,0.06353,-0.00285,-3.19138,False,11-04 00:58
-1707d50db4,-volume & neg=0.05,0.07831,0.05757,-0.00285,-3.17792,False,11-02 14:52
-94bd0ef7c7,kind=ens & -volatility,0.07831,0.05817,-0.00203,-2.24789,False,10-27 20:07
-c53b7d4ea9,min_child_samples=400 & +peer2,0.07831,0.06326,-0.00203,-2.60591,False,10-28 03:10
-fe91875e23,years=None & learning_rate=0.03,0.07831,0.06055,-0.00203,-2.27626,False,10-27 18:02
 1a3d9ca318,num_leaves=15 & years=None,0.07831,0.06355,-0.00285,-3.02864,False,10-30 22:13
+fe91875e23,years=None & learning_rate=0.03,0.07831,0.06055,-0.00203,-2.27626,False,10-27 18:02
+94bd0ef7c7,kind=ens & -volatility,0.07831,0.05817,-0.00203,-2.24789,False,10-27 20:07
+ff69a742d7,kind=lgbm & -volatility,0.07831,0.05692,-0.00285,-3.26134,False,10-30 12:48
+60916a6d2d,kind=ens & -volatility,0.07831,0.06096,-0.00285,-3.11308,False,11-01 05:28
+9b695abd72,+market_alert & -volume,0.07831,0.06353,-0.00285,-3.19138,False,11-04 00:58
+c53b7d4ea9,min_child_samples=400 & +peer2,0.07831,0.06326,-0.00203,-2.60591,False,10-28 03:10
+5506f41167,years=None & reg_lambda=0.0,0.07831,0.06292,-0.00203,-2.12045,False,10-27 06:12
+4e4ce98301,colsample_bytree=0.4 & years=None,0.07831,0.06398,-0.00203,-2.27626,False,10-27 08:57
 3b99fa86b6,years=None & +rel_strength,0.07826,0.06606,-0.00291,-3.23636,False,10-30 17:14
-c0f4a7dabe,spac 제외 & +peer2,0.07826,0.06532,-0.00291,-3.10867,False,10-31 21:28
-85e5b372eb,kind=lgbm & subsample=0.6,0.07826,0.05999,-0.00291,-3.05024,False,11-05 08:25
-a52ab2e838,spac 제외 & min_child_samples=800,0.07826,0.06149,-0.00291,-3.01673,False,10-30 15:31
-b8c9abebd7,reg_lambda=10.0 & learning_rate=0.02,0.07826,0.05422,-0.00209,-2.20151,False,10-27 13:51
-da2cbec186,years=5 & -accumulation,0.07826,0.06675,-0.00291,-3.09671,False,11-04 13:35
+0d0b19caae,spac 제외 & neg=0.03,0.07826,0.05808,-0.00209,-2.19332,False,10-24 00:29
+3caeafa1ac,kind=rank & num_leaves=15,0.07826,0.0561,-0.00291,-2.81839,False,11-06 13:32
+fe963e5015,kind=rank & reg_lambda=10.0,0.07826,0.05776,-0.00291,-2.91251,False,11-03 01:17
 20f87df0ab,spac 제외 & -volatility,0.07826,0.05589,-0.00209,-2.40871,False,10-24 05:03
 2e6ab0f642,spac 제외 & colsample_bytree=0.85,0.07826,0.06355,-0.00291,-3.01673,False,11-06 03:07
-3caeafa1ac,kind=rank & num_leaves=15,0.07826,0.0561,-0.00291,-2.81839,False,11-06 13:32
-269c49529e,kind=lgbm & +stock_hist,0.07826,0.05928,-0.00291,-3.12076,False,10-30 14:35
-add1801b3d,kind=lgbm & years=None,0.07826,0.06123,-0.00291,-3.18342,False,10-30 04:13
-0d0b19caae,spac 제외 & neg=0.03,0.07826,0.05808,-0.00209,-2.19332,False,10-24 00:29
-608608e621,kind=ens & -accumulation,0.07826,0.06021,-0.00291,-3.12076,False,11-03 15:06
 a470321ab3,-market & +peer2,0.07826,0.06125,-0.00291,-3.32097,False,11-06 09:46
-fe963e5015,kind=rank & reg_lambda=10.0,0.07826,0.05776,-0.00291,-2.91251,False,11-03 01:17
-0d24d402a2,-momentum & +overheat,0.0782,0.06213,-0.00297,-3.17735,False,11-06 13:20
-1b422cfc1e,kind=ens & -calendar,0.0782,0.0606,-0.00297,-3.36561,False,10-29 15:19
-3eb7eb5862,neg=0.03 & years=None,0.0782,0.05341,-0.00297,-3.02815,False,10-28 15:07
-761b07cc41,kind=ens & -market,0.0782,0.05585,-0.00297,-3.0718,False,11-05 07:00
+a52ab2e838,spac 제외 & min_child_samples=800,0.07826,0.06149,-0.00291,-3.01673,False,10-30 15:31
+85e5b372eb,kind=lgbm & subsample=0.6,0.07826,0.05999,-0.00291,-3.05024,False,11-05 08:25
+269c49529e,kind=lgbm & +stock_hist,0.07826,0.05928,-0.00291,-3.12076,False,10-30 14:35
+c0f4a7dabe,spac 제외 & +peer2,0.07826,0.06532,-0.00291,-3.10867,False,10-31 21:28
+da2cbec186,years=5 & -accumulation,0.07826,0.06675,-0.00291,-3.09671,False,11-04 13:35
+add1801b3d,kind=lgbm & years=None,0.07826,0.06123,-0.00291,-3.18342,False,10-30 04:13
+b8c9abebd7,reg_lambda=10.0 & learning_rate=0.02,0.07826,0.05422,-0.00209,-2.20151,False,10-27 13:51
+608608e621,kind=ens & -accumulation,0.07826,0.06021,-0.00291,-3.12076,False,11-03 15:06
 0f7be4a08e,kind=rank & reg_lambda=30.0,0.0782,0.05611,-0.00297,-2.82603,False,11-04 17:47
-02503dc915,-size_type & years=5,0.0782,0.0641,-0.00297,-3.03888,False,11-06 05:38
-6213dcd6c2,kind=ens & years=None,0.0782,0.05956,-0.00215,-2.52733,False,10-24 05:23
-4df5e91ff0,min_child_samples=100 & -calendar,0.0782,0.06193,-0.00297,-3.14097,False,11-06 16:27
-8e70b6840c,reg_lambda=0.0 & spac 제외,0.0782,0.06258,-0.00297,-3.0718,False,11-04 16:35
-35f3c1ae72,years=5 & subsample=1.0,0.0782,0.06442,-0.00297,-3.26742,False,10-28 10:34
-7349c43161,subsample=1.0 & learning_rate=0.02,0.0782,0.05313,-0.00215,-2.75545,False,10-27 06:51
-5592598fcf,colsample_bytree=0.85 & -calendar,0.0782,0.06328,-0.00215,-2.41701,False,10-27 15:26
-a6a70b28ab,-volume & kind=lgbm,0.0782,0.05932,-0.00215,-2.25024,False,10-26 12:19
-5ab1779994,min_child_samples=50 & years=None,0.0782,0.06528,-0.00297,-2.89816,False,10-29 02:32
-ae50c4dd9f,years=None & min_child_samples=800,0.0782,0.0608,-0.00215,-2.19412,False,10-27 15:50
 22f33aa53a,min_child_samples=200 & colsample_bytree=1.0,0.0782,0.0591,-0.00297,-3.36561,False,11-05 20:26
+1b422cfc1e,kind=ens & -calendar,0.0782,0.0606,-0.00297,-3.36561,False,10-29 15:19
+5592598fcf,colsample_bytree=0.85 & -calendar,0.0782,0.06328,-0.00215,-2.41701,False,10-27 15:26
+8e70b6840c,reg_lambda=0.0 & spac 제외,0.0782,0.06258,-0.00297,-3.0718,False,11-04 16:35
+0d24d402a2,-momentum & +overheat,0.0782,0.06213,-0.00297,-3.17735,False,11-06 13:20
+4df5e91ff0,min_child_samples=100 & -calendar,0.0782,0.06193,-0.00297,-3.14097,False,11-06 16:27
+ae50c4dd9f,years=None & min_child_samples=800,0.0782,0.0608,-0.00215,-2.19412,False,10-27 15:50
+761b07cc41,kind=ens & -market,0.0782,0.05585,-0.00297,-3.0718,False,11-05 07:00
+7349c43161,subsample=1.0 & learning_rate=0.02,0.0782,0.05313,-0.00215,-2.75545,False,10-27 06:51
+35f3c1ae72,years=5 & subsample=1.0,0.0782,0.06442,-0.00297,-3.26742,False,10-28 10:34
+3eb7eb5862,neg=0.03 & years=None,0.0782,0.05341,-0.00297,-3.02815,False,10-28 15:07
+6213dcd6c2,kind=ens & years=None,0.0782,0.05956,-0.00215,-2.52733,False,10-24 05:23
 fcf09f1878,years=None & neg=0.3,0.0782,0.06591,-0.00297,-3.17735,False,10-28 20:42
-6c6f7b0115,spac 제외 & years=None,0.07814,0.06551,-0.00302,-3.06097,False,10-28 21:06
-d199acd8c9,spac 제외 & reg_lambda=10.0,0.07814,0.05837,-0.00221,-2.28187,False,10-24 07:51
-9e418b2472,learning_rate=0.03 & spac 제외,0.07814,0.0635,-0.00221,-2.58986,False,10-24 06:33
-c636c8e949,years=5 & +rel_strength,0.07814,0.06352,-0.00221,-2.74763,False,10-25 19:52
-b3095a82e7,-volume & min_child_samples=50,0.07814,0.05987,-0.00302,-3.06097,False,11-01 13:15
+02503dc915,-size_type & years=5,0.0782,0.0641,-0.00297,-3.03888,False,11-06 05:38
+5ab1779994,min_child_samples=50 & years=None,0.0782,0.06528,-0.00297,-2.89816,False,10-29 02:32
+a6a70b28ab,-volume & kind=lgbm,0.0782,0.05932,-0.00215,-2.25024,False,10-26 12:19
 a72580c3db,colsample_bytree=0.55 & spac 제외,0.07814,0.06324,-0.00221,-2.35979,False,10-25 17:36
-60c43138cc,num_leaves=31 & kind=ens,0.07814,0.05785,-0.00221,-2.43619,False,10-27 08:33
 23a219d29a,neg=0.3 & spac 제외,0.07814,0.05952,-0.00221,-2.27369,False,10-24 04:21
-91ac9d940c,hardneg,0.07814,0.05893,-0.00302,-2.8342,False,10-28 06:42
 ce4142a9d8,-accumulation & years=None,0.07814,0.06731,-0.00302,-3.11545,False,11-04 20:05
+60c43138cc,num_leaves=31 & kind=ens,0.07814,0.05785,-0.00221,-2.43619,False,10-27 08:33
+b3095a82e7,-volume & min_child_samples=50,0.07814,0.05987,-0.00302,-3.06097,False,11-01 13:15
+9e418b2472,learning_rate=0.03 & spac 제외,0.07814,0.0635,-0.00221,-2.58986,False,10-24 06:33
 c71c55121e,learning_rate=0.02 & kind=ens,0.07814,0.05773,-0.00221,-2.57791,False,10-27 22:09
+91ac9d940c,hardneg,0.07814,0.05893,-0.00302,-2.8342,False,10-28 06:42
 ac2ede0f2c,min_child_samples=100 & reg_lambda=5.0,0.07814,0.0599,-0.00302,-3.32508,False,11-04 04:04
-e670c8baac,reg_lambda=5.0 & years=None,0.07808,0.06068,-0.00227,-2.47521,False,10-28 03:22
-159125ff8b,reg_lambda=30.0 & num_leaves=31,0.07808,0.0547,-0.00308,-2.97419,False,11-04 03:38
-ec7882ce28,years=5 & reg_lambda=5.0,0.07808,0.06352,-0.00308,-3.18143,False,10-29 22:38
-ecb91ddda6,neg=0.3 & reg_lambda=30.0,0.07808,0.05618,-0.00308,-3.20462,False,10-28 13:13
-b4d250c2d2,min_child_samples=400 & kind=ens,0.07808,0.05765,-0.00227,-2.5161,False,10-24 07:06
-b55a2518b7,spac 제외 & learning_rate=0.03,0.07808,0.06277,-0.00308,-3.30273,False,11-01 09:34
-9f027b8431,spac 제외 & colsample_bytree=1.0,0.07808,0.05974,-0.00308,-3.46841,False,11-02 14:33
-8dcdb20959,reg_lambda=0.0 & -market,0.07808,0.05966,-0.00308,-3.45364,False,11-04 12:37
+d199acd8c9,spac 제외 & reg_lambda=10.0,0.07814,0.05837,-0.00221,-2.28187,False,10-24 07:51
+c636c8e949,years=5 & +rel_strength,0.07814,0.06352,-0.00221,-2.74763,False,10-25 19:52
+6c6f7b0115,spac 제외 & years=None,0.07814,0.06551,-0.00302,-3.06097,False,10-28 21:06
 e880fcf988,years=5 & neg=0.03,0.07808,0.05316,-0.00308,-3.10406,False,11-04 03:15
 759ba91ae3,spac 제외 & neg=0.2,0.07808,0.0652,-0.00227,-2.36353,False,10-23 23:56
 4d0b674a44,spac 제외 & learning_rate=0.02,0.07808,0.06152,-0.00308,-3.3964,False,10-31 22:43
-43d51fd67d,num_leaves=15 & +rel_strength,0.07808,0.06153,-0.00308,-3.49852,False,11-05 22:06
+8dcdb20959,reg_lambda=0.0 & -market,0.07808,0.05966,-0.00308,-3.45364,False,11-04 12:37
+b4d250c2d2,min_child_samples=400 & kind=ens,0.07808,0.05765,-0.00227,-2.5161,False,10-24 07:06
 25835955af,-size_type & years=None,0.07808,0.06236,-0.00227,-2.59282,False,10-25 09:58
-3bc74434b9,kind=ens & reg_lambda=5.0,0.07802,0.05838,-0.00233,-2.66548,False,10-25 20:24
-4f8e4bf687,spac 제외 & neg=0.3,0.07802,0.06434,-0.00314,-3.1468,False,11-03 10:39
-9bd38cb66c,min_child_samples=100 & reg_lambda=10.0,0.07802,0.05995,-0.00314,-3.346,False,11-05 10:57
-c77071129d,years=None & reg_lambda=5.0,0.07802,0.06452,-0.00314,-3.51181,False,10-28 18:15
+b55a2518b7,spac 제외 & learning_rate=0.03,0.07808,0.06277,-0.00308,-3.30273,False,11-01 09:34
+43d51fd67d,num_leaves=15 & +rel_strength,0.07808,0.06153,-0.00308,-3.49852,False,11-05 22:06
+9f027b8431,spac 제외 & colsample_bytree=1.0,0.07808,0.05974,-0.00308,-3.46841,False,11-02 14:33
+159125ff8b,reg_lambda=30.0 & num_leaves=31,0.07808,0.0547,-0.00308,-2.97419,False,11-04 03:38
+ec7882ce28,years=5 & reg_lambda=5.0,0.07808,0.06352,-0.00308,-3.18143,False,10-29 22:38
+ecb91ddda6,neg=0.3 & reg_lambda=30.0,0.07808,0.05618,-0.00308,-3.20462,False,10-28 13:13
+e670c8baac,reg_lambda=5.0 & years=None,0.07808,0.06068,-0.00227,-2.47521,False,10-28 03:22
+efe9084e93,kind=lgbm & num_leaves=31,0.07802,0.06198,-0.00314,-3.39864,False,10-30 13:18
+09d44b1ab8,-calendar & -market,0.07802,0.05735,-0.00233,-2.80615,False,10-27 04:25
 9f7fddbe6c,colsample_bytree=0.55 & years=5,0.07802,0.06129,-0.00233,-2.68948,False,10-27 19:19
-5e5c2b7df1,kind=rank & subsample=0.8,0.07802,0.05616,-0.00314,-3.07452,False,10-28 20:51
-a23520f7e2,+market2 & spac 제외,0.07802,0.06428,-0.00314,-3.57281,False,11-05 09:17
 fb9d657890,-pref_link & kind=lgbm,0.07802,0.05261,-0.00233,-2.75246,False,10-25 20:55
 00f93c27c8,+overheat & neg=0.03,0.07802,0.057,-0.00314,-3.1684,False,11-05 23:59
-6c6c0a2d2d,years=None & -size_type,0.07802,0.06663,-0.00314,-3.29574,False,11-05 15:54
-432fa9896c,years=None & reg_lambda=0.0,0.07802,0.06413,-0.00314,-3.35893,False,10-29 06:07
-67f8600af2,kind=lgbm & years=5,0.07802,0.06442,-0.00314,-3.37201,False,11-01 08:53
 0725fc2b5a,years=5 & spac 제외,0.07802,0.0635,-0.00314,-3.1684,False,10-30 08:22
-09d44b1ab8,-calendar & -market,0.07802,0.05735,-0.00233,-2.80615,False,10-27 04:25
-efe9084e93,kind=lgbm & num_leaves=31,0.07802,0.06198,-0.00314,-3.39864,False,10-30 13:18
-b16bdf449e,+market2 & neg=0.03,0.07797,0.05585,-0.0032,-3.16796,False,11-06 15:38
-ddce3df32c,min_child_samples=50 & +market2,0.07797,0.05485,-0.0032,-3.40185,False,11-03 15:56
-3399acb753,neg=0.03 & kind=ens,0.07797,0.05433,-0.00238,-2.47608,False,10-27 04:16
-2f07deceec,spac 제외 & -market,0.07797,0.05986,-0.0032,-3.30223,False,11-06 05:14
-c525bff329,neg=0.03 & -volatility,0.07797,0.05775,-0.00238,-2.67934,False,10-27 05:37
-1f521abce9,subsample=1.0 & reg_lambda=30.0,0.07797,0.05674,-0.0032,-3.32631,False,10-30 19:42
+67f8600af2,kind=lgbm & years=5,0.07802,0.06442,-0.00314,-3.37201,False,11-01 08:53
+4f8e4bf687,spac 제외 & neg=0.3,0.07802,0.06434,-0.00314,-3.1468,False,11-03 10:39
+a23520f7e2,+market2 & spac 제외,0.07802,0.06428,-0.00314,-3.57281,False,11-05 09:17
+6c6c0a2d2d,years=None & -size_type,0.07802,0.06663,-0.00314,-3.29574,False,11-05 15:54
+9bd38cb66c,min_child_samples=100 & reg_lambda=10.0,0.07802,0.05995,-0.00314,-3.346,False,11-05 10:57
+3bc74434b9,kind=ens & reg_lambda=5.0,0.07802,0.05838,-0.00233,-2.66548,False,10-25 20:24
+432fa9896c,years=None & reg_lambda=0.0,0.07802,0.06413,-0.00314,-3.35893,False,10-29 06:07
+5e5c2b7df1,kind=rank & subsample=0.8,0.07802,0.05616,-0.00314,-3.07452,False,10-28 20:51
+c77071129d,years=None & reg_lambda=5.0,0.07802,0.06452,-0.00314,-3.51181,False,10-28 18:15
 435c0005d4,num_leaves=127 & spac 제외,0.07797,0.06466,-0.0032,-3.30223,False,11-05 08:51
-697a0c1d7c,min_child_samples=50 & subsample=1.0,0.07797,0.05687,-0.00238,-2.72635,False,10-26 15:27
+2f07deceec,spac 제외 & -market,0.07797,0.05986,-0.0032,-3.30223,False,11-06 05:14
+1f521abce9,subsample=1.0 & reg_lambda=30.0,0.07797,0.05674,-0.0032,-3.32631,False,10-30 19:42
+ddce3df32c,min_child_samples=50 & +market2,0.07797,0.05485,-0.0032,-3.40185,False,11-03 15:56
 f7e37fdefb,kind=ens & reg_lambda=10.0,0.07797,0.05768,-0.00238,-2.60263,False,10-24 00:56
 c99746cf9d,years=None & +overheat,0.07797,0.06594,-0.0032,-3.46889,False,10-29 20:12
-196427b221,kind=lgbm & +market2,0.07791,0.05806,-0.00326,-3.41862,False,11-06 21:55
-4ca20c1b52,-market & -peer,0.07791,0.0618,-0.00326,-4.12519,False,10-28 15:40
-01069bdb47,reg_lambda=5.0 & spac 제외,0.07791,0.05915,-0.00244,-2.59911,False,10-24 02:18
-c0e32c75b4,neg=0.3 & years=None,0.07791,0.06566,-0.00244,-2.46148,False,10-26 15:01
-68ce1f911a,subsample=1.0 & num_leaves=15,0.07791,0.06241,-0.00326,-3.52541,False,11-02 02:32
-f6f4b799ff,-calendar & -size_type,0.07791,0.06277,-0.00326,-3.82539,False,11-05 22:53
-b2fd7e1625,neg=0.03 & colsample_bytree=0.85,0.07791,0.05625,-0.00326,-3.35661,False,11-02 11:38
+3399acb753,neg=0.03 & kind=ens,0.07797,0.05433,-0.00238,-2.47608,False,10-27 04:16
+697a0c1d7c,min_child_samples=50 & subsample=1.0,0.07797,0.05687,-0.00238,-2.72635,False,10-26 15:27
+b16bdf449e,+market2 & neg=0.03,0.07797,0.05585,-0.0032,-3.16796,False,11-06 15:38
+c525bff329,neg=0.03 & -volatility,0.07797,0.05775,-0.00238,-2.67934,False,10-27 05:37
 aec1299d3f,num_leaves=15 & neg=0.05,0.07791,0.05313,-0.00326,-3.14845,False,11-03 00:58
-79ae810703,hard_neg=True & num_leaves=31,0.07791,0.0619,-0.00326,-3.09981,False,11-04 09:22
-5827b5fefc,reg_lambda=0.0 & min_child_samples=200,0.07791,0.06408,-0.00326,-3.35661,False,10-30 10:17
+196427b221,kind=lgbm & +market2,0.07791,0.05806,-0.00326,-3.41862,False,11-06 21:55
+b2fd7e1625,neg=0.03 & colsample_bytree=0.85,0.07791,0.05625,-0.00326,-3.35661,False,11-02 11:38
 36402e42cb,reg_lambda=30.0 & min_child_samples=50,0.07791,0.05523,-0.00326,-3.43144,False,10-28 20:30
 0f57794632,spac 제외 & min_child_samples=100,0.07791,0.06138,-0.00326,-3.26406,False,10-28 23:01
+4ca20c1b52,-market & -peer,0.07791,0.0618,-0.00326,-4.12519,False,10-28 15:40
+5827b5fefc,reg_lambda=0.0 & min_child_samples=200,0.07791,0.06408,-0.00326,-3.35661,False,10-30 10:17
+79ae810703,hard_neg=True & num_leaves=31,0.07791,0.0619,-0.00326,-3.09981,False,11-04 09:22
+01069bdb47,reg_lambda=5.0 & spac 제외,0.07791,0.05915,-0.00244,-2.59911,False,10-24 02:18
+c0e32c75b4,neg=0.3 & years=None,0.07791,0.06566,-0.00244,-2.46148,False,10-26 15:01
+f6f4b799ff,-calendar & -size_type,0.07791,0.06277,-0.00326,-3.82539,False,11-05 22:53
+68ce1f911a,subsample=1.0 & num_leaves=15,0.07791,0.06241,-0.00326,-3.52541,False,11-02 02:32
 01bd2bf397,colsample_bytree=0.85 & -momentum,0.07785,0.06451,-0.00331,-3.58173,False,10-31 12:15
+f33d959eb3,spac 제외 & reg_lambda=5.0,0.07785,0.06184,-0.00331,-3.47362,False,10-28 10:09
 b81cb4b8a5,kind=lgbm & +market_alert,0.07785,0.05782,-0.00331,-3.47362,False,11-01 20:48
 f89cf1c56f,spac 제외 & +overheat,0.07785,0.06545,-0.0025,-2.66636,False,10-26 06:51
 3d7a5cbbc3,num_leaves=15 & -size_type,0.07785,0.06398,-0.00331,-3.61037,False,11-06 10:57
-9dca93104f,kind=ens & +market2,0.07785,0.05805,-0.0025,-2.64607,False,10-27 19:53
-f33d959eb3,spac 제외 & reg_lambda=5.0,0.07785,0.06184,-0.00331,-3.47362,False,10-28 10:09
 39207d6ecd,years=None & num_leaves=31,0.07785,0.06106,-0.0025,-2.67667,False,10-27 12:39
 fda23b04e8,reg_lambda=30.0 & num_leaves=15,0.07785,0.05449,-0.00331,-3.11282,False,11-04 08:13
-815a2411d4,+rel_strength & min_child_samples=100,0.07779,0.06492,-0.00337,-3.54159,False,11-06 04:12
-ecd4934a66,ens,0.07779,0.06029,-0.00256,-3.04357,False,10-23 17:47
-e96a916bd9,kind=ens & subsample=1.0,0.07779,0.06103,-0.00256,-2.8342,False,10-25 21:12
-98a4d3eac6,+stock_hist & kind=lgbm,0.07779,0.06155,-0.00256,-2.66284,False,10-26 01:00
-11f434d99d,reg_lambda=10.0 & hard_neg=True,0.07779,0.05969,-0.00337,-3.22107,False,11-04 03:22
-61a3430e65,spac 제외 & +market_alert,0.07779,0.06595,-0.00337,-3.66685,False,11-01 02:33
-84b7d2d8e0,spac 제외 & subsample=1.0,0.07779,0.06393,-0.00337,-3.55488,False,10-30 21:53
-7ebe1c4b60,num_leaves=31 & spac 제외,0.07779,0.06287,-0.00337,-3.55488,False,10-31 05:03
-b3667f5d67,reg_lambda=10.0 & years=5,0.07779,0.0556,-0.00256,-2.7339,False,10-27 12:16
+9dca93104f,kind=ens & +market2,0.07785,0.05805,-0.0025,-2.64607,False,10-27 19:53
 d0ed1fcc1a,years=None & colsample_bytree=0.55,0.07779,0.06244,-0.00256,-2.92034,False,10-27 17:32
-b50620a625,-momentum,0.07779,0.06397,-0.00256,-2.78828,False,10-23 18:39
-5961bd98e2,years=5 & reg_lambda=5.0,0.07779,0.05957,-0.00256,-2.77714,False,10-27 14:05
+ecd4934a66,ens,0.07779,0.06029,-0.00256,-3.04357,False,10-23 17:47
+84b7d2d8e0,spac 제외 & subsample=1.0,0.07779,0.06393,-0.00337,-3.55488,False,10-30 21:53
+e96a916bd9,kind=ens & subsample=1.0,0.07779,0.06103,-0.00256,-2.8342,False,10-25 21:12
+61a3430e65,spac 제외 & +market_alert,0.07779,0.06595,-0.00337,-3.66685,False,11-01 02:33
 864e96f3c0,+market2 & years=None,0.07779,0.06373,-0.00256,-2.7339,False,10-27 02:12
-037967aa68,colsample_bytree=0.4 & spac 제외,0.07773,0.06266,-0.00262,-2.85769,False,10-25 18:05
-7b48ec34d3,+stock_hist & min_child_samples=100,0.07773,0.0596,-0.00343,-3.54409,False,11-04 21:46
+b50620a625,-momentum,0.07779,0.06397,-0.00256,-2.78828,False,10-23 18:39
+b3667f5d67,reg_lambda=10.0 & years=5,0.07779,0.0556,-0.00256,-2.7339,False,10-27 12:16
+5961bd98e2,years=5 & reg_lambda=5.0,0.07779,0.05957,-0.00256,-2.77714,False,10-27 14:05
+11f434d99d,reg_lambda=10.0 & hard_neg=True,0.07779,0.05969,-0.00337,-3.22107,False,11-04 03:22
+815a2411d4,+rel_strength & min_child_samples=100,0.07779,0.06492,-0.00337,-3.54159,False,11-06 04:12
+7ebe1c4b60,num_leaves=31 & spac 제외,0.07779,0.06287,-0.00337,-3.55488,False,10-31 05:03
+98a4d3eac6,+stock_hist & kind=lgbm,0.07779,0.06155,-0.00256,-2.66284,False,10-26 01:00
 ad728b7a7c,-momentum & num_leaves=31,0.07773,0.06253,-0.00343,-3.69382,False,11-01 21:49
-0f7423f270,reg_lambda=0.0 & kind=ens,0.07773,0.05878,-0.00262,-2.70876,False,10-26 00:35
-3e41f16be2,num_leaves=15 & kind=lgbm,0.07773,0.0592,-0.00262,-2.89293,False,10-25 11:56
-1f598c7e97,hard_neg=True & -volatility,0.07773,0.06062,-0.00343,-3.15739,False,11-04 02:38
-44637dd071,-calendar & years=None,0.07773,0.0589,-0.00262,-2.81266,False,10-27 12:02
 09abeee054,years=None & -accumulation,0.07773,0.06374,-0.00262,-2.91716,False,10-28 02:39
+1f598c7e97,hard_neg=True & -volatility,0.07773,0.06062,-0.00343,-3.15739,False,11-04 02:38
+0f7423f270,reg_lambda=0.0 & kind=ens,0.07773,0.05878,-0.00262,-2.70876,False,10-26 00:35
+7b48ec34d3,+stock_hist & min_child_samples=100,0.07773,0.0596,-0.00343,-3.54409,False,11-04 21:46
 94044b0646,neg=0.05 & spac 제외,0.07773,0.05927,-0.00343,-3.48179,False,10-30 00:23
+3e41f16be2,num_leaves=15 & kind=lgbm,0.07773,0.0592,-0.00262,-2.89293,False,10-25 11:56
+44637dd071,-calendar & years=None,0.07773,0.0589,-0.00262,-2.81266,False,10-27 12:02
+037967aa68,colsample_bytree=0.4 & spac 제외,0.07773,0.06266,-0.00262,-2.85769,False,10-25 18:05
 3f9c76075e,kind=lgbm & colsample_bytree=0.4,0.07767,0.05933,-0.00349,-3.44076,False,11-06 08:33
 d1ab2295b0,reg_lambda=0.0 & -size_type,0.07767,0.06662,-0.00349,-3.88885,False,11-06 07:10
-3eeb2ec234,subsample=1.0 & years=None,0.07762,0.06188,-0.00273,-3.02217,False,10-27 21:39
-3ae605435e,min_child_samples=100 & -accumulation,0.07762,0.05726,-0.00355,-3.97943,False,11-05 02:22
 2c2d2daedd,neg=0.03 & min_child_samples=800,0.07762,0.05136,-0.00355,-3.47008,False,10-30 15:53
 e1935674ac,kind=lgbm & subsample=1.0,0.07762,0.05416,-0.00273,-2.96153,False,10-24 06:49
-ffdaff5593,-size_type & spac 제외,0.07762,0.06143,-0.00273,-3.12745,False,10-26 10:31
+55410694b9,neg=0.03 & subsample=0.6,0.07762,0.05553,-0.00273,-3.06039,False,10-27 04:10
 95122575a1,kind=lgbm & -market,0.07762,0.05038,-0.00273,-3.00975,False,10-27 01:10
+3ae605435e,min_child_samples=100 & -accumulation,0.07762,0.05726,-0.00355,-3.97943,False,11-05 02:22
+3eeb2ec234,subsample=1.0 & years=None,0.07762,0.06188,-0.00273,-3.02217,False,10-27 21:39
+ffdaff5593,-size_type & spac 제외,0.07762,0.06143,-0.00273,-3.12745,False,10-26 10:31
 4ec0b0f271,min_child_samples=100 & hard_neg=True,0.07762,0.06127,-0.00355,-3.21925,False,11-05 12:17
 03dd87941b,neg=0.3 & hard_neg=True,0.07762,0.0629,-0.00355,-3.50428,False,10-29 20:00
-55410694b9,neg=0.03 & subsample=0.6,0.07762,0.05553,-0.00273,-3.06039,False,10-27 04:10
-434a81ae1b,years=5 & subsample=1.0,0.07756,0.06061,-0.00279,-3.13253,False,10-27 08:23
-6139f02910,+overheat & spac 제외,0.07756,0.06206,-0.0036,-3.81642,False,11-01 00:36
-4a8777bf7d,spac 제외 & -volume,0.07756,0.06205,-0.00279,-2.98366,False,10-24 01:54
 0dd1b5d362,kind=rank & -volatility,0.07756,0.05073,-0.00279,-2.7138,False,10-25 21:25
-1d8f72d545,hard_neg=True & colsample_bytree=1.0,0.07756,0.05601,-0.0036,-3.24979,False,11-01 12:52
-95261c6dca,min_child_samples=800 & hard_neg=True,0.07756,0.0574,-0.0036,-3.38258,False,11-03 04:21
+434a81ae1b,years=5 & subsample=1.0,0.07756,0.06061,-0.00279,-3.13253,False,10-27 08:23
+4a8777bf7d,spac 제외 & -volume,0.07756,0.06205,-0.00279,-2.98366,False,10-24 01:54
 3d48ed95e6,num_leaves=31 & years=5,0.07756,0.0627,-0.00279,-3.23037,False,10-25 08:45
 c3188a053b,kind=ens & neg=0.03,0.07756,0.05532,-0.0036,-3.44469,False,10-29 21:28
-d07044eea2,colsample_bytree=0.85 & kind=ens,0.0775,0.05848,-0.00285,-3.01713,False,10-26 02:47
+95261c6dca,min_child_samples=800 & hard_neg=True,0.07756,0.0574,-0.0036,-3.38258,False,11-03 04:21
+1d8f72d545,hard_neg=True & colsample_bytree=1.0,0.07756,0.05601,-0.0036,-3.24979,False,11-01 12:52
+6139f02910,+overheat & spac 제외,0.07756,0.06206,-0.0036,-3.81642,False,11-01 00:36
 3f37316b22,-volume & spac 제외,0.0775,0.06295,-0.00366,-3.6442,False,11-05 21:41
-fa599ffe1e,kind=ens & learning_rate=0.03,0.0775,0.05527,-0.00285,-3.07604,False,10-27 04:34
+d07044eea2,colsample_bytree=0.85 & kind=ens,0.0775,0.05848,-0.00285,-3.01713,False,10-26 02:47
 40b33a7f94,reg_lambda=5.0 & min_child_samples=50,0.0775,0.05879,-0.00366,-3.82804,False,11-06 22:10
-71c0b1003d,reg_lambda=30.0,0.0775,0.05589,-0.00366,-3.694,False,10-28 15:24
 077c251052,kind=lgbm & neg=0.2,0.0775,0.05554,-0.00285,-2.9088,False,10-23 19:47
 54103eddbe,-calendar & -market,0.0775,0.05844,-0.00366,-4.18308,False,11-06 18:38
+71c0b1003d,reg_lambda=30.0,0.0775,0.05589,-0.00366,-3.694,False,10-28 15:24
 84390fe358,-pref_link & spac 제외,0.0775,0.06488,-0.00285,-2.98337,False,10-26 02:31
-dbc194ca6c,min_child_samples=50 & kind=ens,0.07744,0.05998,-0.00291,-3.12076,False,10-23 19:14
-9b19201c1a,spac 제외 & -pref_link,0.07744,0.06229,-0.00372,-3.75959,False,11-06 11:19
-b855df5609,hard_neg=True & -volume,0.07744,0.05837,-0.00372,-3.45156,False,10-31 21:06
+fa599ffe1e,kind=ens & learning_rate=0.03,0.0775,0.05527,-0.00285,-3.07604,False,10-27 04:34
 d5260ed939,-calendar & hard_neg=True,0.07744,0.05983,-0.00372,-3.33699,False,10-31 11:48
 eda741b4b1,neg=0.2 & reg_lambda=30.0,0.07744,0.05527,-0.00291,-3.01673,False,10-26 11:09
 6eec5ef587,min_child_samples=400 & spac 제외,0.07744,0.06325,-0.00291,-3.19641,False,10-26 16:05
-c8ce4f00a7,reg_lambda=30.0 & hard_neg=True,0.07744,0.05657,-0.00372,-3.51345,False,11-05 07:32
 5e58857de6,reg_lambda=30.0 & learning_rate=0.03,0.07744,0.05458,-0.00372,-3.63614,False,11-03 11:34
+9b19201c1a,spac 제외 & -pref_link,0.07744,0.06229,-0.00372,-3.75959,False,11-06 11:19
+c8ce4f00a7,reg_lambda=30.0 & hard_neg=True,0.07744,0.05657,-0.00372,-3.51345,False,11-05 07:32
+b855df5609,hard_neg=True & -volume,0.07744,0.05837,-0.00372,-3.45156,False,10-31 21:06
 d9f8750e71,years=None & reg_lambda=10.0,0.07744,0.05589,-0.00291,-3.05024,False,10-27 06:40
-8021fc3d77,kind=ens & spac 제외,0.07738,0.05924,-0.00297,-3.02815,False,10-25 10:41
-bc1da5afdc,num_leaves=15 & spac 제외,0.07738,0.06257,-0.00378,-3.96533,False,11-03 05:40
+dbc194ca6c,min_child_samples=50 & kind=ens,0.07744,0.05998,-0.00291,-3.12076,False,10-23 19:14
+2afa7c2c4c,kind=lgbm & -pref_link,0.07738,0.05486,-0.00378,-3.93613,False,11-06 13:04
 11909c4ae3,-volume & -momentum,0.07738,0.06188,-0.00378,-3.98018,False,11-05 15:33
+bc1da5afdc,num_leaves=15 & spac 제외,0.07738,0.06257,-0.00378,-3.96533,False,11-03 05:40
 708eb4fa12,+market2 & hard_neg=True,0.07738,0.05925,-0.00378,-3.3941,False,11-02 05:55
 1a4edfa274,kind=rank & colsample_bytree=0.85,0.07738,0.05227,-0.00378,-3.37573,False,11-02 02:43
+8021fc3d77,kind=ens & spac 제외,0.07738,0.05924,-0.00297,-3.02815,False,10-25 10:41
 9d174e65cb,-market & min_child_samples=100,0.07738,0.05633,-0.00378,-4.02575,False,11-04 10:59
-2afa7c2c4c,kind=lgbm & -pref_link,0.07738,0.05486,-0.00378,-3.93613,False,11-06 13:04
 f3dc30fb70,-volume & kind=rank,0.07733,0.04718,-0.00302,-2.88614,False,10-25 02:53
-8144580aca,hard_neg=True & subsample=0.6,0.07727,0.05813,-0.0039,-3.65197,False,10-31 17:06
 43ba4d8f48,years=5 & num_leaves=15,0.07727,0.06299,-0.0039,-4.15084,False,11-04 06:34
+8144580aca,hard_neg=True & subsample=0.6,0.07727,0.05813,-0.0039,-3.65197,False,10-31 17:06
 8e6aca6a64,kind=lgbm & subsample=1.0,0.07727,0.05575,-0.0039,-4.23292,False,11-06 11:40
-9b1a489f6b,neg=0.3 & kind=rank,0.07721,0.05489,-0.00314,-2.82063,False,10-26 07:53
-03a790fcd0,neg=0.03 & spac 제외,0.07721,0.05278,-0.00395,-3.92935,False,10-31 01:34
 fb09bd69dd,spac 제외 & -accumulation,0.07721,0.05829,-0.00314,-3.43978,False,10-26 04:49
 2e9010e8ba,kind=rank & +overheat,0.07721,0.04896,-0.00314,-3.09466,False,10-26 16:20
-8d8a07702f,hard_neg=True & -accumulation,0.07721,0.05959,-0.00395,-3.61663,False,11-06 06:59
+9b1a489f6b,neg=0.3 & kind=rank,0.07721,0.05489,-0.00314,-2.82063,False,10-26 07:53
+03a790fcd0,neg=0.03 & spac 제외,0.07721,0.05278,-0.00395,-3.92935,False,10-31 01:34
 2de9cd0771,-market & neg=0.03,0.07721,0.05156,-0.00395,-3.63728,False,11-05 20:20
+8d8a07702f,hard_neg=True & -accumulation,0.07721,0.05959,-0.00395,-3.61663,False,11-06 06:59
+0f2b86f4b1,colsample_bytree=0.4 & hard_neg=True,0.07715,0.06255,-0.00401,-3.91633,False,11-05 07:22
 73de2b9ec4,+overheat & kind=lgbm,0.07715,0.04461,-0.0032,-3.32631,False,10-27 00:52
 92178c22cd,kind=lgbm & -calendar,0.07715,0.06205,-0.00401,-3.80743,False,11-06 01:36
 3149108ca7,spac 제외 & +rel_strength,0.07715,0.06355,-0.00401,-4.00781,False,11-06 00:32
+fa22ba43db,neg=0.3 & hard_neg=True,0.07715,0.05918,-0.0032,-2.86142,False,10-25 02:43
+5b6ebe0f28,hard_neg=True & years=5,0.07715,0.06302,-0.00401,-3.63439,False,10-29 21:05
 1152b9f5d3,subsample=0.6 & spac 제외,0.07715,0.0631,-0.0032,-3.52548,False,10-26 17:34
 ce91f4a39c,spac 제외 & min_child_samples=100,0.07715,0.06304,-0.0032,-3.55483,False,10-24 08:05
-0f2b86f4b1,colsample_bytree=0.4 & hard_neg=True,0.07715,0.06255,-0.00401,-3.91633,False,11-05 07:22
-5b6ebe0f28,hard_neg=True & years=5,0.07715,0.06302,-0.00401,-3.63439,False,10-29 21:05
-fa22ba43db,neg=0.3 & hard_neg=True,0.07715,0.05918,-0.0032,-2.86142,False,10-25 02:43
-be33bf03bf,years=5 & spac 제외,0.07709,0.06281,-0.00326,-3.36875,False,10-23 19:59
-eb14119d05,kind=ens & reg_lambda=30.0,0.07709,0.05676,-0.00407,-4.18844,False,11-06 11:35
 1543a11334,learning_rate=0.03 & hard_neg=True,0.07709,0.05971,-0.00407,-3.78877,False,10-29 17:03
+eb14119d05,kind=ens & reg_lambda=30.0,0.07709,0.05676,-0.00407,-4.18844,False,11-06 11:35
+be33bf03bf,years=5 & spac 제외,0.07709,0.06281,-0.00326,-3.36875,False,10-23 19:59
 4aed5258fc,colsample_bytree=0.4 & spac 제외,0.07709,0.06416,-0.00407,-4.28147,False,11-06 20:04
-2116a9d98c,num_leaves=15 & hard_neg=True,0.07703,0.05988,-0.00413,-3.81549,False,11-06 02:56
-312e2c0598,no_spac,0.07703,0.06073,-0.00331,-3.63971,False,10-23 18:18
-074d9f563e,kind=lgbm & -accumulation,0.07703,0.06109,-0.00413,-4.09752,False,10-30 23:09
 d7c83612fa,kind=rank & colsample_bytree=0.55,0.07703,0.05132,-0.00413,-3.849,False,11-04 12:15
+312e2c0598,no_spac,0.07703,0.06073,-0.00331,-3.63971,False,10-23 18:18
+2116a9d98c,num_leaves=15 & hard_neg=True,0.07703,0.05988,-0.00413,-3.81549,False,11-06 02:56
+074d9f563e,kind=lgbm & -accumulation,0.07703,0.06109,-0.00413,-4.09752,False,10-30 23:09
 a84a5cfdcc,kind=rank & -market,0.07698,0.0534,-0.00419,-3.83113,False,11-03 03:07
 69be2bf4ab,-pref_link & hard_neg=True,0.07698,0.05998,-0.00419,-3.92103,False,11-04 13:45
-9c6a3ac6ac,spac 제외 & -market,0.07698,0.05573,-0.00337,-3.65227,False,10-27 00:26
 6fb36d535e,+market2 & -momentum,0.07698,0.05796,-0.00337,-3.66685,False,10-26 08:34
+9c6a3ac6ac,spac 제외 & -market,0.07698,0.05573,-0.00337,-3.65227,False,10-27 00:26
+8d808d9b75,-momentum & learning_rate=0.02,0.07692,0.05941,-0.00424,-4.4096,False,11-06 20:55
 4b3d4cce7c,kind=rank & years=None,0.07692,0.0512,-0.00424,-3.92392,False,11-02 15:05
 be147ea43f,kind=rank & reg_lambda=10.0,0.07692,0.05223,-0.00424,-3.87932,False,10-28 12:57
-8d808d9b75,-momentum & learning_rate=0.02,0.07692,0.05941,-0.00424,-4.4096,False,11-06 20:55
-ce5f7ea402,reg_lambda=30.0,0.07686,0.05321,-0.00349,-3.3024,False,10-24 03:51
+5aa28a3b9b,hard_neg=True & colsample_bytree=0.85,0.07686,0.05894,-0.0043,-3.92739,False,11-05 05:03
 400a5830ba,kind=rank & min_child_samples=400,0.07686,0.05425,-0.0043,-4.23727,False,11-05 00:40
 c042e66629,hard_neg=True & reg_lambda=5.0,0.07686,0.05797,-0.0043,-4.23727,False,11-04 16:49
-8d4effe22d,spac 제외 & learning_rate=0.02,0.07686,0.05602,-0.00349,-3.79434,False,10-27 21:50
-5aa28a3b9b,hard_neg=True & colsample_bytree=0.85,0.07686,0.05894,-0.0043,-3.92739,False,11-05 05:03
+9185790337,kind=lgbm & +rel_strength,0.07686,0.05258,-0.00349,-3.62429,False,10-26 03:31
 f639f4636f,-momentum,0.07686,0.06266,-0.0043,-4.68993,False,10-28 17:34
 5663cf5dc8,kind=rank & colsample_bytree=0.4,0.07686,0.05434,-0.0043,-4.15625,False,11-05 11:15
 c34c1348b7,kind=rank & -size_type,0.07686,0.0528,-0.0043,-3.90543,False,11-05 17:16
-9185790337,kind=lgbm & +rel_strength,0.07686,0.05258,-0.00349,-3.62429,False,10-26 03:31
+ce5f7ea402,reg_lambda=30.0,0.07686,0.05321,-0.00349,-3.3024,False,10-24 03:51
+8d4effe22d,spac 제외 & learning_rate=0.02,0.07686,0.05602,-0.00349,-3.79434,False,10-27 21:50
 5b3a0ffa12,spac 제외 & +stock_hist,0.0768,0.06202,-0.00355,-3.77589,False,10-27 15:16
 5cbd9aeade,spac 제외 & -calendar,0.0768,0.06457,-0.00436,-4.46703,False,11-01 09:53
 2771effe77,spac 제외 & subsample=1.0,0.0768,0.06452,-0.00355,-3.52766,False,10-26 18:10
 bc3f4076af,kind=lgbm & reg_lambda=5.0,0.0768,0.06088,-0.00436,-4.58233,False,11-06 09:32
+44c69d8c6c,+stock_hist & spac 제외,0.07674,0.06257,-0.00442,-4.56802,False,11-06 17:14
 37042cad79,hard_neg=True & +stock_hist,0.07674,0.06015,-0.00442,-4.17838,False,11-06 15:00
 0a7fb61a88,-market & hard_neg=True,0.07674,0.05498,-0.00442,-4.12874,False,10-31 04:30
-44c69d8c6c,+stock_hist & spac 제외,0.07674,0.06257,-0.00442,-4.56802,False,11-06 17:14
-7ce0294fa4,neg=0.2 & hard_neg=True,0.07669,0.05932,-0.00366,-3.4324,False,10-24 03:38
 c7384202fd,min_child_samples=50 & +overheat,0.07669,0.05541,-0.00448,-4.41822,False,11-06 12:50
-c093f312ba,+market_alert & hard_neg=True,0.07669,0.05962,-0.00448,-4.10553,False,11-06 16:42
+9fd803767a,-momentum & neg=0.03,0.07669,0.0544,-0.00448,-4.43285,False,11-06 13:41
+7ce0294fa4,neg=0.2 & hard_neg=True,0.07669,0.05932,-0.00366,-3.4324,False,10-24 03:38
+bc52968b38,neg=0.3 & kind=lgbm,0.07669,0.05242,-0.00366,-3.58469,False,10-27 06:28
 0275769d0b,kind=lgbm & +overheat,0.07669,0.05984,-0.00448,-4.44762,False,11-04 16:03
 ed56a7ea35,reg_lambda=30.0 & neg=0.1,0.07669,0.05309,-0.00448,-3.9935,False,11-05 01:54
-9fd803767a,-momentum & neg=0.03,0.07669,0.0544,-0.00448,-4.43285,False,11-06 13:41
+c093f312ba,+market_alert & hard_neg=True,0.07669,0.05962,-0.00448,-4.10553,False,11-06 16:42
 a1a163bbec,hard_neg=True & reg_lambda=0.0,0.07669,0.06137,-0.00448,-4.31973,False,11-01 01:33
 398a7b9fc1,kind=rank & -calendar,0.07669,0.05481,-0.00366,-3.40222,False,10-24 06:58
 6e0c11dd88,reg_lambda=30.0 & years=5,0.07669,0.0539,-0.00448,-4.08237,False,11-03 04:38
-bc52968b38,neg=0.3 & kind=lgbm,0.07669,0.05242,-0.00366,-3.58469,False,10-27 06:28
 c722b75006,kind=lgbm & min_child_samples=100,0.07669,0.05525,-0.00448,-4.30619,False,11-03 21:43
-506292a55d,hard_neg=True & learning_rate=0.02,0.07663,0.05904,-0.00453,-4.27658,False,11-01 18:46
+4bba4520ad,min_child_samples=100 & kind=lgbm,0.07663,0.04884,-0.00372,-4.08247,False,10-25 12:45
 8370e280db,kind=lgbm & neg=0.3,0.07663,0.05716,-0.00453,-4.30254,False,11-04 05:37
 b4d1291f79,kind=rank & -accumulation,0.07663,0.05144,-0.00453,-4.16531,False,11-05 04:08
-4bba4520ad,min_child_samples=100 & kind=lgbm,0.07663,0.04884,-0.00372,-4.08247,False,10-25 12:45
-bd4abe628d,neg=0.2 & kind=rank,0.07657,0.05818,-0.00378,-3.77349,False,10-25 17:46
+506292a55d,hard_neg=True & learning_rate=0.02,0.07663,0.05904,-0.00453,-4.27658,False,11-01 18:46
 8ef83a7c06,+stock_hist & reg_lambda=30.0,0.07657,0.05512,-0.00459,-4.15455,False,11-06 15:57
-f37f0d217e,kind=rank & +peer2,0.07657,0.0529,-0.00378,-3.50078,False,10-26 17:16
+bd4abe628d,neg=0.2 & kind=rank,0.07657,0.05818,-0.00378,-3.77349,False,10-25 17:46
 be529cfc47,kind=lgbm & num_leaves=15,0.07657,0.05818,-0.00459,-4.61097,False,10-29 17:15
+f37f0d217e,kind=rank & +peer2,0.07657,0.0529,-0.00378,-3.50078,False,10-26 17:16
 28a19c6968,-momentum & subsample=0.6,0.07651,0.06157,-0.00465,-4.91963,False,10-28 18:00
-69f4e1beea,kind=lgbm & neg=0.05,0.07651,0.05415,-0.00465,-4.26109,False,11-03 06:29
 18db9ac69c,hard_neg=True & +rel_strength,0.07651,0.05867,-0.00465,-4.37431,False,11-06 19:21
-93fb79a764,spac 제외 & kind=rank,0.07645,0.05229,-0.0039,-3.52827,False,10-25 15:28
+69f4e1beea,kind=lgbm & neg=0.05,0.07651,0.05415,-0.00465,-4.26109,False,11-03 06:29
 6ddb76402c,num_leaves=15 & spac 제외,0.07645,0.05748,-0.0039,-4.01441,False,10-25 16:02
 7ad29c1542,kind=rank & learning_rate=0.03,0.07645,0.05186,-0.00471,-4.29666,False,11-06 15:32
-4637094f45,years=None & hard_neg=True,0.0764,0.0589,-0.00477,-4.22709,False,10-28 21:58
+93fb79a764,spac 제외 & kind=rank,0.07645,0.05229,-0.0039,-3.52827,False,10-25 15:28
 cfa4cfbbed,neg=0.05 & kind=rank,0.0764,0.04722,-0.00395,-3.70141,False,10-24 06:00
+4637094f45,years=None & hard_neg=True,0.0764,0.0589,-0.00477,-4.22709,False,10-28 21:58
 4c22d86306,reg_lambda=30.0 & -accumulation,0.07634,0.05575,-0.00483,-4.70517,False,11-06 09:26
 e2c5347694,-size_type & hard_neg=True,0.07634,0.05829,-0.00483,-4.35514,False,11-03 18:50
 b44f90e001,num_leaves=15 & -momentum,0.07634,0.06131,-0.00483,-4.86418,False,11-06 19:50
 06c41a8c21,kind=rank & -volatility,0.07634,0.05342,-0.00483,-4.34319,False,11-06 14:36
-abd8a22f07,kind=rank & subsample=1.0,0.07628,0.05346,-0.00488,-4.6375,False,11-04 09:30
-3043ad48f9,hard_neg=True & colsample_bytree=0.55,0.07628,0.05801,-0.00488,-4.3313,False,11-04 09:48
-f4d3525e53,years=5 & -momentum,0.07628,0.06439,-0.00488,-5.18904,False,10-30 08:54
-bbfcc6ee41,kind=lgbm,0.07628,0.05025,-0.00407,-5.03527,False,10-23 19:02
-48004feffb,reg_lambda=30.0 & years=None,0.07628,0.05284,-0.00407,-3.77771,False,10-27 10:39
-86945d989b,hard_neg=True & learning_rate=0.02,0.07628,0.05418,-0.00407,-3.66214,False,10-26 09:07
-44a2d7fbcb,kind=lgbm & min_child_samples=50,0.07628,0.05182,-0.00407,-4.23419,False,10-26 14:14
 37efb87c11,hard_neg=True & +overheat,0.07628,0.0595,-0.00488,-4.65171,False,11-05 14:34
 90b8b745d8,hard_neg=True & learning_rate=0.03,0.07628,0.05599,-0.00407,-3.62268,False,10-26 18:45
-4c85b45bf2,spac 제외 & years=None,0.07622,0.06468,-0.00413,-3.96744,False,10-26 11:46
+48004feffb,reg_lambda=30.0 & years=None,0.07628,0.05284,-0.00407,-3.77771,False,10-27 10:39
+abd8a22f07,kind=rank & subsample=1.0,0.07628,0.05346,-0.00488,-4.6375,False,11-04 09:30
+44a2d7fbcb,kind=lgbm & min_child_samples=50,0.07628,0.05182,-0.00407,-4.23419,False,10-26 14:14
+86945d989b,hard_neg=True & learning_rate=0.02,0.07628,0.05418,-0.00407,-3.66214,False,10-26 09:07
+f4d3525e53,years=5 & -momentum,0.07628,0.06439,-0.00488,-5.18904,False,10-30 08:54
+3043ad48f9,hard_neg=True & colsample_bytree=0.55,0.07628,0.05801,-0.00488,-4.3313,False,11-04 09:48
+bbfcc6ee41,kind=lgbm,0.07628,0.05025,-0.00407,-5.03527,False,10-23 19:02
 9da68320ee,kind=rank & reg_lambda=0.0,0.07622,0.05283,-0.00494,-4.40104,False,11-04 01:16
 a0d3c72fc7,spac 제외 & min_child_samples=50,0.07622,0.06205,-0.00413,-3.90688,False,10-27 02:54
-e14bfd9250,kind=rank & +market_alert,0.07616,0.05331,-0.005,-4.47144,False,11-06 20:19
-91cfad3e82,kind=ens & spac 제외,0.07616,0.0579,-0.005,-5.01672,False,10-31 05:37
+4c85b45bf2,spac 제외 & years=None,0.07622,0.06468,-0.00413,-3.96744,False,10-26 11:46
 4628bf78c6,kind=ens & -momentum,0.07616,0.0615,-0.005,-4.79343,False,11-06 14:24
-8df637ea6b,kind=rank & neg=0.03,0.0761,0.0465,-0.00424,-4.15901,False,10-27 08:12
+91cfad3e82,kind=ens & spac 제외,0.07616,0.0579,-0.005,-5.01672,False,10-31 05:37
+e14bfd9250,kind=rank & +market_alert,0.07616,0.05331,-0.005,-4.47144,False,11-06 20:19
 633fa54f4e,years=None & kind=lgbm,0.0761,0.05461,-0.00424,-4.56205,False,10-25 19:05
 ff0768f16a,-size_type & kind=lgbm,0.0761,0.05729,-0.00506,-4.96715,False,10-28 13:56
+8df637ea6b,kind=rank & neg=0.03,0.0761,0.0465,-0.00424,-4.15901,False,10-27 08:12
 bd860e653f,reg_lambda=0.0 & min_child_samples=100,0.0761,0.0613,-0.00506,-4.69894,False,10-30 19:23
-7c7a800010,neg=0.1 & hard_neg=True,0.07605,0.05734,-0.00512,-4.58912,False,11-02 12:49
 95c463643e,hard_neg=True & colsample_bytree=0.4,0.07605,0.06117,-0.0043,-3.84172,False,10-27 16:45
-7238bf4454,spac 제외 & reg_lambda=30.0,0.07605,0.05522,-0.00512,-4.60166,False,11-05 17:37
 8478caf032,years=5 & min_child_samples=50,0.07605,0.05945,-0.0043,-4.20974,False,10-27 03:58
+7238bf4454,spac 제외 & reg_lambda=30.0,0.07605,0.05522,-0.00512,-4.60166,False,11-05 17:37
+7c7a800010,neg=0.1 & hard_neg=True,0.07605,0.05734,-0.00512,-4.58912,False,11-02 12:49
 914cc19554,years=5 & kind=lgbm,0.07599,0.06014,-0.00436,-4.88346,False,10-23 20:09
-450483510e,spac 제외 & -volatility,0.07599,0.06077,-0.00517,-5.03398,False,11-06 09:16
 13f17b42f0,kind=lgbm & hard_neg=True,0.07599,0.0568,-0.00517,-4.67383,False,10-31 00:09
-0d78d6b6ab,-momentum & spac 제외,0.07599,0.06416,-0.00436,-4.31644,False,10-23 22:38
 64b897a41d,+market2 & hard_neg=True,0.07599,0.0559,-0.00436,-3.87843,False,10-25 19:23
+450483510e,spac 제외 & -volatility,0.07599,0.06077,-0.00517,-5.03398,False,11-06 09:16
+0d78d6b6ab,-momentum & spac 제외,0.07599,0.06416,-0.00436,-4.31644,False,10-23 22:38
 4aef7b5feb,neg=0.1 & -momentum,0.07593,0.05957,-0.00523,-5.48284,False,11-06 18:55
-0d91dde440,subsample=1.0 & hard_neg=True,0.07593,0.05722,-0.00523,-4.97335,False,11-03 05:18
 7f1ee5b8fb,spac 제외 & min_child_samples=50,0.07593,0.05482,-0.00523,-4.89907,False,10-30 20:14
-a8ab7a6e35,num_leaves=127 & hard_neg=True,0.07593,0.05942,-0.00523,-4.68201,False,11-04 04:28
-003a9f1e49,kind=rank & min_child_samples=800,0.07593,0.04685,-0.00442,-4.29698,False,10-25 15:43
 324d2c57a8,min_child_samples=50 & -momentum,0.07593,0.05851,-0.00442,-4.20389,False,10-26 03:47
+003a9f1e49,kind=rank & min_child_samples=800,0.07593,0.04685,-0.00442,-4.29698,False,10-25 15:43
 9a8692bc9f,kind=lgbm & min_child_samples=50,0.07593,0.04977,-0.00523,-4.92838,False,11-05 12:06
+a8ab7a6e35,num_leaves=127 & hard_neg=True,0.07593,0.05942,-0.00523,-4.68201,False,11-04 04:28
+0d91dde440,subsample=1.0 & hard_neg=True,0.07593,0.05722,-0.00523,-4.97335,False,11-03 05:18
 3e5d1f4b47,+stock_hist & hard_neg=True,0.07587,0.0573,-0.00448,-3.9828,False,10-25 22:26
 a1333b7152,hard_neg=True & -peer,0.07587,0.05724,-0.00448,-3.9935,False,10-26 12:43
 b4481e0527,kind=rank & learning_rate=0.02,0.07576,0.048,-0.00541,-4.98408,False,11-03 15:26
@@ -1145,36 +1145,37 @@ b4481e0527,kind=rank & learning_rate=0.02,0.07576,0.048,-0.00541,-4.98408,False,
 0dab4fa474,hardneg,0.0757,0.05728,-0.00465,-4.14505,False,10-23 14:28
 e5980039dc,subsample=0.6 & hard_neg=True,0.0757,0.05882,-0.00465,-3.99744,False,10-25 14:26
 d1981cd6a5,years=None & reg_lambda=30.0,0.07564,0.05429,-0.00552,-4.88645,False,11-04 04:55
+bad1a048e9,spac 제외 & kind=lgbm,0.07564,0.05572,-0.00471,-4.56116,False,10-25 19:37
 98d42799de,hard_neg=True & min_child_samples=50,0.07564,0.06023,-0.00552,-4.96596,False,11-04 05:01
 8e118ef168,-momentum & years=None,0.07564,0.06101,-0.00552,-5.32786,False,11-06 15:49
-bad1a048e9,spac 제외 & kind=lgbm,0.07564,0.05572,-0.00471,-4.56116,False,10-25 19:37
 9b482c7888,kind=rank & +peer2,0.07558,0.05452,-0.00558,-4.91911,False,11-06 13:11
 46bc9341b9,hard_neg=True & -calendar,0.07552,0.05957,-0.00483,-4.33134,False,10-25 13:07
-3a4efad6d5,hard_neg=True & num_leaves=127,0.07552,0.05615,-0.00483,-4.10292,False,10-26 10:08
-098980ea2d,-momentum & neg=0.2,0.07552,0.06043,-0.00483,-4.98558,False,10-26 13:21
 d5842cd308,kind=lgbm & num_leaves=127,0.07552,0.0524,-0.00564,-5.82091,False,11-06 08:24
+098980ea2d,-momentum & neg=0.2,0.07552,0.06043,-0.00483,-4.98558,False,10-26 13:21
 497c2e9ae0,min_child_samples=800 & hard_neg=True,0.07552,0.05739,-0.00483,-4.36718,False,10-26 19:00
+3a4efad6d5,hard_neg=True & num_leaves=127,0.07552,0.05615,-0.00483,-4.10292,False,10-26 10:08
 2ba9ee70a7,+peer2 & hard_neg=True,0.07547,0.05447,-0.00488,-4.24196,False,10-23 20:24
-5e3d395275,hard_neg=True & -peer,0.07535,0.06115,-0.00581,-5.22424,False,11-06 16:18
 55b2c3c3f4,reg_lambda=30.0 & years=5,0.07535,0.05122,-0.005,-4.41217,False,10-25 11:39
-a5dde21269,subsample=1.0 & hard_neg=True,0.07523,0.05635,-0.00512,-4.6143,False,10-26 00:44
+5e3d395275,hard_neg=True & -peer,0.07535,0.06115,-0.00581,-5.22424,False,11-06 16:18
 5767274b13,colsample_bytree=0.85 & hard_neg=True,0.07523,0.05705,-0.00512,-4.4807,False,10-25 22:15
+a5dde21269,subsample=1.0 & hard_neg=True,0.07523,0.05635,-0.00512,-4.6143,False,10-26 00:44
 9f40b9d5ef,hard_neg=True & +overheat,0.07523,0.05783,-0.00512,-4.66593,False,10-27 10:12
-2526f163da,hard_neg=True & min_child_samples=50,0.07517,0.05853,-0.00517,-4.45766,False,10-26 16:39
+cc71ab79bd,min_child_samples=50 & colsample_bytree=0.85,0.07523,0.05622,-0.00593,-5.28726,False,11-06 22:15
 f5197ef55f,hard_neg=True & -volatility,0.07517,0.0537,-0.00517,-4.51468,False,10-26 04:28
+2526f163da,hard_neg=True & min_child_samples=50,0.07517,0.05853,-0.00517,-4.45766,False,10-26 16:39
 61db4ec891,hard_neg=True & -market,0.07517,0.05812,-0.00517,-4.66098,False,10-27 07:14
 c44a928d45,+market_alert & hard_neg=True,0.07512,0.05902,-0.00523,-4.52541,False,10-26 04:06
 d233197ca4,kind=lgbm & spac 제외,0.07506,0.0566,-0.0061,-5.52785,False,10-30 18:22
 2c78e834aa,kind=rank & spac 제외,0.07506,0.05136,-0.0061,-5.32497,False,11-01 22:26
-365360694d,hard_neg=True & years=None,0.075,0.05833,-0.00535,-4.58106,False,10-24 06:41
 fd75ba066c,-momentum & spac 제외,0.075,0.06276,-0.00616,-5.85593,False,11-01 20:35
 03b15e42f8,neg=0.05 & hard_neg=True,0.075,0.05536,-0.00535,-4.7745,False,10-25 22:02
-fc9031e9d4,-pref_link & hard_neg=True,0.07494,0.05678,-0.00541,-4.66048,False,10-27 04:20
+365360694d,hard_neg=True & years=None,0.075,0.05833,-0.00535,-4.58106,False,10-24 06:41
 396b66b8f2,hard_neg=True & years=5,0.07494,0.05998,-0.00541,-4.67223,False,10-24 03:27
-0a50229566,hard_neg=True & reg_lambda=10.0,0.07488,0.0516,-0.00547,-4.87972,False,10-23 20:50
-9d2bb9ca9a,hard_neg=True & spac 제외,0.07488,0.05663,-0.00547,-4.59162,False,10-24 06:12
+fc9031e9d4,-pref_link & hard_neg=True,0.07494,0.05678,-0.00541,-4.66048,False,10-27 04:20
 d4a552de53,kind=rank & years=None,0.07488,0.05178,-0.00547,-4.79014,False,10-24 05:56
+9d2bb9ca9a,hard_neg=True & spac 제외,0.07488,0.05663,-0.00547,-4.59162,False,10-24 06:12
 3ff721313f,kind=rank & years=5,0.07488,0.05047,-0.00547,-4.85362,False,10-24 04:00
+0a50229566,hard_neg=True & reg_lambda=10.0,0.07488,0.0516,-0.00547,-4.87972,False,10-23 20:50
 619d2271fd,neg=0.3 & min_child_samples=100,0.07471,0.06031,-0.00564,-5.05824,False,10-25 13:31
 9a93c299f4,kind=rank & num_leaves=63,0.07471,0.05417,-0.00645,-5.73926,False,11-06 12:26
 b514973454,kind=ens & hard_neg=True,0.07465,0.06151,-0.00651,-5.87914,False,10-31 16:29
