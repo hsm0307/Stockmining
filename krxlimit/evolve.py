@@ -256,13 +256,23 @@ class Evolver:
                 continue
             if cfg_key(cfg) not in st["tested"]:
                 return name, cfg
+        # 1~2개 변경 이웃을 거의 다 본 뒤에는 위 200번이 번번이 비어(대부분 이미 평가됐거나 '번번이 진 변경'이라 건너뜀)
+        # 아무것도 안 하는 단계가 반복된다. 그때는 '번번이 진 변경'이 섞인 남은 후보도 고른다.
+        for _ in range(2000):
+            name, change = mutate(champ, self.rng)
+            cfg = _merge(champ, change)
+            if cfg.get("hard_neg") and not {"candle", "limit_hist"} <= set(cfg["groups"]):
+                continue
+            if cfg_key(cfg) not in st["tested"]:
+                return name, cfg
         return None
 
-    def dev_step(self, st: dict) -> None:
+    def dev_step(self, st: dict) -> bool:
+        """후보 하나를 평가했으면 True, 남은 후보가 없으면 False."""
         target, k = st["target"], PRIMARY_K[st["target"]]
         cand = self.next_candidate(st)
         if cand is None:
-            return
+            return False
         name, cfg = cand
         res = self.eval_dev(target, name, cfg)
         gain, t = paired(res["daily"], _dev_hits(target, st["dev_champion"]["key"]), k)
@@ -278,6 +288,7 @@ class Evolver:
             st["dev_champion"] = {"key": res["key"], "label": name, "cfg": cfg, "score": res["summary"][f"P@{k}"]}
             st["accepted_since_validation"] += 1
             st["queue_pos"] = 0  # 챔피언이 바뀌면 체계적 후보를 새 챔피언 기준으로 다시 훑음 (이미 본 것은 건너뜀)
+        return True
 
     def needs_validation(self, st: dict) -> bool:
         return st["dev_champion"]["key"] != st["production"]["key"] and st["accepted_since_validation"] > 0
@@ -391,7 +402,8 @@ class Evolver:
         else:
             if minutes_left < EST_DEV_MIN.get(st["dev_champion"]["cfg"]["kind"], 10) + 5:
                 return False
-            self.dev_step(st)
+            if not self.dev_step(st):
+                return False  # 남은 후보가 없음 → 저장·보고서·git 동기화 없이 넘어감 (예전엔 빈 단계마다 반복됐음)
         st["iteration"] += 1
         return True
 
