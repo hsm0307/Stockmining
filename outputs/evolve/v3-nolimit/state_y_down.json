@@ -1,6 +1,6 @@
 {
  "target": "y_down",
- "iteration": 2979,
+ "iteration": 2980,
  "dev_champion": {
   "key": "a204c8dea7",
   "label": "-volatility & +overheat",
@@ -41285,7 +41285,7 @@
    "result": "승격 → y_down_v5"
   }
  ],
- "last_event": "evolve y_down: try #1228 -pref_link & min_child_samples=800 (dP@20=-0.0006, t=-2.79)",
+ "last_event": "evolve y_down: 10y baseline of y_down_v5 P@20=0.0071",
  "ten_baseline": [
   {
    "기간": "10년 전체",
