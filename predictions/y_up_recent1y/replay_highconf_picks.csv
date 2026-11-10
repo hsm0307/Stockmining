@@ -37,3 +37,12 @@
 2026-11-06,2026-11-09,18064K,한진칼우,6,0.2602,True,True,timing_records_passed
 2026-11-06,2026-11-09,128540,에코캡,7,0.1971,True,True,timing_records_passed
 2026-11-06,2026-11-09,004835,덕성우,8,0.1715,True,True,timing_records_passed
+2026-11-09,2026-11-10,001527,동양2우B,1,0.5658,True,True,timing_records_passed
+2026-11-09,2026-11-10,004545,깨끗한나라우,2,0.3468,True,True,timing_records_passed
+2026-11-09,2026-11-10,18064K,한진칼우,3,0.3304,False,False,timing_records_passed
+2026-11-09,2026-11-10,900100,파이온엑스,4,0.3166,False,False,timing_records_passed
+2026-11-09,2026-11-10,128540,에코캡,5,0.2986,False,False,timing_records_passed
+2026-11-09,2026-11-10,208640,썸에이지,6,0.2644,True,True,timing_records_passed
+2026-11-09,2026-11-10,004835,덕성우,7,0.2404,False,False,timing_records_passed
+2026-11-09,2026-11-10,006345,대원전선우,8,0.189,False,False,timing_records_passed
+2026-11-09,2026-11-10,003495,대한항공우,9,0.1648,True,False,timing_records_passed
